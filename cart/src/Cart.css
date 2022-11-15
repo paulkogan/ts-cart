@@ -1,0 +1,116 @@
+.Cart {
+  text-align: center;
+}
+
+
+
+.cart-inner{
+  border: 2px solid black;
+  padding: 10px;
+  margin-left: 20px;
+  width: 80%;
+  text-align: left;
+}
+
+.cart-left{
+
+  display: inline-block;
+  width: 50%;
+  margin-left: 30px;
+  border: 1px solid green;
+  vertical-align:middle;
+}
+
+.cart-right{
+  display: inline-block;
+  margin-left: 10px;
+  padding: 10px;
+  width: 40%;
+  border: 1px solid blue;
+  vertical-align:top;
+}
+
+
+.cart-app-1 {
+  border: 2px solid green;
+  padding: 5px;
+  margin-top: 10px;
+}
+.cart-app-2 {
+  border: 2px solid brown;
+  padding: 5px;
+  margin-top: 10px;
+}
+
+.cart-app-3 {
+  border: 2px solid navy;
+  padding: 5px;
+  margin-top: 10px;
+}
+.cart-app-4 {
+  border: 2px solid navy;
+  padding: 5px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+.cart-app-5 {
+  border: 2px solid red;
+  padding: 5px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+
+.prod-form-display {
+  border: 0px solid red;
+  padding-left: 0px;
+}
+
+.prod-form {
+  border: 0px solid purple;
+  margin-top: 20px;
+}
+
+.prod-list-img {
+  height: 15vmin;
+}
+
+.prod-list-item {
+  height: 20vmin;
+  width: 90%;
+  padding: 5px;
+  align-items: left;
+  border: 0px solid red;
+}
+
+
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
