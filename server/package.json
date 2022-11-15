@@ -1,0 +1,25 @@
+{
+  "name": "ts-cart-api",
+  "version": "1.0.0",
+  "description": "ts-cart server",
+  "type": "module",
+  "main": "src/index.cjs",
+  "scripts": {
+    "start": "node src/index.cjs",
+    "test": "test "
+  },
+  "author": "Paul Kogan",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.14",
+    "@types/node": "^18.7.23",
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "helmet": "^6.0.0",
+    "morgan": "^1.10.0"
+  }
+}
