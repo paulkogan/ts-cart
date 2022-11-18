@@ -1,14 +1,14 @@
 import React from 'react';
-import {Product} from "./types/types"
+import {Product, BasketItem} from "./types/types"
 import './Cart.css';
 
 interface Props {
-  selected: Product[]
+  selected: BasketItem[]
 }
 
-const  CartList:React.FC <Props> = ({selected}) => {
+const  BasketList:React.FC <Props> = ({selected}) => {
 
-  const renderlist = ():JSX.Element[]  => {
+  const renderBasketlist = ():JSX.Element[]  => {
 
     return selected.map(item => {
       return (
@@ -24,9 +24,9 @@ const  CartList:React.FC <Props> = ({selected}) => {
 
   return (
     <div className="prod-list">
-      {selected && renderlist()}
+      {selected && renderBasketlist()}
     </div>
   );
 }
 
-export default CartList;
+export default BasketList;

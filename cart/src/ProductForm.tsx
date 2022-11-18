@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Product, TaxRates} from "./types/types"
+import {Product} from "./types/types"
 import './Cart.css';
 import {v4 as uuidv4} from 'uuid';
 
@@ -11,16 +11,13 @@ interface Props {
 
 const  ProductForm:React.FC <Props> = (props) => {
   const {submitAddProduct} = props;
-  const stateOptions = Object.keys(TaxRates)
 
   const getNewProdObj = () :Product => {
       let newUUIDString = uuidv4().toString();
 
       return {
-        id: newUUIDString,
-        cart_id: null,
+        product_id: newUUIDString,
         name: "",
-        us_state: "",
         imageUrl: "",
         description: "", 
         price: 0.00
@@ -54,9 +51,8 @@ const  ProductForm:React.FC <Props> = (props) => {
     <div>
 
         <div className="prod-form-display">
-            <div>id: {newProd.id}</div>
+            <div>id: {newProd.product_id}</div>
             <div>Name: {newProd.name}</div>
-            <div>US_State: {newProd.us_state}</div>
             <div>Price: {newProd.price}</div>
             <div>ImageURL: {newProd.imageUrl}</div>
             <div>Description: {newProd.description}</div>
@@ -76,18 +72,6 @@ const  ProductForm:React.FC <Props> = (props) => {
                     }}
                 />
             </div>
-
-            <div className="prod-input-field">
-                <select 
-                      name="us_state"
-                      onChange = {event => {handleChange(event.target.name, event.target.value) }}
-                >
-
-                   {   stateOptions.map(state => <option key={state} value={state}>{state}</option>   )}
-                       
-                </select>
-            </div>
-
 
             <div className="prod-input-field">
               <input 
@@ -128,6 +112,24 @@ export default ProductForm;
 
 // if sending entire event
 //const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+
+
+//   <div className="prod-input-field">
+//   <select 
+//         name="us_state"
+//         onChange = {event => {handleChange(event.target.name, event.target.value) }}
+//   >
+
+//      {   stateOptions.map(state => <option key={state} value={state}>{state}</option>   )}
+         
+//   </select>
+// </div>
+
+
+
+
+
+
 
 
 // onChange = {handleChange}

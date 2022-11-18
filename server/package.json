@@ -6,6 +6,7 @@
   "main": "src/index.cjs",
   "scripts": {
     "start": "node src/index.cjs",
+    "live" : "nodemon src/index.cjs",
     "test": "test "
   },
   "author": "Paul Kogan",

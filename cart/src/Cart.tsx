@@ -1,81 +1,107 @@
 import React, {useState, useEffect, useReducer} from 'react';
-import {MOCK_PRODUCTS} from './tests/mocks';
-import {Product, TaxRates} from "./types/types"
+import {Product, BasketItem} from "./types/types"
 import './Cart.css';
-import CartList from './CartList';
+import BasketList from './BasketList';
+import ProductList from './ProductList';
 import ProductForm from './ProductForm';
-import PracticePage from './PracticePage';
-import FetchPage from './FetchPage';
 import LoginPage from './LoginPage';
-import TaxReducer from './TaxReducer';
-import LikeButton from './LikeButton';
+import CartUpdater from './CartUpdater';
 
-const InitialCartState = {
-  "items_total" : 0,
-  "num_items": 0,
-  "next_cart_id": 100, 
-  "tax_by_state":  {
-    "NY" : 0,
-    "FL" : 0,
-    "AZ" : 0
-  }
-}
+
+
 
 const Cart:React.FC = () => {
 
-  const [selected, setSelected] = useState<Product[]>([])
-  const [CartState, TaxDispatch] = useReducer(TaxReducer, InitialCartState);
+  const [basketList, setBasketList] = useState<BasketItem[]>([])
+  const [productList, setProductList] = useState<Product[]>([])
+  //const [USTaxRates, setUSTaxRates] = useState<USTaxState[]>([])
+
+  const [isLoading, setIsLoading] = useState(false)
+  const loadLocal = true
+
+
+  const InitialCartState = {
+    "items_total" : 0,
+    "num_items": 0,
+    "next_cart_id": 100, 
+    "tax_by_state":  {
+      "NY" : 0,
+      "FL" : 0,
+      "AZ" : 0
+    },
+    "us_tax_rates": null
+  }
+
+  const [CartState, UpdateCartDispatch] = useReducer(CartUpdater, InitialCartState);
 
 
   useEffect(() => {
     // console.log("render: " + CartState.num_items)
+    //load product list
+    const products_url = "http://localhost:3001/products"
 
-    const loadInitial = async (arr: any[], initial_id: number) => {
-        const new_arr = arr.map( product => {
-            TaxDispatch({
-              type: "ADD_TO_CART", 
-              payload: {
-                item_amount: product.price,
-                us_state: product.us_state,
-              }
-            })
-            
-            product.cart_id = initial_id
-            initial_id +=1 
-            console.log("New Initial Item at Cart: "+JSON.stringify(product))
-            return product
-        })
-        setSelected(new_arr)
-        
+    const fetchBEProducts = async (url: string) => {
+      setIsLoading(true)
+      try {
+           const response= await fetch(url)
+           const body = await response.json()
+           const data = body.data
+           console.log("PRODUCTS BODY: ", data)
+           setProductList(data)
+           setIsLoading(false)
+      } catch(error) {
+           console.log("Error!: failed to fetch product data", error)
+      }
+   }
+
+
+    const fetchTaxRates = () => {
+      const sourceTaxRates = 
+        { 
+        "NY": 10.0,
+         "AZ": 5.25,
+         "FL":1.0,
+        }
+      
+      /// later will fetch from BE
+      UpdateCartDispatch({
+            type: "UPDATE_STATE_TAX_RATES", 
+            payload: {
+              us_tax_rates:  sourceTaxRates,
+            }
+       })
+
     }
 
-
-
+    //need to fetch inside useEffect (or useCallback)
     return () => {
-        console.log("Cart CLEANUP runs once!")
-        if (selected.length === 0) {
-          loadInitial(MOCK_PRODUCTS, CartState.next_cart_id)
+        console.log("Cart SETUP runs once!")
+        if (productList.length === 0) {
+              console.log("Fetching BE products!")
+              fetchBEProducts(products_url)
+              fetchTaxRates()                  
         }
     }
 
   }, []) // pass in a dependency array
 
+
   const submitAddProduct = (product: Product) => {
 
     // update reducer here at the Cart level
-    TaxDispatch({
-      type: "ADD_TO_CART", 
-      payload: {
-        item_amount: product.price,
-        us_state: product.us_state,
-      }
-    })
+    // TaxDispatch({
+    //   type: "ADD_ITEM", 
+    //   payload: {
+    //     item_amount: product.price,
+    //     us_state: product.us_state,
+    //   }
+    // })
 
-    product.cart_id = CartState.next_cart_id //this works!
+    // product.cart_id = CartState.next_cart_id //this works!
     console.log("New Item at Cart: "+JSON.stringify(product))
-    setSelected([
-      ...selected, product
-    ])
+    setProductList(
+      [...productList, product]
+    )
   } 
 
 
@@ -88,22 +114,31 @@ const Cart:React.FC = () => {
           <div className="cart-app-4">
             <LoginPage />
           </div>
-          <div className="cart-app-5">
-            <LikeButton />
+
+          <div> 
+            {isLoading ? <div> PLEASE WAIT - PRODUCTS LOADING !!!</div> : 
+            <div>
+                  <ProductList productList = {productList}/>
+            </div> 
+        
+            }
           </div>
-          <CartList selected = {selected}/>
-          <div> {JSON.stringify(CartState)} </div>
+
+
+          
+          
+          
+
         </div>
 
         <div className="cart-right">
           <div className="cart-app-1">
-              <ProductForm submitAddProduct = {submitAddProduct} />
+            <ProductForm submitAddProduct = {submitAddProduct} />
           </div>
-          <div className="cart-app-2">
-              <PracticePage label = {"test"} > children</PracticePage>
-          </div>
+
           <div className="cart-app-3">
-             <FetchPage  />
+            <div> {JSON.stringify(CartState)} </div>
+            <BasketList selected = {basketList}/>
           </div>
 
         </div>
@@ -116,22 +151,3 @@ const Cart:React.FC = () => {
 
 export default Cart;
 
-//<ProductForm submitAddProduct = {submitAddProduct} />
-
-
-      // arr.forEach( async product =>  {
-      //     console.log("Adding INITIAL Prod in ASYNC EFFECT: "+product.name)
-      //     await TaxDispatch({
-      //       type: "ADD_TO_CART", 
-      //       payload: {
-      //         item_amount: product.price,
-      //         us_state: product.us_state,
-      //       }
-      //     })
-      
-      //     product.cart_id = CartState.next_cart_id //this works!
-      //     console.log("New Item at INITIAL Cart: "+JSON.stringify(product))
-      //     setSelected([
-      //       ...selected, product
-      //     ])
-      // })
