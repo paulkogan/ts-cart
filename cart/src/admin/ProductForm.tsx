@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Product} from "./types/types"
+import {Product} from "../types/types"
 import './Cart.css';
 import {v4 as uuidv4} from 'uuid';
 

@@ -11,10 +11,10 @@ export interface Product {
 
   export interface BasketItem extends Product{
     cart_id: number | null;
-    count: number;
-    us_state: string;
-    tax: number
-    discount?: number
+    num_items: number;
+    tax: number;
+    discount?: number;
+    shipping?: number;
   }
 
   // export interface USTaxState {
@@ -30,11 +30,11 @@ export interface Product {
 
 
 export interface CartState {
-    num_items: number;
-    items_total: number;
-    next_cart_id: number, 
+    basket_items: BasketItem[];
+    next_cart_id: number,
+    buyer_state: string | undefined,  
     tax_by_state: TaxByState;
-    us_tax_rates: any;
+    us_tax_rates: TaxByState | {} | any;
 
 }
 

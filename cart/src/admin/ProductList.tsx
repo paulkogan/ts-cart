@@ -1,5 +1,5 @@
 import React from 'react';
-import {Product} from "./types/types"
+import {Product} from "../types/types"
 import './Cart.css';
 
 interface Props {
@@ -7,6 +7,11 @@ interface Props {
 }
 
 const  ProductList:React.FC <Props> = ({productList}) => {
+
+
+  const handleAdd = (product: Product) => {
+      console.log("adding "+product.product_id)
+  }
 
   const renderProductlist = ():JSX.Element[]  => {
 
