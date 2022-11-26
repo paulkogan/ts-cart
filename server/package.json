@@ -6,7 +6,7 @@
   "main": "src/index.cjs",
   "scripts": {
     "start": "node src/index.cjs",
-    "live" : "nodemon src/index.cjs",
+    "live": "nodemon src/index.cjs",
     "test": "test "
   },
   "author": "Paul Kogan",
@@ -21,6 +21,9 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "helmet": "^6.0.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "pg": "^8.8.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.25.8"
   }
 }
