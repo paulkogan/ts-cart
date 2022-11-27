@@ -15,7 +15,7 @@
 .cart-left{
 
   display: inline-block;
-  width: 50%;
+  width: 40%;
   margin-left: 30px;
   border: 1px solid green;
   vertical-align:middle;
@@ -25,7 +25,7 @@
   display: inline-block;
   margin-left: 10px;
   padding: 10px;
-  width: 40%;
+  width: 50%;
   border: 1px solid blue;
   vertical-align:top;
 }
@@ -121,8 +121,6 @@
 
 
 
-
-
 .cart-app-4 {
   border: 2px solid navy;
   padding: 5px;
@@ -151,6 +149,8 @@
   height: 20vmin;
 }
 
+
+
 .prod-list-item {
   height: 20vmin;
   width: 90%;
@@ -159,7 +159,18 @@
   border: 0px solid red;
 }
 
+.prod-list-plank {
+  border: 0px solid navy;
+  white-space: nowrap;
+}
 
+.prod-list-add {
+
+  border: 0px solid orange;
+  vertical-align:top;
+  padding-left: 10px;
+  padding-top: 5px;
+}
 
 
 @media (prefers-reduced-motion: no-preference) {

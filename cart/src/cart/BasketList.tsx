@@ -14,7 +14,7 @@ const  BasketList:React.FC <Props> = ({selected}) => {
     return selected.map(item =>  {
     
       return (
-        <div key={item.cart_id} className="basket-outer-item" >
+        <div key={item.basket_item_id} className="basket-outer-item" >
               <BasketPlank item = {item} />
         </div>
       )

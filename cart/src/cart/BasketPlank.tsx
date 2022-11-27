@@ -15,7 +15,7 @@ const  BasketPlank:React.FC <Props> = ({item}) => {
               </div>
               <div className="basket-plank-info">
                   <div> {item.name} </div> 
-                  <div> {item.cart_id}</div>
+                  <div> {item.basket_item_id}</div>
                   <div> {item.product_id} </div> 
 
               </div>

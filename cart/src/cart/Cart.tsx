@@ -4,6 +4,7 @@ import './Cart.css';
 import BasketList from './BasketList';
 import ShoppingProductList from './ShoppingProductList';
 import CheckoutForm from './CheckoutForm';
+import LoginPage from './LoginPage';
 import CartUpdater from './CartUpdater';
 
 
@@ -18,9 +19,11 @@ const Cart:React.FC = () => {
   const [taxStatesLoaded, setTaxStatesLoaded] = useState(false)
 
   const InitialCartState = {
+    "cart_id": undefined,
+    "user_id": undefined,
+    "next_item_id": 100,
     "basket_items" : [],
-    "next_cart_id": 100,
-    "buyer_state": "",
+    "delivery_us_state": "",
     "tax_by_state":  {
       "NY" : 0,
       "FL" : 0,
@@ -123,6 +126,11 @@ const Cart:React.FC = () => {
         <h2>Shopping Cart</h2>
         <div className="cart-left">
 
+
+
+        <div className="cart-app-4">
+            <LoginPage />
+          </div>
           <div> 
             {isLoading ? <div> PLEASE WAIT - PRODUCTS LOADING !!!</div> : 
             <div>

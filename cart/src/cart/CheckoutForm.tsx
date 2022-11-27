@@ -25,8 +25,8 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
     const handleSubmit = ():void => {
       console.log(`handleSubmit ${buyerState} `)
       updateCartDispatch({
-        type: "SET_BUYER_STATE", 
-        payload: {buyer_state: buyerState }
+        type: "SET_delivery_us_state", 
+        payload: {delivery_us_state: buyerState }
       })
       
     }
@@ -35,8 +35,8 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
 
   //   export interface CartState {
   //     basket_items: BasketItem[];
-  //     next_cart_id: number,
-  //     buyer_state: string | undefined,  
+  //     next_item_id: number,
+  //     delivery_us_state: string | undefined,  
   //     tax_by_state: TaxByState;
   //     us_tax_rates: TaxByState | {} | any;
   //{"Number of Items:" {cartState.basket_items}}
@@ -63,8 +63,8 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
 
           <div className="cart-status">
             <div>Number of Items: {cartState.basket_items.length}</div>
-            <div>Next Cart id: {cartState.next_cart_id}</div>
-            <div>Buyer State: {cartState.buyer_state}</div>
+            <div>Next Cart id: {cartState.next_item_id}</div>
+            <div>Del. US State: {cartState.delivery_us_state}</div>
           </div>
 
 

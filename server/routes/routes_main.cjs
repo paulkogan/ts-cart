@@ -21,7 +21,7 @@ three controllers
 
 
 router.get('/', (req, res) => {
-    res.send("I am gROXXOT")
+    res.send("I am gROOT")
 });
 
 

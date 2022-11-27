@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useReducer} from 'react';
 import {Product, BasketItem} from "../types/types"
 import './Admin.css';
-import LoginPage from './LoginPage';
+import LoginPage from './LoginPageOld';
 import FetchPage from './FetchPage';
 import PracticePage from './FetchPage';
 import ProductForm from './ProductForm';

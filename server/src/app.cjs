@@ -21,7 +21,7 @@ const app = express();
 app.use(cors());
 // appends requerst to req.body
 app.use(bodyParser.urlencoded({ extended: false }));
-//app.use(express.json());
+//app.use(express.json()); //thru body parser?
 app.use(bodyParser.json())
 app.use(router)
 
