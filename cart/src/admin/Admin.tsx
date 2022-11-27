@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useReducer} from 'react';
 import {Product, BasketItem} from "../types/types"
 import './Admin.css';
-import LoginPage from './LoginPageOld';
+import LoginPageOld from './LoginPageOld';
 import FetchPage from './FetchPage';
 import PracticePage from './FetchPage';
 import ProductForm from './ProductForm';
@@ -63,7 +63,7 @@ const Admin:React.FC = () => {
         <h2>Admin</h2>
         <div className="cart-left">
           <div className="cart-app-4">
-            <LoginPage />
+            <LoginPageOld />
           </div>
 
           <div> 

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Product} from "../types/types"
-import './Cart.css';
+import './Admin.css';
 
 interface Props {
   productList: Product[]
