@@ -9,6 +9,24 @@ import CartUpdater from './CartUpdater';
 
 
 
+const initialUserDetails = {
+  user_uuid: null,
+  email: "",
+  name: "",
+  avatar: ""
+
+}
+
+/*
+loginState:
+    none
+    in_progress
+    success
+    error
+
+*/
+
+
 
 
 
@@ -17,6 +35,9 @@ const Cart:React.FC = () => {
   const [productList, setProductList] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [taxStatesLoaded, setTaxStatesLoaded] = useState(false)
+  const [loginState, setLoginState] = useState("none")
+  const [userMessage, setUserMessage] = useState("Please Log In")
+  const [userDetails, setUserDetails] = useState(initialUserDetails)
 
   const InitialCartState = {
     "cart_id": undefined,
@@ -107,16 +128,57 @@ const Cart:React.FC = () => {
 
   } 
 
+/*
+loginState:
+    none
+    in_progress
+    success
+    error
 
-  const submitAddProduct = (product: Product) => {
+*/
 
 
-    console.log("Addint nbew Product: "+JSON.stringify(product))
 
-    setProductList(
-      [...productList, product]
-    )
-  } 
+
+  const handleLogin = async (login: string, password: string)  =>  {
+    // start with just finding user
+    const find_user_url = "http://localhost:3001/login/find_user"
+    setLoginState("in_progress")
+
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: login})
+    };
+
+    try {
+        const response= await fetch(find_user_url, requestOptions)
+        const data = await response.json()
+        // console.log("response status ", response.status)
+        // console.log("DATA is  ", data)
+        if (response.status > 300) {
+            setLoginState("error")
+            setUserMessage(data.message)
+            return "error"
+
+        } else {
+            setLoginState("success")
+            setUserMessage(`Success! User: ${data.email} is logged in`)
+            await setUserDetails({...userDetails,
+                email: data.email,
+                name: data.name
+            })
+            return "success"
+        }
+        
+
+   } catch(error) {
+        console.log("Error!: failed to find user email", error)
+   }
+
+
+  };
+
 
 
   return (
@@ -127,23 +189,22 @@ const Cart:React.FC = () => {
         <div className="cart-left">
 
 
-
-        <div className="cart-app-4">
-            <LoginPage />
-          </div>
-          <div> 
-            {isLoading ? <div> PLEASE WAIT - PRODUCTS LOADING !!!</div> : 
-            <div>
-                  <ShoppingProductList productList = {productList} addToBasket={addToBasket}/>
-            </div> 
-        
-            }
-          </div>
-
+          <div>ls: {loginState}</div>
+          <div>um: {userMessage}</div>
+          { loginState != "success" ? 
+              <div className="cart-app-4">
+                <LoginPage handleLogin = {handleLogin}/>
+              </div>
+                :
+              <div> 
+                {isLoading ? <div> PLEASE WAIT - PRODUCTS LOADING !!!</div> : 
+                      <ShoppingProductList productList = {productList} addToBasket={addToBasket}/>        
+                }
+              </div>
+          }
 
           
-          
-          
+     
 
         </div>
 

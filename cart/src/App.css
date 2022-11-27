@@ -2,8 +2,8 @@
   text-align: center;
 }
 
-.home-outer {
-  border: 2px solid black;
+.nav-outer {
+  border: 1px solid green;
   padding: 10px;
   margin-left: 20px;
   width: 80%;

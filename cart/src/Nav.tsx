@@ -12,12 +12,11 @@ import './App.css';
 
 
 
-const Home:React.FC = () => {
-
+const Nav:React.FC = () => {
 
   return (
     <Router>
-      <div className="home-outer" >
+      <div className="nav-outer" >
             <div className="home-links"> 
               <div className="nav-link"> 
                 <Link to="/cart">Cart</Link>
@@ -36,4 +35,4 @@ const Home:React.FC = () => {
   );
 }
 
-export default Home;
+export default Nav;

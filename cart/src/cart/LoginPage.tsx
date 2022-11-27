@@ -1,34 +1,25 @@
 import React, {useState, useEffect} from 'react';
 //import useLocalStorage from './hooks/useLocalStorage'
 
+
+interface Props {
+    handleLogin: (login: string, password: string) => Promise<string | undefined>
+  }
+  
+
+
+
 const initialLoginObj = {
     email: "",
     password: "",
 }
 
-const initialUserDetails = {
-    user_uuid: null,
-    email: "",
-    name: "",
-    avatar: ""
-
-}
-
-/*
-validationState:
-    none
-    in_progress
-    success
-    error
-
-*/
 
 
-const LoginPage: React.FC = () => {
+const LoginPage: React.FC <Props>  = ({handleLogin}) => {
+
     const [loginObj, setLoginObj] = useState(initialLoginObj)
     const [loginState, setLoginState] = useState("none")
-    const [loginMessage, setLoginMessage] = useState("Please login.")
-    const [userDetails, setUserDetails] = useState(initialUserDetails)
 
     const doChange = (fieldName:string, fieldValue: string | null ):void => {
         setLoginObj({
@@ -38,39 +29,15 @@ const LoginPage: React.FC = () => {
     };
 
     const handleSubmit = async () => {
-        // start with just finding user
-        const find_user_url = "http://localhost:3001/login/find_user"
-        setLoginState("in_progress")
 
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: loginObj.email })
-        };
-
-        try {
-            const response= await fetch(find_user_url, requestOptions)
-            const data = await response.json()
-            // console.log("response status ", response.status)
-            // console.log("DATA is  ", data)
-            if (response.status > 300) {
-                setLoginState("error")
-                setLoginMessage(data.message)
-
-            } else {
-                setLoginState("success")
-                setLoginMessage(`Success! User: ${data.email} is logged in`)
-                await setUserDetails({...userDetails,
-                    email: data.email,
-                    name: data.name
-                })
-
-
-            }
-
-       } catch(error) {
-            console.log("Error!: failed to find user email", error)
-       }
+        await handleLogin(loginObj.email, loginObj.password).then(result => {
+                console.log("RES is "+result)
+                if (result) {
+                    setLoginState(result);
+                } else {
+                    setLoginState("none");
+                }
+        })
 
     };
 
@@ -78,19 +45,8 @@ const LoginPage: React.FC = () => {
 
     return (
         <div>
-            <div> Login Page</div>
-            <div>{loginMessage}</div>
-            <br/>
-            <div> 
-                {loginState === "success" && 
-                    <div>
-                        { "User is:"+ userDetails.email}<br/>
-                    </div>
-                }
-            </div>
 
-
-
+            <div> Local Login State: {loginState}</div>
             <div>
                 <input
                     type="text"
@@ -108,7 +64,7 @@ const LoginPage: React.FC = () => {
             </div>
 
             <div>
-               <button onClick={handleSubmit}>Update</button>
+               <button onClick={handleSubmit}>Login</button>
             </div>  
 
         
