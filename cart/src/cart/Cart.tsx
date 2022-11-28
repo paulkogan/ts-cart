@@ -106,7 +106,7 @@ const Cart:React.FC = () => {
     return () => {
         console.log("Cart SETUP runs once!")
         if (productList.length === 0) {            
-              console.log("Fetching BE products!")
+              //console.log("Fetching BE products!")
               fetchBEProducts(products_url)
               fetchTaxRates()                  
         }
@@ -142,7 +142,7 @@ loginState:
 
   const handleLogin = async (login: string, password: string)  =>  {
     // start with just finding user
-    const find_user_url = "http://localhost:3001/login/find_user"
+    const find_user_url = "http://localhost:3001/users/find_user"
     setLoginState("in_progress")
 
     const requestOptions = {
@@ -173,7 +173,7 @@ loginState:
         
 
    } catch(error) {
-        console.log("Error!: failed to find user email", error)
+        console.log("Error!: failed to submit login info.", error)
    }
 
 

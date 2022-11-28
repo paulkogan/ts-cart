@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useReducer} from 'react';
 import {Product, BasketItem} from "../types/types"
 import './Admin.css';
-import LoginPageOld from './LoginPageOld';
+import RegisterUserForm from './RegisterUserForm';
 import FetchPage from './FetchPage';
 import PracticePage from './FetchPage';
 import ProductForm from './ProductForm';
@@ -62,9 +62,6 @@ const Admin:React.FC = () => {
       <div className="cart-inner">
         <h2>Admin</h2>
         <div className="cart-left">
-          <div className="cart-app-4">
-            <LoginPageOld />
-          </div>
 
           <div> 
             {isLoading ? <div> PLEASE WAIT - PRODUCTS LOADING !!!</div> : 
@@ -85,6 +82,9 @@ const Admin:React.FC = () => {
         <div className="cart-right">
           <div className="cart-app-1">
             <ProductForm submitAddProduct = {submitAddProduct} />
+          </div>
+          <div className="cart-app-3">
+            <RegisterUserForm />
           </div>
 
 

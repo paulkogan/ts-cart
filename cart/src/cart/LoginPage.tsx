@@ -31,7 +31,7 @@ const LoginPage: React.FC <Props>  = ({handleLogin}) => {
     const handleSubmit = async () => {
 
         await handleLogin(loginObj.email, loginObj.password).then(result => {
-                console.log("RES is "+result)
+                console.log("LOGIN result is: "+result)
                 if (result) {
                     setLoginState(result);
                 } else {
@@ -46,7 +46,7 @@ const LoginPage: React.FC <Props>  = ({handleLogin}) => {
     return (
         <div>
 
-            <div> Local Login State: {loginState}</div>
+
             <div>
                 <input
                     type="text"
@@ -79,3 +79,4 @@ export default LoginPage
 
 // <div>{loginObj.email}..{loginObj.password}</div>
 
+//<div> Local Login State: {loginState}</div>
