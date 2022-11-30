@@ -1,6 +1,6 @@
 
 
-exports.mockProducts = {
+const mockProducts = {
     data : [
 
         {
@@ -30,5 +30,8 @@ exports.mockProducts = {
         },
     ]
 }
+
+export default mockProducts
+
 // https://m.media-amazon.com/images/I/61IB1hj+ZfL._AC_SL1500_.jpg
 

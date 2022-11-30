@@ -1,5 +1,5 @@
 
-const db = require('../models/index.cjs')
+import db from '../models/index.cjs'
 const User = db.users;
 const Op = db.Sequelize.Op;
 
@@ -49,4 +49,4 @@ const findUser = async (req, res) => {
 
 }
 
-module.exports = {listUsers, findUser}
+export default {listUsers, findUser}

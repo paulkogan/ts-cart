@@ -1,8 +1,9 @@
 
-const {mockProducts} = require('../tests/products.cjs')
-// no sequelize hjere yet
-// const db = require('../models/index.cjs')
-// const Op = db.Sequelize.Op;
+import mockProducts from '../tests/products.js'
+
+// no sequelize here yet
+import db from '../models/index.cjs'
+const Op = db.Sequelize.Op;
 
 // create temorary catalog
 let catalog = mockProducts
@@ -16,4 +17,4 @@ const listProducts = (req, res) => {
 // if (data == null){
 //     return res.json({error: 'id not found'});
 
-module.exports = {listProducts}
+export default {listProducts}
