@@ -1,5 +1,7 @@
 'use strict';
 
+//we are staying CJS here to use require and __filedir
+
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');

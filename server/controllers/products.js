@@ -1,5 +1,5 @@
 
-const {mockProducts} = require('../tests/products.cjs')
+import mockProducts from '../tests/products.js'
 // no sequelize hjere yet
 // const db = require('../models/index.cjs')
 // const Op = db.Sequelize.Op;
@@ -16,4 +16,4 @@ const listProducts = (req, res) => {
 // if (data == null){
 //     return res.json({error: 'id not found'});
 
-module.exports = {listProducts}
+export default {listProducts}

@@ -5,14 +5,24 @@
 
 
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-//import dotenv from "dotenv";
-const dotenv = require('dotenv');
-const helmet = require('helmet');
-const morgan = require('morgan');
-const router = require('../routes/routes_main.cjs');
+// const express = require('express');
+// const bodyParser = require('body-parser');
+// const cors = require('cors');
+// const helmet = require('helmet');
+// const morgan = require('morgan');
+//const dotenv = require('dotenv');
+
+
+
+import express from 'express'
+import cors from 'cors'
+import bodyParser from 'body-parser'
+import helmet from 'helmet';
+import morgan from 'morgan';
+import dotenv from "dotenv";
+import router from '../routes/routes_main.js';
+
+
 //dotenv.config()
 const port = 3001
 const app = express();

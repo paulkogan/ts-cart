@@ -1,11 +1,11 @@
-//import express from "express";
-const express = require('express');
+import express from "express";
+//const express = require('express');
 
 // import { listProducts} from "../controllers/products.js";
 //import { listUsers, findUser} from "../controllers/users.js";
 
-const productsController = require("../controllers/products.cjs");
-const usersController = require("../controllers/users.cjs");
+import productsController from "../controllers/products.js";
+import usersController from "../controllers/users.js";
 
 
 const router = express.Router();
@@ -29,12 +29,12 @@ router.get('/', (req, res) => {
 //router.get('/products', verifyToken, getUsers);
 router.get('/products', productsController.listProducts);
 router.get('/users', usersController.listUsers);
-router.post('/login/find_user', usersController.findUser)
+router.post('/users/find_user', usersController.findUser)
 
 
 
 
-module.exports = router
-//export default router;
+//module.exports = router
+export default router;
 
 
