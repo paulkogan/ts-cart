@@ -35,15 +35,15 @@ const userModel = (sequelize, DataTypes) => {
 
     User.findByEmail = async (email_target) => {
 
-      let userFound = await User.findOne({
+      let results = await User.findOne({
         where: {email: email_target},
       })
 
-      if (!userFound) {
+      if (!results) {
           console.log("No user found")
       }
       
-      return userFound 
+      return results
 
     } 
 

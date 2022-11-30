@@ -153,15 +153,16 @@ loginState:
 
     try {
         const response= await fetch(find_user_url, requestOptions)
-        const data = await response.json()
+        const body = await response.json()
         // console.log("response status ", response.status)
-        // console.log("DATA is  ", data)
+        // console.log("LOGIN body is  ", body)
         if (response.status > 300) {
             setLoginState("error")
-            setUserMessage(data.message)
+            setUserMessage(body.message)
             return "error"
 
         } else {
+            let data = body.data
             setLoginState("success")
             setUserMessage(`Success! User: ${data.email} is logged in`)
             await setUserDetails({...userDetails,

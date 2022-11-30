@@ -77,15 +77,17 @@ const findUser = async (req, res) => {
     User.findByEmail(target_email)
     .then(data => {
         if (data) {
-            console.log(`Found user ${data}`)
+            console.log(`Found user ${JSON.stringify(data)}`)
             res.status(200).send({
                 "data":data,
                 "errors": null     
             });
         } else {
-            console.log(`Did not find user with  ${target_email}`)
+            console.log(`Did not find user ${target_email}`)
             res.status(404).send({
-                message: `Did not find user with  ${target_email}`
+                "data": null,
+                "errors": `Did not find user with  ${target_email}`, 
+                "message": `ERROR: Did not find user with ${target_email}`
               });
         }
 
