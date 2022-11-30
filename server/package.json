@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "ts-cart server",
   "type": "module",
-  "main": "src/app.cjs",
+  "main": "src/app.js",
   "scripts": {
-    "start": "node src/app.cjs",
-    "live": "nodemon src/app.cjs",
+    "start": "node src/app.js",
+    "live": "nodemon src/app.js",
     "test": "test "
   },
   "author": "Paul Kogan",
