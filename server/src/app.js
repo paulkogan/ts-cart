@@ -1,19 +1,3 @@
-// import * as express from 'express'
-// import * as cors from 'cors'
-// import * as bodyParser from 'body-parser'
-// SyntaxError: Cannot use import statement outside a module
-
-
-
-// const express = require('express');
-// const bodyParser = require('body-parser');
-// const cors = require('cors');
-// const helmet = require('helmet');
-// const morgan = require('morgan');
-//const dotenv = require('dotenv');
-
-
-
 import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'

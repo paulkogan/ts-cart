@@ -1,8 +1,9 @@
 
 import mockProducts from '../tests/products.js'
-// no sequelize hjere yet
-// const db = require('../models/index.cjs')
-// const Op = db.Sequelize.Op;
+
+// no sequelize here yet
+import db from '../models/index.cjs'
+const Op = db.Sequelize.Op;
 
 // create temorary catalog
 let catalog = mockProducts
