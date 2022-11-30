@@ -78,7 +78,10 @@ const findUser = async (req, res) => {
     .then(data => {
         if (data) {
             console.log(`Found user ${data}`)
-            res.status(200).send(data);
+            res.status(200).send({
+                "data":data,
+                "errors": null     
+            });
         } else {
             console.log(`Did not find user with  ${target_email}`)
             res.status(404).send({
