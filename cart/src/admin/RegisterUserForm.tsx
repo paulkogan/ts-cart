@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {User} from "../types/types"
 import './Admin.css';
-import {v4 as uuidv4} from 'uuid';
+// we will set UUID on the backend
+// import {v4 as uuidv4} from 'uuid';
 
 
 // interface Props {
@@ -56,7 +57,7 @@ const  RegisterUserForm:React.FC = () => {
           const response= await fetch(regitser_user_url , requestOptions)
           const data = await response.json()
           // console.log("response status ", response.status)
-          // console.log("DATA is  ", data)
+          // console.log("REGISTER DATA is  ", data)
           if (response.status > 300) {
               setUserMessage(data.message)
               setRegStatus("error")

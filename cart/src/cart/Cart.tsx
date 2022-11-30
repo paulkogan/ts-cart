@@ -189,8 +189,7 @@ loginState:
         <div className="cart-left">
 
 
-          <div>ls: {loginState}</div>
-          <div>um: {userMessage}</div>
+          <div>{userMessage}</div>
           { loginState != "success" ? 
               <div className="cart-login">
                 <LoginPage handleLogin = {handleLogin}/>

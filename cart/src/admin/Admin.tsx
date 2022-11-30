@@ -23,7 +23,7 @@ const Admin:React.FC = () => {
            const response= await fetch(url)
            const body = await response.json()
            const data = body.data
-           console.log("PRODUCTS BODY: ", data)
+           //console.log("PRODUCTS BODY: ", data)
            setProductList(data)
            setIsLoading(false)
       } catch(error) {
