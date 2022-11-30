@@ -192,11 +192,11 @@ loginState:
           <div>ls: {loginState}</div>
           <div>um: {userMessage}</div>
           { loginState != "success" ? 
-              <div className="cart-app-4">
+              <div className="cart-login">
                 <LoginPage handleLogin = {handleLogin}/>
               </div>
                 :
-              <div> 
+                <div className="cart-prod-list">
                 {isLoading ? <div> PLEASE WAIT - PRODUCTS LOADING !!!</div> : 
                       <ShoppingProductList productList = {productList} addToBasket={addToBasket}/>        
                 }
@@ -208,23 +208,23 @@ loginState:
 
         </div>
 
-        <div className="cart-right">
+        
 
+        { (loginState == "success") && 
+          <div className="cart-right">
+              <div className="cart-app-3">
+                {!taxStatesLoaded ? <div> PLEASE WAIT - TAX STATES LOADING !!!</div> : 
+                <div>
+                  <CheckoutForm cartState = {cartState} updateCartDispatch={updateCartDispatch}  />
+                </div> 
+                }
+              </div>
 
-          <div className="cart-app-3">
-            {!taxStatesLoaded ? <div> PLEASE WAIT - TAX STATES LOADING !!!</div> : 
-            <div>
-              <CheckoutForm cartState = {cartState} updateCartDispatch={updateCartDispatch}  />
-            </div> 
-            }
+              <div className="cart-app-3">
+                  <BasketList selected = {cartState.basket_items}/>
+              </div>
           </div>
-
-          <div className="cart-app-3">
-              <BasketList selected = {cartState.basket_items}/>
-          </div>
-
-        </div>
-
+          }
 
       </div>
     </div>

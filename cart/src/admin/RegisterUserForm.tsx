@@ -85,13 +85,9 @@ const  RegisterUserForm:React.FC = () => {
 
 
   return (
-    <div>
-        <div>{userMessage} </div>
-        <br/>
-        <div className="prod-form-display">
-            <div>Name: {newUser.name}</div>
-            <div>Email: {newUser.email}</div>
-            <div>Password: {newUser.password}</div>
+    <div>     
+        <div className="form-message">
+            <div>{userMessage} </div>
         </div>
         {/*  updates newUser directly  - can do it both ways*/}
         <div className="prod-form">

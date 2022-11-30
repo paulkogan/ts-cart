@@ -61,7 +61,7 @@ const Admin:React.FC = () => {
       
       <div className="cart-inner">
         <h2>Admin</h2>
-        <div className="cart-left">
+        <div className="admin-left">
 
           <div> 
             {isLoading ? <div> PLEASE WAIT - PRODUCTS LOADING !!!</div> : 
@@ -80,10 +80,10 @@ const Admin:React.FC = () => {
         </div>
 
         <div className="cart-right">
-          <div className="cart-app-1">
+          <div className="admin-app-1">
             <ProductForm submitAddProduct = {submitAddProduct} />
           </div>
-          <div className="cart-app-3">
+          <div className="admin-app-2">
             <RegisterUserForm />
           </div>
 
