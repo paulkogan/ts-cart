@@ -47,6 +47,12 @@ const userModel = (sequelize, DataTypes) => {
 
     } 
 
+    User.registerNew = async (new_user) => {
+
+      let message = await User.create(new_user)
+      return {"message": message}
+    }
+
 
 
     return User;

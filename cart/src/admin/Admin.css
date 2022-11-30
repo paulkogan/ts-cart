@@ -12,13 +12,13 @@
   text-align: left;
 }
 
-.cart-left{
+.admin-left{
 
   display: inline-block;
   width: 50%;
   margin-left: 30px;
   border: 1px solid green;
-  vertical-align:middle;
+  vertical-align: top;
 }
 
 .cart-right{
@@ -29,13 +29,23 @@
   border: 1px solid blue;
   vertical-align:top;
 }
-
-
-.cart-app-1 {
-  border: 2px solid green;
+.admin-app-1 {
+  border: 1px solid green;
   padding: 5px;
-  margin-top: 10px;
 }
+
+.admin-app-2 {
+  border: 1px solid orange;
+  vertical-align: top;
+  padding: 5px;
+}
+
+.form-message {
+  border: 0px solid red;
+  font-size: 12px;
+  padding-bottom: 5px;
+}
+
 .cart-app-2 {
   border: 2px solid brown;
   padding: 5px;

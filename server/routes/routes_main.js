@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 router.get('/products', productsController.listProducts);
 router.get('/users', usersController.listUsers);
 router.post('/users/find_user', usersController.findUser)
-
+router.post('/users/register', usersController.registerNew)
 
 export default router;
 
