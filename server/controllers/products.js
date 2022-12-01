@@ -11,7 +11,13 @@ let catalog = mockProducts
 
 
 const listProducts = (req, res) => {
-    res.send(catalog)
+    res.status(200).json({
+        data: catalog,
+        errors: null,
+        });
+
+
+
 };
 
 // if (data == null){

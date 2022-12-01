@@ -23,6 +23,7 @@ const registerNew = async (req, res) => {
         name: req.body.name,
         password: req.body.password,
         email: req.body.email,
+        avatar_url: null
     }
     // console.log(`New User OBJECT is: ${JSON.stringify(new_user)}`)
 
@@ -30,10 +31,10 @@ const registerNew = async (req, res) => {
     User.registerNew(new_user)
     .then(data => {
         if (data) {
-            console.log(`SUCCESS: New User registered with: ${JSON.stringify(data)}`)
+            console.log(`\n\nSUCCESS BE: New User registered with: ${JSON.stringify(data)}`)
             res.send(data);
         } else {
-            console.log(`FAIL: Did not register new user with  ${new_user.email}`)
+            console.log(`\n\nFAIL BE: Did not register new user with  ${new_user.email}`)
             res.status(400).send({
                 message: `Error (400): Did not register new user with   ${new_user.email}`
               });
@@ -43,20 +44,22 @@ const registerNew = async (req, res) => {
     .catch(err => {
         res.status(500).send({
         message:
-            err.message || "Some error occurred while finding User by email"
+            err.message || "Some error occurred while registering user"
         });
     });
 
 }
 
 const listUsers = async (req, res) => {
-
     const name = req.query.name;
     var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
 
     User.findAll({ where: condition })
     .then(data => {
-        res.send(data);
+        res.status(200).send({
+            "data":data,
+            "errors": null
+        });
     })
     .catch(err => {
         res.status(500).send({
@@ -66,6 +69,7 @@ const listUsers = async (req, res) => {
     });
 }
 
+
 const findUser = async (req, res) => {
     var target_email = req.body.email;
     console.log(`User target_email is ${target_email}`)
@@ -74,12 +78,17 @@ const findUser = async (req, res) => {
     User.findByEmail(target_email)
     .then(data => {
         if (data) {
-            console.log(`Found user ${data}`)
-            res.send(data);
+            console.log(`Found user ${JSON.stringify(data)}`)
+            res.status(200).send({
+                "data":data,
+                "errors": null     
+            });
         } else {
-            console.log(`Did not find user with  ${target_email}`)
+            console.log(`Did not find user ${target_email}`)
             res.status(404).send({
-                message: `Did not find user with  ${target_email}`
+                "data": null,
+                "errors": `Did not find user with  ${target_email}`, 
+                "message": `ERROR: Did not find user with ${target_email}`
               });
         }
 

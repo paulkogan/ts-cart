@@ -22,6 +22,10 @@ const userModel = (sequelize, DataTypes) => {
           type: DataTypes.TEXT,
           unique: true,
         }, 
+        avatar_url:{
+          allowNull: true,
+          type: DataTypes.TEXT,
+        }
       },
       {
         //tableName: "users",
@@ -35,26 +39,26 @@ const userModel = (sequelize, DataTypes) => {
 
     User.findByEmail = async (email_target) => {
 
-      let userFound = await User.findOne({
+      let results = await User.findOne({
         where: {email: email_target},
       })
 
-      if (!userFound) {
+      if (!results) {
           console.log("No user found")
       }
       
-      return userFound 
+      return results
 
     } 
 
     User.registerNew = async (new_user) => {
 
-      let message = await User.create(new_user)
-      return {"message": message}
+      return await User.create(new_user)
+      //return message
     }
 
 
-
+    //sequelize.sync({alter:true})
     return User;
   };
 

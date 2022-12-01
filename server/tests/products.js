@@ -1,7 +1,6 @@
 
 
-const mockProducts = {
-    data : [
+const mockProducts = [
 
         {
             product_id: "5406e66e-40f4-4bb8-b88f-e1315d9dbc91",
@@ -29,7 +28,6 @@ const mockProducts = {
             description: "The Mind-glowing 3D Moon Lamps come in 3 different sizes, to fit your needs & to bring a dazzling blend of magic & function to your home."
         },
     ]
-}
 
 export default mockProducts
 
