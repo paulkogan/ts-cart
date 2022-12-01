@@ -56,15 +56,15 @@ const  RegisterUserForm:React.FC = () => {
       try {
           const response= await fetch(regitser_user_url , requestOptions)
           const data = await response.json()
-          // console.log("response status ", response.status)
-          // console.log("REGISTER DATA is  ", data)
+          console.log("response status ", response.status)
+          console.log("REGISTER DATA is  ", data)
           if (response.status > 300) {
               setUserMessage(data.message)
               setRegStatus("error")
 
   
           } else {
-              setUserMessage(`Success! Registration complete for ${data.message.email}`)
+              setUserMessage(`Success! Registration complete for ${data.email}`)
               setRegStatus("success")
               //reset the form
               setNewUser(getNewUserObj())

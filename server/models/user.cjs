@@ -22,6 +22,10 @@ const userModel = (sequelize, DataTypes) => {
           type: DataTypes.TEXT,
           unique: true,
         }, 
+        avatar_url:{
+          allowNull: true,
+          type: DataTypes.TEXT,
+        }
       },
       {
         //tableName: "users",
@@ -49,12 +53,12 @@ const userModel = (sequelize, DataTypes) => {
 
     User.registerNew = async (new_user) => {
 
-      let message = await User.create(new_user)
-      return {"message": message}
+      return await User.create(new_user)
+      //return message
     }
 
 
-
+    //sequelize.sync({alter:true})
     return User;
   };
 

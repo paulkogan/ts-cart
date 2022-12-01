@@ -12,6 +12,7 @@ let test_user_1 = {
     name: "Matt Damon",
     password: "abcd",
     email: "matt@damon.com",
+    avatar_url: null
 }
 
 let test_user_2 = {
@@ -19,6 +20,7 @@ let test_user_2 = {
     name: "Tom Hanks",
     password: "abcd",
     email: "tom@hanks.com",
+    avatar_url: null
 }
 
 let test_user_3 = {
@@ -26,18 +28,26 @@ let test_user_3 = {
     name: "Paul Kogan",
     password: "abcd",
     email: "paulkog@gmail.com",
+    avatar_url: "http://www.image.com/paul_kogan.jpg"
 }
+
+let bad_test_user = {
+    user_uuid: null,
+    name: "Bad Tester",
+    password: "abcd",
+    email: "bad_email",
+    avatar_url: "http://www.image.com/paul_kogan.jpg"
+}
+
 
 
 describe("GET /products", () => {
 
     beforeAll(async () => {
-    // set up the todo
-    //await request(baseURL).post("/todo").send(newTodo);
+
     })
 
     afterAll(async () => {
-    //await request(baseURL).delete(`/todo/${newTodo.id}`)
     })
 
     it("should return 200", async () => {
@@ -62,7 +72,7 @@ describe("GET /users", () => {
     })
 
     afterAll(async () => {
-    //await request(baseURL).delete(`/todo/${newTodo.id}`)
+        //await db.sequelize.close()
     })
 
     it("should return 200 and ALL users", async () => {
@@ -85,9 +95,9 @@ describe("POST /findUser", () => {
 
     const find_params = {"email":"matt@damon.com"}
     const not_find_params = {"email":"not@there.com"}
-    //console.log(`New User OBJECT is: ${JSON.stringify(test_user)}`)
 
     beforeAll(async () => {
+
         await db.sequelize.sync({ force: true })
         User.registerNew(test_user_1)
         User.registerNew(test_user_3)
@@ -100,7 +110,7 @@ describe("POST /findUser", () => {
 
     it("should return 200", async () => {
         const response = await request(baseURL).post("/users/find_user").send(find_params);
-        //console.log("RESPONSE ============\n",response.body.data, null,4)
+        //console.log("RESPONSE find user ============\n",response.body)
         expect(response.statusCode).toBe(200);
         expect(response.body.errors).toBe(null);
     });
@@ -113,11 +123,50 @@ describe("POST /findUser", () => {
 
     it("should return 404 if not found", async () => {
         const response = await request(baseURL).post("/users/find_user").send(not_find_params);
-        console.log("NOT FOUND RESPONSE ============\n",response.body.data, null,4)
+        //console.log("NOT FOUND RESPONSE ============\n",response.body, null,4)
         expect(response.statusCode).toBe(404);
-        expect(response.body.errors).toBe("Did not find user with  not@there.com");
+        expect(response.body.errors).toContain("Did not find user with");
 
         });
     
+
+});
+
+
+
+describe("POST /register ", () => {
+
+    beforeAll(async () => {
+        await db.sequelize.sync({ force: true }) //clear User
+        User.registerNew(test_user_1)
+    })
+ 
+
+
+
+
+    it("should properly register a valid new user", async () => {
+        const response = await request(baseURL).post('/users/register').send(test_user_2);
+        // console.log("REGISTER RESPONSE 200============\n",JSON.stringify(response.body, null,4))
+        expect(response.statusCode).toBe(200);
+        expect(response.body.errors).toBe(undefined);
+        expect(response.body.name).toBe('Tom Hanks');
+    });
+    
+
+    it("should return 400 if bad registration request", async () => {
+        const response = await request(baseURL).post('/users/register').send(bad_test_user);
+        // console.log("BAD REGISTER RESPONSE ============\n",JSON.stringify(response.body, null,4))
+        expect(response.statusCode).toBe(400);
+        expect(response.body.message).toContain("invalid email");
+
+
+        });
+    
+        afterAll( () => {
+            db.sequelize.close()
+        })
+    
+
 
 });
