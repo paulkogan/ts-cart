@@ -1,7 +1,7 @@
 const request = require("supertest")
 const baseURL = "http://localhost:3001"
 //import db from '../models/index.cjs'
-const db = require("../models/index.cjs")
+const db = require("../models/index.ts/index.js")
 // import { v4 as uuidv4 } from 'uuid';
 const { v4 : uuidv4 } = require('uuid')
 const User = db.users;
@@ -100,7 +100,7 @@ describe("POST /findUser", () => {
 
         await db.sequelize.sync({ force: true })
         User.registerNew(test_user_1)
-        User.registerNew(test_user_3)
+        User.registerNew(test_user_2)
     })
     
     afterAll(async () => {
@@ -138,7 +138,7 @@ describe("POST /register ", () => {
 
     beforeAll(async () => {
         await db.sequelize.sync({ force: true }) //clear User
-        User.registerNew(test_user_1)
+        User.registerNew(test_user_3)
     })
  
 

@@ -1,5 +1,10 @@
 
-import db from '../models/index.cjs'
+//import {sequelize as db} from '../models/index.ts'
+
+import sequelize from '../models/index.js'
+const db = sequelize
+
+
 const User = db.users;
 const Op = db.Sequelize.Op;
 
