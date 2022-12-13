@@ -1,12 +1,8 @@
 
-//import {sequelize as db} from '../models/index.ts'
-
-import sequelize from '../models/index.js'
-const db = sequelize
-
-
-const User = db.users;
-const Op = db.Sequelize.Op;
+const Sequelize = require("sequelize");
+const models = require("../models/index.js");
+const User = models.User;
+const Op = Sequelize.Op;
 
 //import { randomUUID } from 'crypto'
 import { v4 as uuidv4 } from 'uuid';
