@@ -1,8 +1,7 @@
 "use strict";
-//import {sequelize as db} from '../models/index.ts'
 Object.defineProperty(exports, "__esModule", { value: true });
-//import {Sequelize, sequelize} from '../models/index.js'
-const { models, sequelize, Sequelize } = require("../models/index.js");
+const Sequelize = require("sequelize");
+const { models, sequelize } = require("../models/index.js");
 const User = models.User;
 const Op = Sequelize.Op;
 //import { randomUUID } from 'crypto'

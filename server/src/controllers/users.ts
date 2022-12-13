@@ -1,6 +1,6 @@
 
 const Sequelize = require("sequelize");
-const models = require("../models/index.js");
+const {models, sequelize} = require("../models/index.js");
 const User = models.User;
 const Op = Sequelize.Op;
 

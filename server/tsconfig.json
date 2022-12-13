@@ -109,7 +109,7 @@
   ],
   "include": [
     "src/**/*.ts",
-    "**/*.ts", "src/models/index.js", "src/controllers/users.js",  
+    "**/*.ts", "src/models/index.ts", "src/controllers/users.ts", "src/models/user.ts",  
   ],
   
   "exclude": [
