@@ -2,17 +2,19 @@
   "development": {
     "use_env_variable": false,
     "username": "postgres",
-    "password": "abc",
+    "password": "",
     "database": "ts_cart_db",
     "host": "127.0.0.1",
+    "port": "5432",
     "dialect": "postgres"
   },
   "test": {
     "use_env_variable": false,
     "username": "postgres",
-    "password": "abc",
+    "password": "",
     "database": "ts_cart_db",
     "host": "127.0.0.1",
+    "port": "5432",
     "dialect": "postgres"
   },
   "production": {

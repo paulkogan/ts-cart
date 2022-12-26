@@ -32,6 +32,7 @@ let test_user_3 = {
 }
 
 let bad_test_user = {
+    
     user_uuid: null,
     name: "Bad Tester",
     password: "abcd",
