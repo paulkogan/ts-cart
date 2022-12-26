@@ -1,5 +1,12 @@
+const {Model, Optional} = require('sequelize')
+
+
+
 const userModel = (sequelize, DataTypes) => {
-    let User = sequelize.define(
+
+
+
+    const User = sequelize.define(
       'users', //name of table
       {
         user_uuid: {

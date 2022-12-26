@@ -4,8 +4,8 @@ import bodyParser from 'body-parser'
 import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from "dotenv";
-import router from '../routes/routes_main.js';
-
+import router from './routes/routes_main.js';
+// Could not find a declaration file for module '../routes/routes_main.js
 
 //dotenv.config()
 const port = 3001
