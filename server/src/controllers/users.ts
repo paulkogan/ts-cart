@@ -1,7 +1,8 @@
 
-import db from '../models/index.cjs'
-const User = db.users;
-const Op = db.Sequelize.Op;
+const Sequelize = require("sequelize");
+const {models, sequelize} = require("../models/index.js");
+const User = models.User;
+const Op = Sequelize.Op;
 
 //import { randomUUID } from 'crypto'
 import { v4 as uuidv4 } from 'uuid';

@@ -1,10 +1,10 @@
 const request = require("supertest")
 const baseURL = "http://localhost:3001"
 //import db from '../models/index.cjs'
-const db = require("../models/index.cjs")
+const {models, sequelize} = require("../dist/src/models/index.js")
 // import { v4 as uuidv4 } from 'uuid';
 const { v4 : uuidv4 } = require('uuid')
-const User = db.users;
+const User = models.User;
 
 
 let test_user_1 = {
@@ -67,7 +67,7 @@ describe("GET /products", () => {
 describe("GET /users", () => {
 
     beforeAll(async () => {
-        await db.sequelize.sync({ force: true })
+        await sequelize.sync({ force: true })
         User.registerNew(test_user_1)
         User.registerNew(test_user_2)
     })
@@ -99,9 +99,9 @@ describe("POST /findUser", () => {
 
     beforeAll(async () => {
 
-        await db.sequelize.sync({ force: true })
+        await sequelize.sync({ force: true })
         User.registerNew(test_user_1)
-        User.registerNew(test_user_3)
+        User.registerNew(test_user_2)
     })
     
     afterAll(async () => {
@@ -138,8 +138,8 @@ describe("POST /findUser", () => {
 describe("POST /register ", () => {
 
     beforeAll(async () => {
-        await db.sequelize.sync({ force: true }) //clear User
-        User.registerNew(test_user_1)
+        await sequelize.sync({ force: true }) //clear User
+        User.registerNew(test_user_3)
     })
  
 
@@ -165,7 +165,7 @@ describe("POST /register ", () => {
         });
     
         afterAll( () => {
-            db.sequelize.close()
+            sequelize.close()
         })
     
 

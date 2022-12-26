@@ -1,9 +1,18 @@
+// import {Sequelize, sequelize as db } from '../models/index.js'
 
-import mockProducts from '../tests/products.js'
+// import {Op} from "sequelize";
+//const db = sequelize
+//const User = db.users;
+//const Op = Sequelize.Op;
+
+
+
+import mockProducts from '../../tests/products.js'
+//import { Sequelize } from 'sequelize';
 
 // no sequelize here yet
-import db from '../models/index.cjs'
-const Op = db.Sequelize.Op;
+
+//const Op = Sequelize.Op;
 
 // create temorary catalog
 let catalog = mockProducts
