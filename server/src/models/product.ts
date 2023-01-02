@@ -1,5 +1,4 @@
 'use strict';
-
 const {Model, Optional} = require('sequelize')
 const uuid = require('uuidv4')
 
@@ -9,7 +8,7 @@ const productModel = (sequelize, DataTypes) => {
     const Product = sequelize.define(
       'products', //name of table
       {
-        productId: {
+        product_id: {
           allowNull: false,
           autoIncrement: false,
           primaryKey: true,
@@ -30,16 +29,24 @@ const productModel = (sequelize, DataTypes) => {
           allowNull: true,
           type: DataTypes.TEXT
         },
-        imageURL: {
+        image_url: {
           allowNull: true,
           type: DataTypes.TEXT
         },
 
-      }, {});
+      }, 
+      {
+        //tableName: "users",
+        //timedstamps: false, 
+        updatedAt: false,
+        createdAt: false
+      });
       
-      Product.beforeCreate(product => product.productId = uuid());
+      Product.beforeCreate(product => product.product_id = uuid());
 
       Product.removeAttribute('id');
+      // Product.removeAttribute('createdat');
+      // Product.removeAttribute('updatedAt');
 
       Product.associate = function(models) {
         // associations can be defined here

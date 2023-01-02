@@ -1,5 +1,5 @@
 "use strict";
-const { Model, Optional } = require('sequelize');
+//const {Model, Optional} = require('sequelize')
 const userModel = (sequelize, DataTypes) => {
     const User = sequelize.define('users', //name of table
     {
@@ -49,6 +49,9 @@ const userModel = (sequelize, DataTypes) => {
         //return message
     };
     //sequelize.sync({alter:true})
+    // (async () => {
+    //   await sequelize.sync({ alter: true });
+    // })();
     return User;
 };
 module.exports = userModel;

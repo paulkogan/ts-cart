@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const userModel = require("./user.js");
+const productModel = require("./product.js");
 
 const env = process.env.NODE_ENV || 'development';
 import {env_config} from "../../config/config_json.js"
@@ -12,7 +13,8 @@ const sequelize =  new Sequelize(config.database, config.username,
     config_options);
 
 const models = {
-    User: userModel(sequelize, Sequelize.DataTypes)
+    User: userModel(sequelize, Sequelize.DataTypes),
+    Product: productModel(sequelize, Sequelize.DataTypes)
 };
 
 

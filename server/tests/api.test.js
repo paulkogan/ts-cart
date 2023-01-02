@@ -19,7 +19,7 @@ let test_user_2 = {
     user_uuid: uuidv4(),
     name: "Tom Hanks",
     password: "abcd",
-    email: "tom@hanks.com",
+    email: "paul.kogan@tempus.com",
     avatar_url: null
 }
 
