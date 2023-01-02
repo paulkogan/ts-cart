@@ -1,22 +1,31 @@
 
 
 export interface Product {
-    product_id: string;
+    productId: string;
     name: string;
-    imageUrl: string;
+    imageURL: string;
     price: number;
     description?: string;
   
 }
 
 export interface BasketItem extends Product{
-    basket_item_id: number;
-    num_items: number;
+    basketItemId: number;
+    numItems: number;
     tax: number;
     discount?: number;
 }
 
  
+export interface OrderItem extends Product{
+  orderItemId: number;
+  orderId: string
+  numItems: number;
+  tax: number;
+  discount?: number;
+}
+
+
 
 export interface TaxByState {
    [key: string]: number
@@ -34,13 +43,6 @@ export interface CartState {
 
 }
 
-export interface OrderItem extends Product{
-  order_item_id: number;
-  order_id: string
-  num_items: number;
-  tax: number;
-  discount?: number;
-}
 
 
 export interface Order {

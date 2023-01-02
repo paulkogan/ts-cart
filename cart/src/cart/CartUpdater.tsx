@@ -34,12 +34,12 @@ const CartUpdater = (state: CartState,  action: any) => {
             //new_tax_by_state[us_state] = new_tax_by_state[us_state as keyof typeof USTaxState] + tax_amount
 
 
-            new_basket_item.basket_item_id = next_item_id 
+            new_basket_item.basketItemId = next_item_id 
             new_basket_item.num_items = 1
             new_basket_item.tax = tax_amount 
 
             // block double-adds due to React strict mode for useReducer hook
-            if (!new_basket_items.find(item => item.basket_item_id === new_basket_item.basket_item_id)){
+            if (!new_basket_items.find(item => item.basketItemId === new_basket_item.basketItemId)){
             
                 new_basket_items.push(new_basket_item)
                 return {
@@ -50,7 +50,7 @@ const CartUpdater = (state: CartState,  action: any) => {
                 }
                     
             } else {
-                console.log(`DUPLICATE, not adding:  ${new_basket_item.basket_item_id} `)
+                console.log(`DUPLICATE, not adding:  ${new_basket_item.basketItemId} `)
                 return state
             }
 

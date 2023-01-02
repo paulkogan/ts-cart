@@ -11,12 +11,12 @@ const  BasketPlank:React.FC <Props> = ({item}) => {
       return (
           <div className="basket-plank" >
               <div className="basket-plank-img">
-                    <img className="basket-img" src={item.imageUrl}></img>
+                    <img className="basket-img" src={item.imageURL}></img>
               </div>
               <div className="basket-plank-info">
                   <div> {item.name} </div> 
-                  <div> {item.basket_item_id}</div>
-                  <div> {item.product_id} </div> 
+                  <div> {item.basketItemId}</div>
+                  <div> {item.productId} </div> 
 
               </div>
               <div className="basket-plank-cost">

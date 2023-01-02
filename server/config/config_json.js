@@ -4,8 +4,16 @@ export const env_config = {
     "username": "postgres",
     "password": "abc",
     "database": "ts_cart_db",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+    "config_options": {
+      "options":{
+        "quoteIdentifiers": false
+      },
+      "host": "127.0.0.1",
+      "dialect": "postgres",
+      "quoteIdentifiers": false,
+
+    }
+
   },
   "test": {
     "use_env_variable": false,
@@ -13,7 +21,8 @@ export const env_config = {
     "password": "abc",
     "database": "ts_cart_db",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres", 
+    "quoteIdentifiers": false,
   },
   "production": {
     "username": "root",

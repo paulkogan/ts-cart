@@ -8,7 +8,8 @@ exports.env_config = {
         "password": "abc",
         "database": "ts_cart_db",
         "host": "127.0.0.1",
-        "dialect": "postgres"
+        "dialect": "postgres",
+        "quoteIdentifiers": false,
     },
     "test": {
         "use_env_variable": false,

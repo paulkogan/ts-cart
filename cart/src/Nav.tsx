@@ -27,6 +27,7 @@ const Nav:React.FC = () => {
             </div>
 
             <Routes>
+            <Route path="/"  element={<Admin/>} />
               <Route path="/cart"  element={<Cart/>} />
               <Route path="/admin"  element={<Admin/>} />
             </Routes>

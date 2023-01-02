@@ -16,9 +16,9 @@ const  ProductForm:React.FC <Props> = (props) => {
       let newUUIDString = uuidv4().toString();
 
       return {
-        product_id: newUUIDString,
+        productId: newUUIDString,
         name: "",
-        imageUrl: "",
+        imageURL: "",
         description: "", 
         price: 0.00
       }
@@ -51,10 +51,10 @@ const  ProductForm:React.FC <Props> = (props) => {
     <div>
 
         <div className="prod-form-display">
-            <div>id: {newProd.product_id}</div>
+            <div>id: {newProd.productId}</div>
             <div>Name: {newProd.name}</div>
             <div>Price: {newProd.price}</div>
-            <div>ImageURL: {newProd.imageUrl}</div>
+            <div>ImageURL: {newProd.imageURL}</div>
             <div>Description: {newProd.description}</div>
         </div>
         {/*  updates newProd directly  - can do it both ways*/}
@@ -86,7 +86,7 @@ const  ProductForm:React.FC <Props> = (props) => {
               <input 
                   type="text"
                   placeholder="Image Url"
-                  name="imageUrl"
+                  name="imageURL"
                   onChange = {event => {handleChange(event.target.name, event.target.value) }}
               />
             </div>
