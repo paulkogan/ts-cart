@@ -13,10 +13,10 @@ const  ProductForm:React.FC <Props> = (props) => {
   const {submitAddProduct} = props;
 
   const getNewProdObj = () :Product => {
-      let newUUIDString = uuidv4().toString();
+      //let newUUIDString = uuidv4().toString();
 
       return {
-        product_id: newUUIDString,
+        product_id: "--",
         name: "",
         image_url: "",
         description: "", 

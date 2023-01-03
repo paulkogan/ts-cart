@@ -11,6 +11,7 @@ import ProductList from './ProductList';
 
 const Admin:React.FC = () => {
 
+  const [userMessage, setUserMessage] = useState("Please enter product info.")
   const [productList, setProductList] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(false)
 
@@ -45,15 +46,57 @@ const Admin:React.FC = () => {
 
   }, []) // pass in a dependency array
 
-
-  const submitAddProduct = (product: Product) => {
+  // onst handleSubmit = async (): Promise<string | undefined> => {
+  const submitAddProduct = async (product: Product) => {
 
     // product.cart_id = CartState.next_cart_id //this works!
     console.log("New Item at Cart: "+JSON.stringify(product))
-    setProductList(
-      [...productList, product]
-    )
-  } 
+ 
+
+
+    const regitser_user_url = "http://localhost:3001/products/create"
+
+    console.log(`Submit: New Productis: ${JSON.stringify(product)}`)
+
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          name: product.name,
+          description: product.description,
+          price: product.price,
+          image_url: product.image_url
+        })
+    };
+      
+ 
+    try {
+        const response= await fetch(regitser_user_url , requestOptions)
+        const data = await response.json()
+        console.log("response status ", response.status)
+        console.log("NEW PRODUCT DATA is  ", data)
+        if (response.status > 300) {
+            setUserMessage(data.message)
+            //setRegStatus("error")
+
+
+        } else {
+            setUserMessage(`Success! Added Product ${data}`)
+
+            setProductList(
+              [...productList, data]
+            )
+
+        }
+        
+
+      } catch(error) {
+            setUserMessage(`Error: failed to add product with:  ${error}`)
+            console.log("Error: failed to add product with: ", error)
+            //setRegStatus("error")
+      }
+
+  }      
 
 
   return (
