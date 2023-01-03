@@ -27,7 +27,7 @@ const CartUpdater = (state: CartState,  action: any) => {
 
             if (delivery_us_state) {
                 tax_rate = us_tax_rates[delivery_us_state]/100
-                tax_amount = new_basket_item.price * tax_rate
+                tax_amount = parseFloat((parseFloat(new_basket_item.price) * tax_rate).toFixed(2))
                 new_tax_by_state[delivery_us_state] = new_tax_by_state[delivery_us_state] + tax_amount
             }
             console.log(`REDUCE: Tax amount ${tax_amount} with rate ${tax_rate} for ${new_basket_item.price}`)

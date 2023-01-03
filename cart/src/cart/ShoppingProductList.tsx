@@ -19,7 +19,7 @@ const  ShoppingProductList:React.FC <Props> = ({productList, addToBasket}) => {
 
     return productList.map(item => {
       return (
-          <div key={item.productId} className="prod-list-item" >
+          <div key={item.product_id} className="prod-list-item" >
             <ShoppingProductPlank  handleAdd = {handleAdd} item = {item} />
           </div>
       )

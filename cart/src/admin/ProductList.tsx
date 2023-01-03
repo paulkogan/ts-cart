@@ -10,17 +10,17 @@ const  ProductList:React.FC <Props> = ({productList}) => {
 
 
   const handleAdd = (product: Product) => {
-      console.log("adding "+product.productId)
+      console.log("adding "+product.product_id)
   }
 
   const renderProductlist = ():JSX.Element[]  => {
 
     return productList.map(item => {
       return (
-          <div key={item.productId} className="prod-list-item" >
-            <span><img className="prod-list-img" src={item.imageURL}></img></span> 
+          <div key={item.product_id} className="prod-list-item" >
+            <span><img className="prod-list-img" src={item.image_url}></img></span> 
             <span> {item.name} </span> <span> {item.price}</span>
-            <div> {item.productId}</div>
+            <div> {item.product_id}</div>
           </div>
       )
     })

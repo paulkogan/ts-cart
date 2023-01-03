@@ -41,8 +41,15 @@ const productModel = (sequelize, DataTypes) => {
         updatedAt: false,
         createdAt: false
       });
-      
-      Product.beforeCreate(product => product.product_id = uuid());
+
+      Product.createNew = async (new_product) => {
+        return await Product.create(new_product)
+
+      }
+  
+
+      // can you make this work?
+      //Product.beforeCreate(product => product.product_id = uuid());
 
       Product.removeAttribute('id');
       // Product.removeAttribute('createdat');

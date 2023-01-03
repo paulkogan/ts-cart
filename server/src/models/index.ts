@@ -5,12 +5,15 @@ const productModel = require("./product.js");
 const env = process.env.NODE_ENV || 'development';
 import {env_config} from "../../config/config_json.js"
 const config = env_config[env]
-const config_options = config["config_options"]
 
-
-const sequelize =  new Sequelize(config.database, config.username, 
-    config.password, 
-    config_options);
+const sequelize =  new Sequelize(
+    config.database, 
+    config.username, 
+    config.password,  {
+        host: config.host, 
+        dialect: config.dialect,
+    },
+    );
 
 const models = {
     User: userModel(sequelize, Sequelize.DataTypes),
