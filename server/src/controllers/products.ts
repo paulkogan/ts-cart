@@ -1,33 +1,30 @@
-// import {Sequelize, sequelize as db } from '../models/index.js'
 
-// import {Op} from "sequelize";
-//const db = sequelize
-//const User = db.users;
-//const Op = Sequelize.Op;
-
+const Sequelize = require("sequelize");
+const {models, sequelize} = require("../models/index.js");
+const Product = models.Product;
+const Op = Sequelize.Op;
 
 
-import mockProducts from '../../tests/products.js'
-//import { Sequelize } from 'sequelize';
+const listProducts = async (req, res) => {
+    const name = req.query.name;
+    var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
 
-// no sequelize here yet
-
-//const Op = Sequelize.Op;
-
-// create temorary catalog
-let catalog = mockProducts
-
-
-
-const listProducts = (req, res) => {
-    res.status(200).json({
-        data: catalog,
-        errors: null,
+    Product.findAll({ where: condition })
+    .then(data => {
+        console.log("products "+JSON.stringify(data))
+        res.status(200).send({
+            "data":data,
+            "errors": null
         });
+    })
+    .catch(err => {
+        res.status(500).send({
+        message:
+            err.message || "Some error occurred while retrieving products."
+        });
+    });
+}
 
-
-
-};
 
 // if (data == null){
 //     return res.json({error: 'id not found'});

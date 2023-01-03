@@ -1,4 +1,4 @@
-const {Model, Optional} = require('sequelize')
+//const {Model, Optional} = require('sequelize')
 
 
 
@@ -66,6 +66,11 @@ const userModel = (sequelize, DataTypes) => {
 
 
     //sequelize.sync({alter:true})
+
+    // (async () => {
+    //   await sequelize.sync({ alter: true });
+    // })();
+
     return User;
   };
 

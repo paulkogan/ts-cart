@@ -5,7 +5,7 @@ export const env_config = {
     "password": "abc",
     "database": "ts_cart_db",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
   },
   "test": {
     "use_env_variable": false,
@@ -13,7 +13,7 @@ export const env_config = {
     "password": "abc",
     "database": "ts_cart_db",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres", 
   },
   "production": {
     "username": "root",

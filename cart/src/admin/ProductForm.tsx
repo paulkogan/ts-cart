@@ -18,7 +18,7 @@ const  ProductForm:React.FC <Props> = (props) => {
       return {
         product_id: newUUIDString,
         name: "",
-        imageUrl: "",
+        image_url: "",
         description: "", 
         price: 0.00
       }
@@ -54,7 +54,7 @@ const  ProductForm:React.FC <Props> = (props) => {
             <div>id: {newProd.product_id}</div>
             <div>Name: {newProd.name}</div>
             <div>Price: {newProd.price}</div>
-            <div>ImageURL: {newProd.imageUrl}</div>
+            <div>ImageURL: {newProd.image_url}</div>
             <div>Description: {newProd.description}</div>
         </div>
         {/*  updates newProd directly  - can do it both ways*/}
@@ -86,7 +86,7 @@ const  ProductForm:React.FC <Props> = (props) => {
               <input 
                   type="text"
                   placeholder="Image Url"
-                  name="imageUrl"
+                  name="image_url"
                   onChange = {event => {handleChange(event.target.name, event.target.value) }}
               />
             </div>

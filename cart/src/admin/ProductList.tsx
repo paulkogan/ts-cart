@@ -18,7 +18,7 @@ const  ProductList:React.FC <Props> = ({productList}) => {
     return productList.map(item => {
       return (
           <div key={item.product_id} className="prod-list-item" >
-            <span><img className="prod-list-img" src={item.imageUrl}></img></span> 
+            <span><img className="prod-list-img" src={item.image_url}></img></span> 
             <span> {item.name} </span> <span> {item.price}</span>
             <div> {item.product_id}</div>
           </div>
