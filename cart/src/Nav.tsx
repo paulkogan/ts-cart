@@ -6,7 +6,9 @@ import {
   Link, 
 } from "react-router-dom";
 import Cart from './cart/Cart';
-import Admin from './admin/Admin';
+import UserAdmin from './admin/UserAdmin';
+import ProductAdmin from './admin/ProductAdmin';
+import Practice from './practice/Practice';
 import './App.css';
  
 
@@ -22,14 +24,22 @@ const Nav:React.FC = () => {
                 <Link to="/cart">Cart</Link>
               </div>
               <div className="nav-link"> 
-                <Link to="/admin">Admin</Link>
+                <Link to="/productadmin">Product Admin</Link>
+              </div>
+              <div className="nav-link"> 
+                <Link to="/useradmin">User Admin</Link>
+              </div>
+              <div className="nav-link"> 
+                <Link to="/practice">Practice</Link>
               </div>
             </div>
 
             <Routes>
-            <Route path="/"  element={<Admin/>} />
+            <Route path="/"  element={<ProductAdmin/>} />
               <Route path="/cart"  element={<Cart/>} />
-              <Route path="/admin"  element={<Admin/>} />
+              <Route path="/productadmin"  element={<ProductAdmin/>} />
+              <Route path="/useradmin"  element={<UserAdmin/>} />
+              <Route path="/practice"  element={<Practice/>} />
             </Routes>
       </div>
     </Router>

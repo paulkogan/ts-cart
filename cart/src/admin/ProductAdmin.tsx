@@ -1,15 +1,12 @@
 import React, {useState, useEffect, useReducer} from 'react';
 import {Product, BasketItem} from "../types/types"
 import './Admin.css';
-import RegisterUserForm from './RegisterUserForm';
-import FetchPage from './FetchPage';
-import PracticePage from './FetchPage';
 import ProductForm from './ProductForm';
 import ProductList from './ProductList';
 
 
 
-const Admin:React.FC = () => {
+const ProductAdmin:React.FC = () => {
 
   const [userMessage, setUserMessage] = useState("Please enter product info.")
   const [productList, setProductList] = useState<Product[]>([])
@@ -103,35 +100,22 @@ const Admin:React.FC = () => {
     <div>
       
       <div className="cart-inner">
-        <h2>Admin</h2>
+        <h2>Product Admin</h2>
         <div className="admin-left">
-
-          <div> 
-            {isLoading ? <div> PLEASE WAIT - PRODUCTS LOADING !!!</div> : 
-            <div>
-                  <ProductList productList = {productList}/>
-            </div> 
-        
-            }
-          </div>
-
-
+              {isLoading ? <div> PLEASE WAIT - PRODUCTS LOADING !!!</div> : 
+              <div>
+                    <ProductList productList = {productList}/>
+              </div> 
           
-          
-          
+              }     
+       </div>
 
-        </div>
-
-        <div className="cart-right">
-          <div className="admin-app-1">
-            <ProductForm submitAddProduct = {submitAddProduct} />
+          <div className="cart-right">
+            <div>MESSAGE: {userMessage}</div>
+            <div className="admin-app-1">
+              <ProductForm submitAddProduct = {submitAddProduct} />
+            </div>
           </div>
-          <div className="admin-app-2">
-            <RegisterUserForm />
-          </div>
-
-
-        </div>
 
 
       </div>
@@ -139,5 +123,5 @@ const Admin:React.FC = () => {
   );
 }
 
-export default Admin;
+export default ProductAdmin;
 
