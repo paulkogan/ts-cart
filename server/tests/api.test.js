@@ -25,7 +25,7 @@ let test_user_3 = {
     user_uuid: uuidv4(),
     name: "Paul Kogan",
     password: "abcd",
-    email: "paulkog@gmail.com",
+    email: "paul.kogan@tempus.com",
     avatar_url: "http://www.image.com/paul_kogan.jpg"
 }
 

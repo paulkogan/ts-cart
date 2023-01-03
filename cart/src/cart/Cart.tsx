@@ -156,7 +156,7 @@ loginState:
         const body = await response.json()
         //console.log("response status ", response.status)
         console.log("LOGIN body is  ", body)
-        if (response.status > 300 && false) {
+        if (response.status > 300) {
             setLoginState("error")
             setUserMessage(body.message)
             return "error"
