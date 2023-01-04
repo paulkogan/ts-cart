@@ -7,8 +7,6 @@ interface Props {
   }
   
 
-
-
 const initialLoginObj = {
     email: "",
     password: "",

@@ -24,7 +24,8 @@ const registerNew = async (req, res) => {
         name: req.body.name,
         password: req.body.password,
         email: req.body.email,
-        avatar_url: null
+        avatar_url: null,
+        home_state: req.body.home_state
     }
     // console.log(`New User OBJECT is: ${JSON.stringify(new_user)}`)
 

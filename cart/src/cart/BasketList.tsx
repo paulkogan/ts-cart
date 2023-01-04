@@ -1,10 +1,10 @@
 import React from 'react';
-import {BasketItem} from "../types/types"
+import {OrderItem} from "../types/types"
 import BasketPlank from "./BasketPlank"
 import './Cart.css';
 
 interface Props {
-  selected: BasketItem[]
+  selected: OrderItem[]
 }
 
 const  BasketList:React.FC <Props> = ({selected}) => {

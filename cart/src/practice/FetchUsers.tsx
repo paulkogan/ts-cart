@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 
 
-const FetchPage:React.FC = () => {
+const FetchUsers:React.FC = () => {
 
 
     const [users, setUsers] = useState([])
@@ -59,4 +59,4 @@ const FetchPage:React.FC = () => {
     )
 }
 
-export default FetchPage
+export default FetchUsers

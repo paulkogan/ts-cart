@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useReducer} from 'react';
-import {Product, BasketItem, CartState} from "../types/types"
+import {Product, OrderItem, CartState} from "../types/types"
 import './Cart.css';
 import BasketList from './BasketList';
 import ShoppingProductList from './ShoppingProductList';
@@ -13,8 +13,8 @@ const initialUserDetails = {
   user_uuid: null,
   email: "",
   name: "",
-  avatar: ""
-
+  avatar: "",
+  home_state: ""
 }
 
 /*
@@ -156,7 +156,7 @@ loginState:
         const body = await response.json()
         //console.log("response status ", response.status)
         console.log("LOGIN body is  ", body)
-        if (response.status > 300 && false) {
+        if (response.status > 300) {
             setLoginState("error")
             setUserMessage(body.message)
             return "error"
@@ -167,8 +167,14 @@ loginState:
             setUserMessage(`Success! User: ${data.email} is logged in`)
             await setUserDetails({...userDetails,
                 email: data.email,
-                name: data.name
+                name: data.name,
+                home_state: data.home_state
             })
+
+            updateCartDispatch({
+              type: "SET_delivery_us_state", 
+              payload: {delivery_us_state: data.home_state }
+            }) 
             return "success"
         }
         
@@ -187,13 +193,14 @@ loginState:
       
       <div className="cart-inner">
         <h2>Shopping Cart</h2>
+
+        <div className="user-info">User: {userDetails.name}</div> 
+        <div>Home_state: {userDetails.home_state}</div>
+
         <div className="cart-left">
-
-
-          <div>{userMessage}</div>
           { loginState != "success" ? 
               <div className="cart-login">
-                <LoginPage handleLogin = {handleLogin}/>
+                <LoginPage handleLogin = {handleLogin} />
               </div>
                 :
                 <div className="cart-prod-list">

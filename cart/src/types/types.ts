@@ -1,29 +1,23 @@
 
 
 export interface Product {
-    product_id: string;
+    product_id: string | null;
     name: string;
     image_url: string;
     price: number;
     description?: string;
+    inventory: number;
   
 }
 
-export interface BasketItem extends Product{
+export interface OrderItem extends Product{
     basketItemId: number;
+    orderId: string
     numItems: number;
     tax: number;
     discount?: number;
 }
 
- 
-export interface OrderItem extends Product{
-  orderItemId: number;
-  orderId: string
-  numItems: number;
-  tax: number;
-  discount?: number;
-}
 
 
 
@@ -36,7 +30,7 @@ export interface CartState {
     cart_id: string | undefined;
     user_id: string | undefined;
     next_item_id: number,
-    basket_items: BasketItem[];
+    basket_items: OrderItem[];
     delivery_us_state: string | undefined,  
     tax_by_state: TaxByState;
     us_tax_rates: TaxByState | {} | any;
@@ -63,4 +57,5 @@ export interface User {
   name: string;
   email: string;
   password: string;
+  home_state: string | null;
 }

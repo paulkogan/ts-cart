@@ -1,12 +1,13 @@
 import React from 'react';
 import {Product} from "../types/types"
+import AdminProductPlank from "./AdminProductPlank"
 import './Admin.css';
 
 interface Props {
   productList: Product[]
 }
 
-const  ProductList:React.FC <Props> = ({productList}) => {
+const  AdminProductList:React.FC <Props> = ({productList}) => {
 
 
   const handleAdd = (product: Product) => {
@@ -17,13 +18,13 @@ const  ProductList:React.FC <Props> = ({productList}) => {
 
     return productList.map(item => {
       return (
-          <div key={item.product_id} className="prod-list-item" >
-            <span><img className="prod-list-img" src={item.image_url}></img></span> 
-            <span> {item.name} </span> <span> {item.price}</span>
-            <div> {item.product_id}</div>
-          </div>
+        <div key={item.product_id} className="prod-list-item" >
+        <AdminProductPlank  item = {item} />
+      </div>
       )
     })
+
+
 
   }
 
@@ -34,4 +35,4 @@ const  ProductList:React.FC <Props> = ({productList}) => {
   );
 }
 
-export default ProductList;
+export default AdminProductList;

@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react';
 
 interface Props {
     label: string;
-    children: string
+    children: string[]
 }
 
 const PracticePage:React.FC <Props> = ({label, children}) => {
