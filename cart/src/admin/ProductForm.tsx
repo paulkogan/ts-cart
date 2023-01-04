@@ -16,11 +16,12 @@ const  ProductForm:React.FC <Props> = (props) => {
       //let newUUIDString = uuidv4().toString();
 
       return {
-        product_id: "--",
+        product_id: null,
         name: "",
         image_url: "",
         description: "", 
-        price: 0.00
+        price: 0.00, 
+        inventory: 10
       }
   }
   
@@ -51,9 +52,9 @@ const  ProductForm:React.FC <Props> = (props) => {
     <div>
 
         <div className="prod-form-display">
-            <div>id: {newProd.product_id}</div>
             <div>Name: {newProd.name}</div>
             <div>Price: {newProd.price}</div>
+            <div>Inventory: {newProd.inventory}</div>
             <div>ImageURL: {newProd.image_url}</div>
             <div>Description: {newProd.description}</div>
         </div>
@@ -79,6 +80,15 @@ const  ProductForm:React.FC <Props> = (props) => {
                   name="price"
                   placeholder="Price"
                   onChange = {event => {handleChange(event.target.name, parseFloat(event.target.value)) }}
+              />
+            </div>
+
+            <div className="prod-input-field">
+              <input 
+                  type="text"
+                  name="inventory"
+                  placeholder="Inventory"
+                  onChange = {event => {handleChange(event.target.name, parseInt(event.target.value)) }}
               />
             </div>
 

@@ -82,8 +82,26 @@
 }
 
 .prod-list-img {
-  height: 15vmin;
+  border: 1px solid purple;
+  height: auto;
+  width:  auto;/* you can use % */
+  max-height: 80px;
+  
 }
+
+.prod-list-plank {
+  border: 2px solid green;
+  white-space: nowrap;
+}
+
+.prod-list-item {
+  height: 20vmin;
+  width: 90%;
+  padding: 5px;
+  align-items: left;
+  border: 2px solid red;
+}
+
 
 .user-list-item {
   width: 90%;

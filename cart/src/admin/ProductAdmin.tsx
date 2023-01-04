@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useReducer} from 'react';
-import {Product, BasketItem} from "../types/types"
+import {Product, OrderItem} from "../types/types"
 import './Admin.css';
 import ProductForm from './ProductForm';
 import ProductList from './ProductList';
@@ -62,7 +62,9 @@ const ProductAdmin:React.FC = () => {
           name: product.name,
           description: product.description,
           price: product.price,
-          image_url: product.image_url
+          inventory: product.inventory,
+          image_url: product.image_url,
+
         })
     };
       
@@ -78,7 +80,7 @@ const ProductAdmin:React.FC = () => {
 
 
         } else {
-            setUserMessage(`Success! Added Product ${data}`)
+            setUserMessage(`Success! Added: ${data.name}.`)
 
             setProductList(
               [...productList, data]

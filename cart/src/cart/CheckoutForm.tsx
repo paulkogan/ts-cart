@@ -34,7 +34,7 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
 
 
   //   export interface CartState {
-  //     basket_items: BasketItem[];
+  //     basket_items: OrderItem[];
   //     next_item_id: number,
   //     delivery_us_state: string | undefined,  
   //     tax_by_state: TaxByState;

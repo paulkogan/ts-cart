@@ -1,9 +1,9 @@
 import React from 'react';
-import {BasketItem} from "../types/types"
+import {OrderItem} from "../types/types"
 import './Cart.css';
 
 interface Props {
-  item: BasketItem
+  item: OrderItem
 }
 
 const  BasketPlank:React.FC <Props> = ({item}) => {

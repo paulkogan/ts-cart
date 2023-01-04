@@ -20,6 +20,7 @@ const  UserList:React.FC <Props> = ({itemList}) => {
           <div key={item.user_uuid} className="user-list-item" >
             <span> {item.name} </span> 
             <span> {item.email}</span>
+            <span> {item.home_state}</span>
           </div>
       )
     })

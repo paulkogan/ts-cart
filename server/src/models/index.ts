@@ -2,11 +2,9 @@ const Sequelize = require("sequelize");
 const userModel = require("./user.js");
 const productModel = require("./product.js");
 
-//const env = process.env.NODE_ENV || 'development';
-const env = 'development';
+const env = process.env.NODE_ENV || 'development';
 import {env_config} from "../../config/config_json.js"
 const config = env_config[env]
-console.log("======== DIALECT is "+config.dialect)
 
 
 const sequelize =  new Sequelize(
@@ -23,15 +21,5 @@ const models = {
 };
 
 
-
 module.exports = {models, sequelize};
 
-
-// const sequelize =  new Sequelize(
-//     config.database, 
-//     config.username, 
-//     config.password,  {
-//         host: config.host, 
-//         dialect: config.dialect,
-//     },
-//     );

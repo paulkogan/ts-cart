@@ -28,6 +28,7 @@ const createNew = async (req, res) => {
         name: req.body.name,
         image_url: req.body.image_url,
         price: parseFloat(req.body.price),
+        inventory: req.body.inventory,
         description: req.body.description
     }
     

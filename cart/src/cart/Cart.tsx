@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useReducer} from 'react';
-import {Product, BasketItem, CartState} from "../types/types"
+import {Product, OrderItem, CartState} from "../types/types"
 import './Cart.css';
 import BasketList from './BasketList';
 import ShoppingProductList from './ShoppingProductList';
