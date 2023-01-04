@@ -15,21 +15,21 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
 
     
     const us_tax_states = Object.keys(cartState.us_tax_rates)
-    const [buyerState, setBuyerState] = useState(us_tax_states[0].toString())  
+    //const [buyerState, setBuyerState] = useState(us_tax_states[0].toString())  
 
-    const handleChange = (fieldName: string, fieldValue: string | number): void => {
-      console.log(`HandleChange: ${fieldName} ${fieldValue}`)
-      setBuyerState(fieldValue.toString())
-    };
+    // const handleChange = (fieldName: string, fieldValue: string | number): void => {
+    //   console.log(`HandleChange: ${fieldName} ${fieldValue}`)
+    //   setBuyerState(fieldValue.toString())
+    // };
 
-    const handleSubmit = ():void => {
-      console.log(`handleSubmit ${buyerState} `)
-      updateCartDispatch({
-        type: "SET_delivery_us_state", 
-        payload: {delivery_us_state: buyerState }
-      })
+    // const handleSubmit = ():void => {
+    //   console.log(`handleSubmit ${buyerState} `)
+    //   updateCartDispatch({
+    //     type: "SET_delivery_us_state", 
+    //     payload: {delivery_us_state: buyerState }
+    //   })
       
-    }
+    // }
 
 
 
@@ -64,27 +64,10 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
           <div className="cart-status">
             <div>Number of Items: {cartState.basket_items.length}</div>
             <div>Next Cart id: {cartState.next_item_id}</div>
-            <div>Del. US State: {cartState.delivery_us_state}</div>
+            <div>home_state: {cartState.delivery_us_state}</div>
           </div>
 
 
-
-
-          <div className="cart-settings">
-            <div>
-                <select 
-                    name="us_state"
-                    onChange = {event => {handleChange(event.target.name, event.target.value) }}
-                    defaultValue={"..."} 
-                  >
-                  {us_tax_states.map((state_rate: any) => <option key={state_rate} value={state_rate}>{state_rate}</option>   )}
-              
-                </select>
-            </div>
-            <div>
-               <button onClick={handleSubmit}>Update</button>
-            </div>  
-          </div>
 
           <div className="cart-tax-by-state">
                Tax by State: {renderTaxbyState()}

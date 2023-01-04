@@ -7,7 +7,7 @@ interface Props {
   productList: Product[]
 }
 
-const  ProductList:React.FC <Props> = ({productList}) => {
+const  AdminProductList:React.FC <Props> = ({productList}) => {
 
 
   const handleAdd = (product: Product) => {
@@ -35,4 +35,4 @@ const  ProductList:React.FC <Props> = ({productList}) => {
   );
 }
 
-export default ProductList;
+export default AdminProductList;

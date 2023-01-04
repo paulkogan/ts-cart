@@ -2,7 +2,7 @@ import React, {useState, useEffect, useReducer} from 'react';
 import {Product, OrderItem} from "../types/types"
 import './Admin.css';
 import ProductForm from './ProductForm';
-import ProductList from './ProductList';
+import AdminProductList from './AdminProductList';
 
 
 
@@ -103,10 +103,10 @@ const ProductAdmin:React.FC = () => {
       
       <div className="cart-inner">
         <h2>Product Admin</h2>
-        <div className="admin-left">
+        <div className="admin-prod-list">
               {isLoading ? <div> PLEASE WAIT - PRODUCTS LOADING !!!</div> : 
               <div>
-                    <ProductList productList = {productList}/>
+                    <AdminProductList productList = {productList}/>
               </div> 
           
               }     

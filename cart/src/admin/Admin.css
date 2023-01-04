@@ -13,11 +13,10 @@
 }
 
 .admin-left{
-
   display: inline-block;
   width: 50%;
   margin-left: 30px;
-  border: 1px solid green;
+  border: 1px solid orange;
   vertical-align: top;
 }
 
@@ -30,7 +29,7 @@
   vertical-align:top;
 }
 .admin-app-1 {
-  border: 1px solid green;
+  border: 3px solid green;
   padding: 5px;
 }
 
@@ -81,25 +80,37 @@
   margin-top: 20px;
 }
 
+
+.admin-prod-list{
+  display: inline-block;
+  width: 50%;
+  margin-left: 10px;
+  border: 1px solid orange;
+  vertical-align: top;
+}
+
+.prod-list {
+  border: 0px solid red;
+  padding: 5px;
+}
+
 .prod-list-img {
-  border: 1px solid purple;
-  height: auto;
-  width:  auto;/* you can use % */
-  max-height: 80px;
-  
+  border: 0px solid purple;
+  max-width: 100px;
 }
 
 .prod-list-plank {
-  border: 2px solid green;
+  border: 1px solid green;
+  width: 100%;
+  padding: 5px;
   white-space: nowrap;
 }
 
 .prod-list-item {
-  height: 20vmin;
   width: 90%;
   padding: 5px;
   align-items: left;
-  border: 2px solid red;
+  border: 1px solid red;
 }
 
 
