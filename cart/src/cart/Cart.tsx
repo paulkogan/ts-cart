@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useReducer} from 'react';
-import {Product, BasketItem, CartState} from "../types/types"
+import {Product, OrderItem, CartState} from "../types/types"
 import './Cart.css';
 import BasketList from './BasketList';
 import ShoppingProductList from './ShoppingProductList';
@@ -13,8 +13,8 @@ const initialUserDetails = {
   user_uuid: null,
   email: "",
   name: "",
-  avatar: ""
-
+  avatar: "",
+  home_state: ""
 }
 
 /*
@@ -45,11 +45,6 @@ const Cart:React.FC = () => {
     "next_item_id": 100,
     "basket_items" : [],
     "delivery_us_state": "",
-    "tax_by_state":  {
-      "NY" : 0,
-      "FL" : 0,
-      "AZ" : 0
-    },
     "us_tax_rates": {}
   }
   
@@ -59,7 +54,7 @@ const Cart:React.FC = () => {
 
 
   useEffect(() => {
-    // console.log("render: " + cartState.num_items)
+    // console.log("render: " + cartState.num_units)
     //load product list
     const products_url = "http://localhost:3001/products"
 
@@ -83,7 +78,7 @@ const Cart:React.FC = () => {
         // later will fetch from BE
         const sourceTaxRates = 
           { 
-          "NY": 20.50,
+          "NY": 8.125,
           "AZ": 10.25,
           "FL": 5.0,
           }
@@ -156,7 +151,7 @@ loginState:
         const body = await response.json()
         //console.log("response status ", response.status)
         console.log("LOGIN body is  ", body)
-        if (response.status > 300 && false) {
+        if (response.status > 300) {
             setLoginState("error")
             setUserMessage(body.message)
             return "error"
@@ -167,8 +162,14 @@ loginState:
             setUserMessage(`Success! User: ${data.email} is logged in`)
             await setUserDetails({...userDetails,
                 email: data.email,
-                name: data.name
+                name: data.name,
+                home_state: data.home_state
             })
+
+            updateCartDispatch({
+              type: "SET_delivery_us_state", 
+              payload: {delivery_us_state: data.home_state }
+            }) 
             return "success"
         }
         
@@ -187,13 +188,14 @@ loginState:
       
       <div className="cart-inner">
         <h2>Shopping Cart</h2>
+
+        <div className="user-info">User: {userDetails.name}</div> 
+        <div>Home_state: {userDetails.home_state}</div>
+
         <div className="cart-left">
-
-
-          <div>{userMessage}</div>
           { loginState != "success" ? 
               <div className="cart-login">
-                <LoginPage handleLogin = {handleLogin}/>
+                <LoginPage handleLogin = {handleLogin} />
               </div>
                 :
                 <div className="cart-prod-list">

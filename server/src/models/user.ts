@@ -32,6 +32,10 @@ const userModel = (sequelize, DataTypes) => {
         avatar_url:{
           allowNull: true,
           type: DataTypes.TEXT,
+        }, 
+        home_state:{
+          allowNull: false,
+          type: DataTypes.TEXT,
         }
       },
       {

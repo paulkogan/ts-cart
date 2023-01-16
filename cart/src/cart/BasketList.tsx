@@ -1,10 +1,10 @@
 import React from 'react';
-import {BasketItem} from "../types/types"
+import {OrderItem} from "../types/types"
 import BasketPlank from "./BasketPlank"
 import './Cart.css';
 
 interface Props {
-  selected: BasketItem[]
+  selected: OrderItem[]
 }
 
 const  BasketList:React.FC <Props> = ({selected}) => {
@@ -14,7 +14,7 @@ const  BasketList:React.FC <Props> = ({selected}) => {
     return selected.map(item =>  {
     
       return (
-        <div key={item.basketItemId} className="basket-outer-item" >
+        <div key={item.product_id} className="basket-outer-item" >
               <BasketPlank item = {item} />
         </div>
       )

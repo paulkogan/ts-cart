@@ -1,13 +1,17 @@
 import React from 'react';
 import {Product} from "../types/types"
-import './Cart.css';
+import './Admin.css';
 
 interface Props {
   item: Product
-  handleAdd: (product: Product) => any 
 }
 
-const  ShoppingProductPlank:React.FC <Props> = ({item, handleAdd}) => {
+const handleDelete = (item: Product) => {
+   console.log("Delete "+item.name)
+}
+
+
+const  AdminProductPlank:React.FC <Props> = ({item}) => {
 
       return (
           <div className="prod-list-plank" >
@@ -16,10 +20,11 @@ const  ShoppingProductPlank:React.FC <Props> = ({item, handleAdd}) => {
               </div>
               <div className="basket-plank-info">
                   <div> {item.name} </div> 
+                  <div> Price: {item.price} </div>
+                  <div> Inventory: {item.inventory} </div>
                   <div> {item.product_id} </div>
-                  <div> {item.price} </div>
                   <div className="prod-list-add">
-                    <button onClick={() => handleAdd(item)}>Add to Cart</button>
+                    <button onClick={() => handleDelete(item)}>Delete</button>
                   </div> 
 
               </div>
@@ -32,6 +37,6 @@ const  ShoppingProductPlank:React.FC <Props> = ({item, handleAdd}) => {
 
 
 
-export default ShoppingProductPlank;
+export default AdminProductPlank;
 
 

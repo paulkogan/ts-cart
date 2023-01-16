@@ -21,7 +21,8 @@ const  RegisterUserForm:React.FC = () => {
         user_uuid: "",
         name: "",
         email: "",
-        password: "", 
+        password: "",
+        home_state: null, 
       }
   }
   
@@ -29,7 +30,13 @@ const  RegisterUserForm:React.FC = () => {
   const [userMessage, setUserMessage] = useState("Please enter registration details.")
   const [regStatus, setRegStatus] = useState("none")
 
+  const us_tax_states =  ["--", "NY", "FL","AZ"]
+
   const handleChange = (fieldName: string, fieldValue: string | number): void => {
+    if(fieldName == "home_state" && fieldValue == "--" ) {
+      return 
+    }
+
     setNewUser({
       ...newUser,
       [fieldName]: fieldValue
@@ -48,7 +55,8 @@ const  RegisterUserForm:React.FC = () => {
           body: JSON.stringify({ 
             email: newUser.email,
             name: newUser.name,
-            password: newUser.password
+            password: newUser.password,
+            home_state: newUser.home_state
           })
       };
       
@@ -89,6 +97,7 @@ const  RegisterUserForm:React.FC = () => {
     <div>     
         <div className="form-message">
             <div>{userMessage} </div>
+            <div>{/* JSON.stringify(newUser)*/} </div>
         </div>
         {/*  updates newUser directly  - can do it both ways*/}
         <div className="prod-form">
@@ -123,7 +132,16 @@ const  RegisterUserForm:React.FC = () => {
                   onChange = {event => {handleChange(event.target.name, event.target.value) }}
               />
             </div>
-
+            <div>
+                <select 
+                    name="home_state"
+                    onChange = {event => {handleChange(event.target.name, event.target.value) }}
+                    defaultValue={"..."} 
+                  >
+                  {us_tax_states.map((state_code: string) => <option key={state_code} value={state_code}>{state_code}</option>   )}
+              
+                </select>
+            </div>
 
         </div>
         <button onClick={handleSubmit}>Register</button>
