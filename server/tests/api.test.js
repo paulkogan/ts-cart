@@ -79,7 +79,56 @@ let test_product_3 = {
     description: "The Mind-glowing 3D Moon Lamps come in 3 different sizes, to fit your needs & to bring a dazzling blend of magic & function to your home."
 }
 
+let bad_product_4 = {
+    product_id: uuidv4(),
+    name: "Negative toy",
+    image_url: "",
+    price: -6.07,
+    inventory: 12,
+    description: null
+}
 
+
+describe("POST /products/create", () => {
+
+
+    beforeAll(async () => {
+        // clear DB
+        await sequelize.sync({ force: true })
+        Product.createNew(test_product_1)
+        Product.createNew(test_product_2)
+    })
+    
+    afterAll(async () => {
+        //await db.sequelize.close()
+    })
+
+    it("should properly add a new product", async () => {
+        const response = await request(baseURL).post('/products/create').send(test_product_3);
+        //console.log("new product create============\n",JSON.stringify(response.body, null,4))
+        expect(response.statusCode).toBe(200);
+        expect(response.body.errors).toBe(undefined);
+        expect(response.body.name).toBe('Glowing Moon Lamp-D');
+        expect(response.body.inventory).toBe(12);
+    });
+    
+
+    it("should return 400 if bad data", async () => {
+        const response = await request(baseURL).post('/products/create').send(bad_product_4);
+        //console.log("BAD product RESPONSE ============\n",JSON.stringify(response.body, null,4))
+        expect(response.statusCode).toBe(400);
+        expect(response.body.message).toContain("price must be >= 0 but is");
+    });
+
+    it("should return 400 if duplicate", async () => {
+        const response = await request(baseURL).post('/products/create').send(test_product_3);
+        console.log("DUPLICATE product RESPONSE ============\n",JSON.stringify(response.body, null,4))
+        expect(response.statusCode).toBe(400);
+        expect(response.body.message).toContain("Duplicate product");
+    });
+
+
+})
 
 describe("GET /products", () => {
 
@@ -109,7 +158,7 @@ describe("GET /products", () => {
 describe("GET /users", () => {
 
     beforeAll(async () => {
-        //await sequelize.sync({ force: true })
+        await sequelize.sync({ force: true })
         User.registerNew(test_user_1)
         User.registerNew(test_user_2)
     })
@@ -187,8 +236,10 @@ describe("POST /register ", () => {
         Product.createNew(test_product_2)
         Product.createNew(test_product_3)
     })
- 
 
+    afterAll( () => {
+        sequelize.close()
+    })
 
 
 
@@ -209,12 +260,9 @@ describe("POST /register ", () => {
         expect(response.body.message).toContain("invalid email");
 
 
-        });
+    });
     
-        afterAll( () => {
-            sequelize.close()
-        })
-    
+
 
 
 });

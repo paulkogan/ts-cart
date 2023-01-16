@@ -54,7 +54,7 @@ const Cart:React.FC = () => {
 
 
   useEffect(() => {
-    // console.log("render: " + cartState.num_items)
+    // console.log("render: " + cartState.num_units)
     //load product list
     const products_url = "http://localhost:3001/products"
 

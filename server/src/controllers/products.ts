@@ -15,13 +15,26 @@ const createNew = async (req, res) => {
     // return
 
     if (!req.body.price || parseFloat(req.body.price) < 0.00) {
-        console.log(`\n\nFAIL BE: Error (400): price must be > 0 but is ${req.body.price}`)
-        res.status(400).send({
-            message: `Error (400): price must be > 0 but is ${req.body.price}`
+        console.log(`\n\nFAIL BE: Error (400): price must be >= 0 but is ${req.body.price}`)
+        return res.status(400).send({
+            message: `Error (400): price must be >= 0 but is ${req.body.price}`
           });
-        return  
+     
     }
+    
+    //check for duplicate product name
+    const dup_product =  await Product.findAll({ where: { 
+        name: { [Op.like]: `%${req.body.name}%` } 
+    }  })
 
+    if (dup_product.length > 0) {
+        return res.status(400).send({
+            "data": dup_product,
+            "errors": "Duplicate Product",
+            "message": `Error (400): Duplicate product  ${req.body.name}`
+
+        });
+    }     
 
     let new_product = {
         product_id: uuidv4(),
@@ -32,17 +45,17 @@ const createNew = async (req, res) => {
         description: req.body.description
     }
     
-    console.log(`New Product OBJECT is: ${JSON.stringify(new_product)}`)
+    console.log(`server - New Product OBJECT is: ${JSON.stringify(new_product)}`)
 
 
     Product.createNew(new_product)
     .then(data => {
         if (data) {
             console.log(`\n\nSUCCESS BE: New Product created with: ${JSON.stringify(data)}`)
-            res.send(data);
+            return res.send(data);
         } else {
             console.log(`\n\nFAIL BE: Did not create new product with  ${new_product.name}`)
-            res.status(400).send({
+            return res.status(400).send({
                 message: `Error (400): Did not create new product with   ${new_product.name}`
               });
         }

@@ -42,7 +42,7 @@ const CartUpdater = (state: CartState,  action: any) => {
             const same_in_basket = new_basket_items.find(item => item.product_id === new_basket_item.product_id)
 
             if (same_in_basket) { //already in cart
-                same_in_basket.num_items += 1
+                same_in_basket.num_units += 1
                 return {
                     ...state,
                     basket_items: new_basket_items,
@@ -52,7 +52,7 @@ const CartUpdater = (state: CartState,  action: any) => {
 
                 new_basket_item.basketItemId = next_item_id
                 // if item with this product_id is in, increment
-                new_basket_item.num_items = 1
+                new_basket_item.num_units = 1
                 new_basket_item.tax = tax_amount 
 
         
