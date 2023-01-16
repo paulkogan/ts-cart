@@ -17,6 +17,7 @@ const  ShoppingProductPlank:React.FC <Props> = ({item, handleAdd}) => {
               <div className="basket-plank-info">
                   <div> {item.name} </div> 
                   <div> {item.product_id} </div>
+                  <div> {item.price} </div>
                   <div className="prod-list-add">
                     <button onClick={() => handleAdd(item)}>Add to Cart</button>
                   </div> 

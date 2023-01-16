@@ -45,11 +45,6 @@ const Cart:React.FC = () => {
     "next_item_id": 100,
     "basket_items" : [],
     "delivery_us_state": "",
-    "tax_by_state":  {
-      "NY" : 0,
-      "FL" : 0,
-      "AZ" : 0
-    },
     "us_tax_rates": {}
   }
   
@@ -83,7 +78,7 @@ const Cart:React.FC = () => {
         // later will fetch from BE
         const sourceTaxRates = 
           { 
-          "NY": 20.50,
+          "NY": 8.125,
           "AZ": 10.25,
           "FL": 5.0,
           }

@@ -22,14 +22,14 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
     //   setBuyerState(fieldValue.toString())
     // };
 
-    // const handleSubmit = ():void => {
-    //   console.log(`handleSubmit ${buyerState} `)
-    //   updateCartDispatch({
-    //     type: "SET_delivery_us_state", 
-    //     payload: {delivery_us_state: buyerState }
-    //   })
+    const handleSubmit = ():void => {
+      console.log(`Submit Order for ${cartState.basket_items.length} `)
+      updateCartDispatch({
+        type: "SUBMIT_ORDER", 
+        payload: {}
+      })
       
-    // }
+    }
 
 
 
@@ -43,20 +43,17 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
   
   // }
 
+  const renderUSTaxRates = ():JSX.Element[]  => {
 
-
-  const renderTaxbyState = ():JSX.Element[]  => {
-    const stateKeys = Object.keys(cartState.tax_by_state)
-    return stateKeys.map(state=> {
+    return us_tax_states.map(state =>  {
       return (
-          <div key={state} className="state-tax-item" >
-            <span> {state} </span> : <span> ${cartState.tax_by_state[state]}</span>
-          </div>
+        <div key={state} className="basket-outer-item" >
+              {state} {cartState.us_tax_rates[state].toFixed(2)}%
+        </div>
       )
     })
+
   }
-
-
 
     return (
       <div>
@@ -66,13 +63,10 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
             <div>Next Cart id: {cartState.next_item_id}</div>
             <div>home_state: {cartState.delivery_us_state}</div>
           </div>
-
-
-
-          <div className="cart-tax-by-state">
-               Tax by State: {renderTaxbyState()}
+          <div>
+            {renderUSTaxRates()} 
           </div>
-          
+          <button onClick={handleSubmit}>Submit Order</button>
           
       </div>
     );

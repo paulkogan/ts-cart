@@ -11,10 +11,12 @@ export interface Product {
 }
 
 export interface OrderItem extends Product{
-    basketItemId: number;
-    orderId: string
-    numItems: number;
+    order_item_id: number;
+    product_id: string | null;
+    order_uuid: string
+    num_items: number;
     tax: number;
+    order_item_status: string;
     discount?: number;
 }
 
@@ -32,7 +34,6 @@ export interface CartState {
     next_item_id: number,
     basket_items: OrderItem[];
     delivery_us_state: string | undefined,  
-    tax_by_state: TaxByState;
     us_tax_rates: TaxByState | {} | any;
 
 }
@@ -44,8 +45,9 @@ export interface Order {
     user_uuid: string;
     date_placed: Date;
     delivery_us_state: string;
-    total_amount: number;
-    total_tax: number; 
+    items_total: number;
+    tax_total: number;
+    shipping_total: number;  
     order_status: string;
     order_items: OrderItem[];
 }

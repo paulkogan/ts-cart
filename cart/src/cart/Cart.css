@@ -95,9 +95,13 @@
 .basket-plank {
   border: 1px solid navy;
   white-space: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
 }
 
-
+.basket-img {
+  height: 15vmin;
+}
 
 .basket-plank-img {
   display: inline-block;
@@ -106,26 +110,34 @@
 
 }
 
-.basket-img {
-  height: 15vmin;
-}
+
 
 .basket-plank-info {
   display: inline-block;
   border: 0px solid black;
   vertical-align:top;
   padding-top: 5px;
+  width: 40%;
 
 }
+.basket-plank-item {
+  border: 1px solid purple;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
+}
 
 .basket-plank-cost {
   display: inline-block;
   border: 0px solid orange;
   vertical-align:top;
+  width: 60%;
   padding-left: 10px;
   padding-top: 5px;
+
+
 }
+
 
 
 
