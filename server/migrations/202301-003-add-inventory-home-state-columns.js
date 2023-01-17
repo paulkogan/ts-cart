@@ -2,8 +2,11 @@
 //import _ from 'lodash';
 const _ = require('lodash');
 
+
+
+
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  up: async(queryInterface, Sequelize) => {
     await queryInterface.addColumn(
       {
         tableName: 'users'
@@ -21,10 +24,6 @@ module.exports = {
       Sequelize.INTEGER,
       false,
     );
-
-
-
-  },
-  down: _.noop,
-};
-
+},
+down: _.noop
+}

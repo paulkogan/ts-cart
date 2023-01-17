@@ -1,4 +1,5 @@
-export const env_config = {
+
+const env_config = {
   "development": {
     "use_env_variable": false,
     "username": "postgres",
@@ -23,3 +24,4 @@ export const env_config = {
     "dialect": "mysql"
   }
 }
+module.exports = env_config;
