@@ -68,6 +68,11 @@ const userModel = (sequelize, DataTypes) => {
       //return message
     }
 
+    //no value
+    // User.associate = function(models) {
+    //   //models.Order.belongsTo(User, {foreignKey: 'user_uuid'});
+    //   User.hasMany(models.Order, {foreignKey: 'user_uuid'})
+    // };
 
     //sequelize.sync({alter:true})
 

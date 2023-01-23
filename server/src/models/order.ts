@@ -46,6 +46,7 @@ const orderModel = (sequelize, DataTypes) => {
       }
 
       }, 
+
       {
         //tableName: "users",
         //timedstamps: false, 
@@ -62,12 +63,13 @@ const orderModel = (sequelize, DataTypes) => {
       // Product.removeAttribute('createdat');
       // Product.removeAttribute('updatedAt');
 
-      Order.associate = function(models) {
-          Order.hasOne(models.user, {
-              foreignKey: 'user_uuid',
-              as: 'user_uuid'
-          });
-      };
+      //just add to index file
+      // Order.associate = function(models) {
+      //     Order.hasOne(models.User, {
+      //         foreignKey: 'user_uuid',
+      //         sourceKey: 'user_uuid'
+      //     });
+      // };
 
     //sequelize.sync({alter:true})
     return Order;

@@ -32,6 +32,13 @@ const models = {
     Order: orderModel(sequelize, Sequelize.DataTypes)
 };
 
+models.Order.hasOne(models.User,
+//models.Order.belongsTo(models.User,
+    {
+        foreignKey: 'user_uuid',
+        sourceKey: 'user_uuid', 
+        as: "customer"
+    });
 
 module.exports = {models, sequelize};
 

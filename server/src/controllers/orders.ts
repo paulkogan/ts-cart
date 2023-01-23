@@ -2,6 +2,7 @@ const Sequelize = require("sequelize");
 const {models, sequelize} = require("../models/index.js");
 import {OrderItem} from "../types/types"
 const Order = models.Order;
+const User = models.User;
 const Op = Sequelize.Op;
 
 import { v4 as uuidv4 } from 'uuid';
@@ -106,9 +107,13 @@ const listOrders = async (req, res) => {
     const order_uuid = req.query.uuid;
     var condition = order_uuid ? { order_uuid: { [Op.eq]: `%${order_uuid}%` } } : null;
 
-    Order.findAll({ where: condition })
+    Order.findAll({ 
+        include: [{
+            model: models.User,
+            as: "customer"
+            }],
+        where: condition })
     .then(data => {
-        //console.log("list orders "+JSON.stringify(data))
         res.status(200).send({
             "data":data,
             "errors": null
