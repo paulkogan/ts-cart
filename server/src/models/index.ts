@@ -6,8 +6,8 @@ const orderModel = require("./order.js");
 const env = process.env.NODE_ENV || 'development';
 //import {env_config} from "../../config/config_json.js"
 import env_config = require("../../config/config_json.js")
-console.log("========================")
-console.log(env_config)
+// console.log("========================")
+// console.log(env_config)
 
 const config = env_config[env]
 

@@ -17,10 +17,11 @@ const  BasketPlank:React.FC <Props> = ({item}) => {
               </div>
               <div className="basket-plank-info">
                   <div className="basket-plank-item">{item.name}</div>
-                  <div className="basket-plank-item">{item.inventory}</div> 
+                  <div className="basket-plank-item">Inventory: {item.inventory}</div> 
                   <div className="basket-plank-item">{item.product_id}</div> 
               </div>
               <div className="basket-plank-cost">
+                
                 <div> Unit Price: {item.price}</div>
                 <div> Num. Units: {item.num_units} </div>
                 <div> Units Total: {totPriceFloat}</div>

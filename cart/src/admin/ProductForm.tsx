@@ -18,7 +18,7 @@ const  ProductForm:React.FC <Props> = (props) => {
       return {
         product_id: null,
         name: "",
-        image_url: "",
+        image_url: "https://m.media-amazon.com/images/I/61IB1hj+ZfL._AC_SL1500_.jpg",
         description: "", 
         price: 0.00, 
         inventory: 10

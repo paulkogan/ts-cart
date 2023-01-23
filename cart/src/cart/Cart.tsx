@@ -14,7 +14,7 @@ const initialUserDetails = {
   email: "",
   name: "",
   avatar: "",
-  home_state: ""
+  home_state: "", 
 }
 
 /*
@@ -41,16 +41,17 @@ const Cart:React.FC = () => {
 
   const InitialCartState = {
     "cart_id": undefined,
-    "user_id": undefined,
+    "user_uuid": undefined,
     "next_item_id": 100,
     "basket_items" : [],
     "delivery_us_state": "",
-    "us_tax_rates": {}
+    "us_tax_rates": {},
+    price_total:0.0,
+    tax_total:0.0
   }
   
 
   const [cartState, updateCartDispatch] = useReducer(CartUpdater, InitialCartState);
-
 
 
   useEffect(() => {
@@ -110,16 +111,15 @@ const Cart:React.FC = () => {
   }, []) // pass in a dependency array
 
 
-  const addToBasket = (product: Product) => {
+  const addToBasket = async (product: Product) => {
     //console.log("addToBasket: New Item in Cart: "+JSON.stringify(product))
 
-        updateCartDispatch({
+        await updateCartDispatch({
           type: "ADD_ITEM", 
           payload: {
             product: product,
           }
         })
-
 
   } 
 
@@ -159,16 +159,20 @@ loginState:
         } else {
             let data = body.data
             setLoginState("success")
-            setUserMessage(`Success! User: ${data.email} is logged in`)
+            setUserMessage(`Success! User: ${data} is logged in`)
             await setUserDetails({...userDetails,
                 email: data.email,
                 name: data.name,
-                home_state: data.home_state
+                home_state: data.home_state, 
+                user_uuid: data.user_uuid
             })
 
             updateCartDispatch({
-              type: "SET_delivery_us_state", 
-              payload: {delivery_us_state: data.home_state }
+              type: "SET_customer_details", 
+              payload: {
+                delivery_us_state: data.home_state,
+                user_uuid: data.user_uuid
+               }
             }) 
             return "success"
         }
@@ -191,7 +195,6 @@ loginState:
 
         <div className="user-info">User: {userDetails.name}</div> 
         <div>Home_state: {userDetails.home_state}</div>
-
         <div className="cart-left">
           { loginState != "success" ? 
               <div className="cart-login">

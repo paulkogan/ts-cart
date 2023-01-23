@@ -8,7 +8,7 @@ import AdminProductList from './AdminProductList';
 
 const ProductAdmin:React.FC = () => {
 
-  const [userMessage, setUserMessage] = useState("Please enter product info.")
+  const [userMessage, setUserMessage] = useState("Please enter new product")
   const [productList, setProductList] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(false)
 

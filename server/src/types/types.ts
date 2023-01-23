@@ -22,7 +22,6 @@ export interface OrderItem extends Product{
 
 
 
-
 export interface TaxByState {
    [key: string]: number
  } 

@@ -3,13 +3,29 @@ import {CartState, OrderItem} from "../types/types"
 import {cloneDeep} from 'lodash'
 
 
+const reduceTotals = (basket_items: OrderItem[]) => {
+    return basket_items.reduce((tots:any, item) => {
+        const totPriceFloat = parseFloat((Number(item.price)*item.num_units).toFixed(2))
+        const totTaxFloat = parseFloat(Number(item.tax*item.num_units).toFixed(2))
+
+        tots.price = tots.price+totPriceFloat;
+        tots.tax = tots.tax+totTaxFloat;
+        return tots
+      }, {price:0.0, tax:0.0});
+
+}
+
+
 const CartUpdater = (state: CartState,  action: any) => {
 
     const {
         basket_items, 
         next_item_id, 
         delivery_us_state,
-        us_tax_rates
+        us_tax_rates, 
+        user_uuid,
+        price_total,
+        tax_total
     } = state
     // need to clone the array to avoid double execution under TS Strict in DEV 
     
@@ -22,6 +38,8 @@ const CartUpdater = (state: CartState,  action: any) => {
 
             return {
                 ...state,
+                price_total: 0.0,
+                tax_total: 0.0,
                 basket_items: [],
             }
 
@@ -43,9 +61,12 @@ const CartUpdater = (state: CartState,  action: any) => {
 
             if (same_in_basket) { //already in cart
                 same_in_basket.num_units += 1
+                const totals = reduceTotals(new_basket_items)
                 return {
                     ...state,
                     basket_items: new_basket_items,
+                    tax_total: parseFloat(totals.tax.toFixed(2)),
+                    price_total:  parseFloat(totals.price.toFixed(2)),
                 }
 
             } else {
@@ -60,10 +81,14 @@ const CartUpdater = (state: CartState,  action: any) => {
                 if (!new_basket_items.find(item => item.order_item_id === new_basket_item.basketItemId)){
                 
                     new_basket_items.push(new_basket_item)
+                    const totals = reduceTotals(new_basket_items)
+
                     return {
                         ...state,
                         next_item_id: next_item_id+1,
                         basket_items: new_basket_items,
+                        tax_total: totals.tax,
+                        price_total: totals.price
                     }
                         
                 } else {
@@ -72,14 +97,15 @@ const CartUpdater = (state: CartState,  action: any) => {
                 }
             }    
 
-        case "SET_delivery_us_state":
-                const new_delivery_us_state = action.payload.delivery_us_state
+        case "SET_customer_details":
     
                 state = {...state, 
-                    delivery_us_state: new_delivery_us_state
+                    delivery_us_state: action.payload.delivery_us_state, 
+                    user_uuid: action.payload.user_uuid
                 }
                 return state
 
+        //REMOVE!
         case "UPDATE_STATE_TAX_RATES":
             const new_tax_rates = action.payload.us_tax_rates
 
