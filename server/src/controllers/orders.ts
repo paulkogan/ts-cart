@@ -61,7 +61,7 @@ const createNew = async (req, res) => {
     //     tax_total: number;
     //     shipping_total: number;  
     //     order_status: string;
-    //     order_items: OrderItem[];
+    //     order_items: OrderItem[]; // not part of orders model
     // }
 
     const totals =  reduceTotals(req.body.order_items)

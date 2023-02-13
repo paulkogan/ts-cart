@@ -51,6 +51,7 @@ export interface Order {
     shipping_total: number;  
     order_status: string;
     order_items: OrderItem[];
+    customer: User;
 }
 
 
