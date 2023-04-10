@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useMemo} from 'react';
+import moment from 'moment';
 import { useTable } from "react-table"
 import {Order} from "../types/types"
 import './Orders.css';
@@ -10,9 +11,14 @@ interface Props {
 const  OrdersTable:React.FC <Props> = ({ordersList}) => {
 
     const columns = [
+
         {
-          Header: "Date Placed",
-          accessor: "date_placed",
+          Header: "Date Placed ",
+          accessor: (order:Order) => {
+            return moment(order.date_placed)
+              .local()
+              .format("DD-MM-YYYY")
+          }
         },
         {
           Header: "Status",

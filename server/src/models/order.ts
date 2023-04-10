@@ -60,18 +60,7 @@ const orderModel = (sequelize, DataTypes) => {
       }
 
       Order.removeAttribute('id');
-      // Product.removeAttribute('createdat');
-      // Product.removeAttribute('updatedAt');
 
-      //just add to index file
-      // Order.associate = function(models) {
-      //     Order.hasOne(models.User, {
-      //         foreignKey: 'user_uuid',
-      //         sourceKey: 'user_uuid'
-      //     });
-      // };
-
-    //sequelize.sync({alter:true})
     return Order;
   };
 
