@@ -8,6 +8,7 @@ import {
 import Cart from './cart/Cart';
 import UserAdmin from './admin/UserAdmin';
 import ProductAdmin from './admin/ProductAdmin';
+import Orders from './orders/Orders';
 import Practice from './practice/Practice';
 import './App.css';
  
@@ -27,6 +28,9 @@ const Nav:React.FC = () => {
                 <Link to="/productadmin">Product Admin</Link>
               </div>
               <div className="nav-link"> 
+                <Link to="/orders">Orders</Link>
+              </div>
+              <div className="nav-link"> 
                 <Link to="/useradmin">User Admin</Link>
               </div>
               <div className="nav-link"> 
@@ -38,6 +42,7 @@ const Nav:React.FC = () => {
             <Route path="/"  element={<ProductAdmin/>} />
               <Route path="/cart"  element={<Cart/>} />
               <Route path="/productadmin"  element={<ProductAdmin/>} />
+              <Route path="/orders"  element={<Orders/>} />
               <Route path="/useradmin"  element={<UserAdmin/>} />
               <Route path="/practice"  element={<Practice/>} />
             </Routes>

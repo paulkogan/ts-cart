@@ -1,0 +1,219 @@
+.Cart {
+  text-align: center;
+}
+
+
+
+.cart-inner{
+  border: 2px solid black;
+  padding: 5px;
+  margin-left: 10px;
+  width: 95%;
+  text-align: left;
+}
+
+.cart-left{
+  display: inline-block;
+  width: 50%;
+  margin-left: 10px;
+  padding: 5px;
+  border: 3px solid purple;
+  vertical-align:middle;
+}
+
+.cart-prod-list {
+  border: 2px solid orange;
+  padding: 5px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+
+.cart-right{
+  display: inline-block;
+  margin-left: 10px;
+  padding: 10px;
+  width: 50%;
+  border: 1px solid blue;
+  vertical-align:top;
+}
+
+
+.cart-app-1 {
+  border: 3px solid green;
+  padding: 5px;
+  margin-top: 10px;
+}
+.cart-app-2 {
+  border: 2px solid brown;
+  padding: 5px;
+  margin-top: 10px;
+}
+
+.cart-app-3 {
+  border: 2px solid navy;
+  padding: 5px;
+  margin-top: 10px;
+}
+
+.cart-status {
+  display: inline-block;
+  border: 1px solid orange;
+  padding: 5px;
+
+}
+
+.cart-settings {
+  display: inline-block;
+  vertical-align:top;
+  border: 1px solid green;
+  padding: 5px;
+}
+
+.cart-tax-by-state {
+  display: inline-block;
+  vertical-align:top;
+  border: 1px solid red;
+  padding: 5px;
+  margin-left: 10px;
+}
+
+
+.state-tax-item {
+  width: 90%;
+  padding: 0px;
+  padding-left: 15px;
+  align-items: left;
+  border: 0px solid red;
+}
+
+
+.basket-list {
+  border: 1px solid purple;
+}
+
+.basket-plank {
+  border: 1px solid navy;
+  white-space: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.basket-img {
+  height: 15vmin;
+}
+
+.basket-plank-img {
+  display: inline-block;
+  border: 0px solid green;
+  padding-right: 5px
+
+}
+
+
+
+.basket-plank-info {
+  display: inline-block;
+  border: 0px solid black;
+  vertical-align:top;
+  padding-top: 5px;
+  width: 40%;
+
+}
+.basket-plank-item {
+  border: 1px solid purple;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}
+
+.basket-plank-cost {
+  display: inline-block;
+  border: 0px solid orange;
+  vertical-align:top;
+  width: 60%;
+  padding-left: 10px;
+  padding-top: 5px;
+
+
+}
+
+
+
+
+
+.cart-app-5 {
+  border: 2px solid red;
+  padding: 5px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+
+.prod-form-display {
+  border: 0px solid red;
+  padding-left: 0px;
+}
+
+.prod-form {
+  border: 0px solid purple;
+  margin-top: 20px;
+}
+
+.prod-list-img {
+  height: 20vmin;
+}
+
+
+
+.prod-list-item {
+  height: 20vmin;
+  width: 90%;
+  padding: 5px;
+  align-items: left;
+  border: 0px solid red;
+}
+
+.prod-list-plank {
+  border: 0px solid navy;
+  white-space: nowrap;
+}
+
+.prod-list-add {
+
+  border: 0px solid orange;
+  vertical-align:top;
+  padding-left: 10px;
+  padding-top: 5px;
+}
+
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
