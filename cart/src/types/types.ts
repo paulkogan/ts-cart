@@ -9,15 +9,16 @@ export interface Product {
     inventory: number;
   
 }
-
+// 
 export interface OrderItem extends Product{
-    order_item_id: number;
-    product_id: string | null;
-    order_uuid: string
+    order_item_uuid: string | null;
+    item_cart_id: number;
+    product_id: string;
+    order_uuid: string;
     num_units: number;
+    cost: number;
     tax: number;
     order_item_status: string;
-    discount?: number;
 }
 
 

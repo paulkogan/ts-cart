@@ -1,14 +1,15 @@
 const Sequelize = require("sequelize");
 const {models, sequelize} = require("../models/index.js");
-import {OrderItem} from "../types/types"
+import {OrderItem as OrderItemType} from "../types/types"
 const Order = models.Order;
+const OrderItem = models.Order;
 const User = models.User;
 const Op = Sequelize.Op;
 
 import { v4 as uuidv4 } from 'uuid';
 
 
-const reduceTotals = (basket_items: OrderItem[]) => {
+const reduceTotals = (basket_items: OrderItemType[]) => {
     return basket_items.reduce((tots:any, item) => {
         const totPriceFloat = parseFloat((Number(item.price)*item.num_units).toFixed(2))
         const totTaxFloat = parseFloat((Number(item.tax)*item.num_units).toFixed(2))
@@ -49,25 +50,12 @@ const createNew = async (req, res) => {
 
     //     });
     // }     
-
-
-
-    // export interface Order {
-    //     order_uuid: string;
-    //     user_uuid: string;
-    //     date_placed: Date;
-    //     delivery_us_state: string;
-    //     items_total: number;
-    //     tax_total: number;
-    //     shipping_total: number;  
-    //     order_status: string;
-    //     order_items: OrderItem[]; // not part of orders model
-    // }
-
-    const totals =  reduceTotals(req.body.order_items)
+    const orderItems = req.body.order_items
+    const newOrderUUID = uuidv4()
+    const totals =  reduceTotals(orderItems)
 
     let new_order = {
-        order_uuid: uuidv4(),
+        order_uuid: newOrderUUID,
         user_uuid: req.body.user_uuid,
         date_placed: new Date(),
         delivery_us_state: req.body.delivery_us_state,
@@ -83,7 +71,25 @@ const createNew = async (req, res) => {
     Order.createNew(new_order)
     .then(data => {
         if (data) {
-            console.log(`\n\nSUCCESS BE: New ORDERR created with: ${JSON.stringify(data)}`)
+            orderItems.forEach (oi => {
+                console.log(`----item: ${JSON.stringify(oi)}\n`)
+
+                let new_order_item = {
+                    order_item_uuid: uuidv4(),
+                    item_cart_id: oi.item_cart_id,
+                    product_id: oi.product_id,
+                    order_uuid: newOrderUUID,
+                    num_units: oi.num_units,
+                    cost: oi.cost,
+                    tax: oi.tax,
+                    order_item_status: "accepted"
+                }
+                OrderItem.createNew(new_order_item)
+            })
+           
+
+        
+            console.log(`\n\nSUCCESS BE: New ORDER created with: ${JSON.stringify(data)}`)
             return res.send(data);
         } else {
             console.log(`\n\nFAIL BE: Did not create new ORDER for  ${new_order.user_uuid}`)
