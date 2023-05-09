@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useReducer} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Product, OrderItem} from "../types/types"
 import './Admin.css';
 import ProductForm from './ProductForm';
