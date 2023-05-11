@@ -16,8 +16,8 @@ export interface OrderItem extends Product{
     product_id: string;
     order_uuid: string;
     num_units: number;
-    cost: number;
-    tax: number;
+    cost: number; //total cost
+    tax: number;  //total tax
     order_item_status: string;
 }
 

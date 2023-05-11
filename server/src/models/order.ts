@@ -55,6 +55,7 @@ const orderModel = (sequelize, DataTypes) => {
       });
 
       Order.createNew = async (new_order) => {
+        //console.log(`\nMODEL - Order.Create: ${JSON.stringify(new_order)}\n\n`)
         return await Order.create(new_order)
 
       }

@@ -28,26 +28,42 @@ const models = {
 };
 
 //models.Order.belongsTo(models.User,
-models.Order.hasOne(models.User,
+models.User.hasMany(models.Order,
     {
         foreignKey: 'user_uuid',
         sourceKey: 'user_uuid', 
-        as: "customer"
+        as: "orders"
     });
 
-models.OrderItem.hasOne(models.Order,
+models.Order.belongsTo(models.User,
+        {
+            foreignKey: 'user_uuid',
+            sourceKey: 'user_uuid', 
+            as: "customer"
+        });
+
+models.Order.hasMany(models.OrderItem,
+    {
+            foreignKey: 'order_uuid',
+            sourceKey: 'order_uuid', 
+            as: "order_items"
+
+    });
+
+models.OrderItem.belongsTo(models.Order, 
         {
             foreignKey: 'order_uuid',
             sourceKey: 'order_uuid', 
             as: "order"
         });
 
-models.OrderItem.hasOne(models.Product,
+models.OrderItem.belongsTo(models.Product,
     {
         foreignKey: 'product_id',
         sourceKey: 'product_id', 
-        as: "product"
+        as: "order_item_product"
     });
+
 
 module.exports = {models, sequelize};
 

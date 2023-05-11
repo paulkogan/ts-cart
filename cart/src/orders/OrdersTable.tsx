@@ -37,7 +37,7 @@ const  OrdersTable:React.FC <Props> = ({ordersList}) => {
           accessor: "items_total",
         },
         {
-          Header: "Taxs Total",
+          Header: "Tax Total",
           accessor: "tax_total",
         }
       ]
