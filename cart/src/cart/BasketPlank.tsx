@@ -7,8 +7,8 @@ interface Props {
 }
 
 const  BasketPlank:React.FC <Props> = ({item}) => {
-      const totPriceFloat = parseFloat((Number(item.price)*item.num_units).toFixed(2))
-      const totTaxFloat = parseFloat((Number(item.tax)*item.num_units).toFixed(2))
+      const totPriceFloat = parseFloat(Number(item.cost).toFixed(2))
+      const totTaxFloat = parseFloat(Number(item.tax).toFixed(2))
       const plank_total = parseFloat((totTaxFloat+totPriceFloat).toFixed(2)).toFixed(2)
       return (
           <div className="basket-plank" >

@@ -2,7 +2,7 @@
 
 const orderItemModel = (sequelize, DataTypes) => {
     const OrderItem = sequelize.define(
-      'orders_items', //name of table
+      'order_items', //name of table
      {
       order_item_uuid: {
         allowNull: false,
@@ -30,7 +30,7 @@ const orderItemModel = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER
       },
       item_cart_id: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.INTEGER
       },
       order_item_status: {
@@ -51,11 +51,24 @@ const orderItemModel = (sequelize, DataTypes) => {
         //timedstamps: false, 
         updatedAt: false,
         createdAt: false
-    });
+
+    },
+    // example of associate code in model
+    // we do it in the index instead
+    // {
+    //   classMethods:{
+    //     associate:(models)=> {
+    //       OrderItem.belongsTo(models.Order,{foreignKey:'order_uuid'})
+    //     }
+    //   }
+      
+    // }
+    
+    );
 
     OrderItem.createNew = async (new_order_item) => {
+        console.log(`\nMODEL - OrderITEM.Create: ${JSON.stringify(new_order_item)}\n\n`)
         return await OrderItem.create(new_order_item)
-
     }
 
     OrderItem.removeAttribute('id');

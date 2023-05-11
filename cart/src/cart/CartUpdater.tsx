@@ -6,10 +6,10 @@ import {cloneDeep} from 'lodash'
 const reduceTotals = (basket_items: OrderItem[]) => {
     return basket_items.reduce((tots:any, item) => {
         const totPriceFloat = parseFloat((Number(item.price)*item.num_units).toFixed(2))
-        const totTaxFloat = parseFloat(Number(item.tax*item.num_units).toFixed(2))
+        const totTaxFloat = parseFloat(Number(item.tax).toFixed(2))
 
         tots.price = tots.price+totPriceFloat;
-        tots.tax = tots.tax+totTaxFloat;
+        tots.tax = parseFloat(Number(tots.tax+totTaxFloat).toFixed(2))
         return tots
       }, {price:0.0, tax:0.0});
 
@@ -61,6 +61,8 @@ const CartUpdater = (state: CartState,  action: any) => {
 
             if (same_in_basket) { //already in cart
                 same_in_basket.num_units += 1
+                same_in_basket.cost = same_in_basket.price*same_in_basket.num_units
+                same_in_basket.tax = tax_amount*same_in_basket.num_units
                 const totals = reduceTotals(new_basket_items)
                 return {
                     ...state,
@@ -70,11 +72,12 @@ const CartUpdater = (state: CartState,  action: any) => {
                 }
 
             } else {
-
+                //new non-dup item
                 new_basket_item.basketItemId = next_item_id
-                // if item with this product_id is in, increment
                 new_basket_item.num_units = 1
-                new_basket_item.tax = tax_amount 
+                new_basket_item.tax = tax_amount
+                new_basket_item.cost = new_basket_item.price
+                
 
         
                 // block double-adds due to React strict mode for useReducer hook

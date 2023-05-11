@@ -2,8 +2,9 @@ const Sequelize = require("sequelize");
 const {models, sequelize} = require("../models/index.js");
 import {OrderItem as OrderItemType} from "../types/types"
 const Order = models.Order;
-const OrderItem = models.Order;
+const OrderItem = models.OrderItem;
 const User = models.User;
+const Product = models.Product;
 const Op = Sequelize.Op;
 
 import { v4 as uuidv4 } from 'uuid';
@@ -23,7 +24,7 @@ const reduceTotals = (basket_items: OrderItemType[]) => {
 
 const createNew = async (req, res) => {
     const payload = JSON.stringify(req.body)
-    console.log(`\n\nBE orders req.body ${payload}`)
+    console.log(`\n\nBE orders req.BODY ${payload}\n\n`)
     // res.status(200).send({
     //     message: `Create Product Body is ${payload}`
     // });
@@ -65,15 +66,28 @@ const createNew = async (req, res) => {
         order_status: "accepted"
     }
     
-    console.log(`server - New Order OBJECT is: ${JSON.stringify(new_order)}`)
+    console.log(`\nserver - New Order OBJECT is: ${JSON.stringify(new_order)}\n\n`)
+
+    // let oi = orderItems[0]
+    // let new_order_item = {
+    //                 order_item_uuid: uuidv4(),
+    //                 item_cart_id: oi.item_cart_id,
+    //                 product_id: oi.product_id,
+    //                 order_uuid: newOrderUUID,
+    //                 num_units: oi.num_units,
+    //                 cost: oi.cost,
+    //                 tax: oi.tax,
+    //                 order_item_status: "accepted"
+    //             }
+    // console.log(`\nServer - New Order ITEM is: ${JSON.stringify(new_order_item)}\n\n`)            
+    // OrderItem.createNew(new_order_item)
+
 
 
     Order.createNew(new_order)
     .then(data => {
         if (data) {
             orderItems.forEach (oi => {
-                console.log(`----item: ${JSON.stringify(oi)}\n`)
-
                 let new_order_item = {
                     order_item_uuid: uuidv4(),
                     item_cart_id: oi.item_cart_id,
@@ -84,6 +98,8 @@ const createNew = async (req, res) => {
                     tax: oi.tax,
                     order_item_status: "accepted"
                 }
+                console.log(`CONT----Creating Order item: ${JSON.stringify(new_order_item)}\n`)
+
                 OrderItem.createNew(new_order_item)
             })
            
@@ -115,9 +131,22 @@ const listOrders = async (req, res) => {
 
     Order.findAll({ 
         include: [{
-            model: models.User,
-            as: "customer"
-            }],
+                model: models.User,
+                attributes: ["user_uuid", "name", "avatar_url"],
+                as: "customer"
+            },
+            {
+                model: models.OrderItem,
+                as: "order_items",
+                required: true, 
+                attributes: ["order_item_uuid", "product_id", "num_units", "order_item_status", "cost", "tax"],
+                include: [{
+                    model: models.Product,
+                    attributes: ["name", "price", "description", "image_url"],
+                    as: "order_item_product"
+                }]
+            }
+        ],
         where: condition })
     .then(data => {
         res.status(200).send({
