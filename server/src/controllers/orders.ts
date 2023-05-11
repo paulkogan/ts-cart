@@ -2,7 +2,11 @@ const Sequelize = require("sequelize");
 const {models, sequelize} = require("../models/index.js");
 import {OrderItem as OrderItemType} from "../types/types"
 const Order = models.Order;
+<<<<<<< HEAD
 const OrderItem = models.OrderItem;
+=======
+const OrderItem = models.Order;
+>>>>>>> main
 const User = models.User;
 const Product = models.Product;
 const Op = Sequelize.Op;
@@ -88,7 +92,11 @@ const createNew = async (req, res) => {
     .then(data => {
         if (data) {
             orderItems.forEach (oi => {
+<<<<<<< HEAD
                 
+=======
+                console.log(`----item: ${JSON.stringify(oi)}\n`)
+>>>>>>> main
 
                 let new_order_item = {
                     order_item_uuid: uuidv4(),
@@ -100,7 +108,10 @@ const createNew = async (req, res) => {
                     tax: oi.tax,
                     order_item_status: "accepted"
                 }
+<<<<<<< HEAD
                 console.log(`CONT----Creating Order item: ${JSON.stringify(new_order_item)}\n`)
+=======
+>>>>>>> main
                 OrderItem.createNew(new_order_item)
             })
            

@@ -28,6 +28,7 @@ const models = {
 };
 
 //models.Order.belongsTo(models.User,
+
 models.User.hasMany(models.Order,
     {
         foreignKey: 'user_uuid',
@@ -57,13 +58,13 @@ models.OrderItem.belongsTo(models.Order,
             as: "order"
         });
 
+
 models.OrderItem.belongsTo(models.Product,
     {
         foreignKey: 'product_id',
         sourceKey: 'product_id', 
         as: "order_item_product"
     });
-
 
 module.exports = {models, sequelize};
 

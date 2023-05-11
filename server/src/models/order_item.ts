@@ -51,6 +51,7 @@ const orderItemModel = (sequelize, DataTypes) => {
         //timedstamps: false, 
         updatedAt: false,
         createdAt: false
+
     },
     // example of associate code in model
     // we do it in the index instead
@@ -68,11 +69,7 @@ const orderItemModel = (sequelize, DataTypes) => {
     OrderItem.createNew = async (new_order_item) => {
         console.log(`\nMODEL - OrderITEM.Create: ${JSON.stringify(new_order_item)}\n\n`)
         return await OrderItem.create(new_order_item)
-
     }
-
-
-
 
     OrderItem.removeAttribute('id');
 
