@@ -78,7 +78,7 @@ const CartUpdater = (state: CartState,  action: any) => {
 
         
                 // block double-adds due to React strict mode for useReducer hook
-                if (!new_basket_items.find(item => item.order_item_id === new_basket_item.basketItemId)){
+                if (!new_basket_items.find(item => item.item_cart_id === new_basket_item.basketItemId)){
                 
                     new_basket_items.push(new_basket_item)
                     const totals = reduceTotals(new_basket_items)

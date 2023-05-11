@@ -11,7 +11,7 @@ export interface Product {
 }
 
 export interface OrderItem extends Product{
-    order_item_id: number;
+    item_cart_id: number;
     product_id: string | null;
     order_uuid: string
     num_units: number;
