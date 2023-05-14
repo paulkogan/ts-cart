@@ -54,7 +54,7 @@ let test_product_1 = {
     product_id: uuidv4(),
     name: "Fire Engine D",
     image_url: "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTTzySWCGvNjrCgzv_COpr6MxjEmajgzuQ0TD3MtDBtxrfqXLZ2d3ZVPdawcZi_&usqp=CAc",
-    price: 100.00,
+    price: 10000,
     inventory: 10,
     description: "Roll to the rescue! Our action-packed fire engine features a ladder that extends to over 2 feet high and rotates a full 360 degrees, "
     +"a retractable fire hose and more. "
@@ -64,7 +64,7 @@ let test_product_2 = {
     product_id: uuidv4(),
     name: "Solar System Model D",
     image_url: "https://cdn.shopify.com/s/files/1/2689/5080/products/solar-system-mobile-making-kit-hands-on-4m-great-gizmos_907.jpg",
-    price: 80.00,
+    price: 8000,
     inventory: 10,
     description: "Children build their own glow-in-the-dark solar system mobile with this out-of-this-world kit! Kids just snap the solar system together, paint the models, attach them to the included frame and hang the mobile anywhere for over-the-moon fun! "
 
@@ -74,7 +74,7 @@ let test_product_3 = {
     product_id: uuidv4(),
     name: "Glowing Moon Lamp-D",
     image_url: "https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/713M2QIsPuL._AC_SL1500_.jpg",
-    price: 20.00,
+    price: 2000,
     inventory: 12,
     description: "The Mind-glowing 3D Moon Lamps come in 3 different sizes, to fit your needs & to bring a dazzling blend of magic & function to your home."
 }
@@ -83,7 +83,7 @@ let bad_product_4 = {
     product_id: uuidv4(),
     name: "Negative toy",
     image_url: "",
-    price: -6.07,
+    price: -607,
     inventory: 12,
     description: null
 }
@@ -151,7 +151,7 @@ describe("GET /products", () => {
     it("should return catalog products", async () => {
     const response = await request(baseURL).get("/products");
     expect(response.body.data.length).toBeGreaterThan(1);
-    expect(response.body.data[0].price).toBe("100.00");
+    expect(response.body.data[0].price).toBe("10000");
     });
 });
 

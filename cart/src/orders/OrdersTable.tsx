@@ -2,6 +2,7 @@ import React, {useState, useEffect, useMemo} from 'react';
 import moment from 'moment';
 import { useTable } from "react-table"
 import {Order} from "../types/types"
+import {toDollarString} from "../utils"
 import './Orders.css';
 
 interface Props {
@@ -34,11 +35,17 @@ const  OrdersTable:React.FC <Props> = ({ordersList}) => {
         },
         {
           Header: "Items Total",
-          accessor: "items_total",
+          accessor: (order:Order) => {
+            return toDollarString(order.items_total)
+  
+          }
         },
         {
           Header: "Tax Total",
-          accessor: "tax_total",
+          accessor: (order:Order) => {
+            return toDollarString(order.tax_total)
+  
+          }
         }
       ]
 

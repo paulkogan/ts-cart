@@ -1,5 +1,6 @@
 import React, {useState, useReducer} from 'react';
 import {CartState} from "../types/types"
+import {toDollarString} from "../utils"
 import './Cart.css';
 
 
@@ -66,32 +67,11 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
               setUserMessage(`Error: failed to create order with:  ${error}`)
               console.log("Error: failed to create order with: ", error)
               //setRegStatus("error")
-        }
-  
-  
-        
-  
-  
-  
-  
+        }  
       }   
   
 
 
-
-
-
-
-
-  //   export interface CartState {
-  //     basket_items: OrderItem[];
-  //     next_item_id: number,
-  //     delivery_us_state: string | undefined,  
-  //     tax_by_state: TaxByState;
-  //     us_tax_rates: TaxByState | {} | any;
-  //{"Number of Items:" {cartState.basket_items}}
-  
-  // }
 
   const renderUSTaxRates = ():JSX.Element[]  => {
 
@@ -112,8 +92,8 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
             <div> User: {cartState.user_uuid}</div>
             <div>home_state: {cartState.delivery_us_state}</div>
             <div>Number of Items: {cartState.basket_items.length}</div>
-            <div> Price Total: {cartState.price_total} </div>
-            <div> Tax Total: {cartState.tax_total} </div>
+            <div> Price Total: {toDollarString(cartState.price_total)} </div>
+            <div> Tax Total: {toDollarString(cartState.tax_total)} </div>
             <div>Next Cart id: {cartState.next_item_id}</div>
           </div>
           <div>

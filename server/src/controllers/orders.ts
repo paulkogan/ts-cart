@@ -10,15 +10,12 @@ const Op = Sequelize.Op;
 import { v4 as uuidv4 } from 'uuid';
 
 
-const reduceTotals = (basket_items: OrderItemType[]) => {
+const reduceOrderTotals = (basket_items: OrderItemType[]) => {
     return basket_items.reduce((tots:any, item) => {
-        const totPriceFloat = parseFloat((Number(item.price)*item.num_units).toFixed(2))
-        const totTaxFloat = parseFloat((Number(item.tax)*item.num_units).toFixed(2))
-
-        tots.price = tots.price+totPriceFloat;
-        tots.tax = tots.tax+totTaxFloat;
+        tots.price = tots.price+item.cost;
+        tots.tax = tots.tax+item.tax;
         return tots
-      }, {price:0.0, tax:0.0});
+      }, {price:0, tax:0});
 
 }
 
@@ -53,7 +50,7 @@ const createNew = async (req, res) => {
     // }     
     const orderItems = req.body.order_items
     const newOrderUUID = uuidv4()
-    const totals =  reduceTotals(orderItems)
+    const totals =  reduceOrderTotals(orderItems)
 
     let new_order = {
         order_uuid: newOrderUUID,

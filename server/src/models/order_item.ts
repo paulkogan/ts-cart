@@ -39,11 +39,11 @@ const orderItemModel = (sequelize, DataTypes) => {
       },
       cost: {
         allowNull: true,
-        type: DataTypes.DECIMAL(10,2)
+        type: DataTypes.INTEGER
       },
       tax: {
         allowNull: true,
-        type: DataTypes.DECIMAL(10,2)
+        type: DataTypes.INTEGER
       }
     }, 
     {

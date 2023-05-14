@@ -23,7 +23,7 @@ const productModel = (sequelize, DataTypes) => {
 
         price: {
           allowNull: false,
-          type: DataTypes.DECIMAL(10,2)
+          type: DataTypes.INTEGER
         },
         inventory: {
           allowNull: false,

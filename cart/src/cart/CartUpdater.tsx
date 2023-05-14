@@ -1,17 +1,14 @@
-import React, {useState, useReducer} from 'react';
+//import React, {useState, useReducer} from 'react';
 import {CartState, OrderItem} from "../types/types"
 import {cloneDeep} from 'lodash'
 
 
-const reduceTotals = (basket_items: OrderItem[]) => {
-    return basket_items.reduce((tots:any, item) => {
-        const totPriceFloat = parseFloat((Number(item.price)*item.num_units).toFixed(2))
-        const totTaxFloat = parseFloat(Number(item.tax).toFixed(2))
-
-        tots.price = tots.price+totPriceFloat;
-        tots.tax = parseFloat(Number(tots.tax+totTaxFloat).toFixed(2))
+const reduceCartTotals = (basket_items: OrderItem[]) : {price: number, tax: number} => {
+    return basket_items.reduce((tots, item: OrderItem) => {
+        tots.price = tots.price+item.cost;
+        tots.tax = tots.tax+item.tax
         return tots
-      }, {price:0.0, tax:0.0});
+      }, {price:0, tax:0});
 
 }
 
@@ -38,20 +35,20 @@ const CartUpdater = (state: CartState,  action: any) => {
 
             return {
                 ...state,
-                price_total: 0.0,
-                tax_total: 0.0,
+                price_total: 0,
+                tax_total: 0,
                 basket_items: [],
             }
 
         case "ADD_ITEM":
-            // will use cache if sam item 
+            // will use cache if same item 
             let new_basket_item = cloneDeep(action.payload.product)
             let tax_rate = 0.0
-            let tax_amount = 0.0
+            let tax_amount = 0
 
             if (delivery_us_state) {
                 tax_rate = us_tax_rates[delivery_us_state]/100
-                tax_amount = parseFloat((parseFloat(new_basket_item.price) * tax_rate).toFixed(2))
+                tax_amount = Math.round(new_basket_item.price * tax_rate)
               
             }
             console.log(`REDUCE: Tax amount ${tax_amount} with rate ${tax_rate} for ${new_basket_item.price}`)
@@ -63,12 +60,12 @@ const CartUpdater = (state: CartState,  action: any) => {
                 same_in_basket.num_units += 1
                 same_in_basket.cost = same_in_basket.price*same_in_basket.num_units
                 same_in_basket.tax = tax_amount*same_in_basket.num_units
-                const totals = reduceTotals(new_basket_items)
+                const totals = reduceCartTotals(new_basket_items)
                 return {
                     ...state,
                     basket_items: new_basket_items,
-                    tax_total: parseFloat(totals.tax.toFixed(2)),
-                    price_total:  parseFloat(totals.price.toFixed(2)),
+                    tax_total: totals.tax,
+                    price_total: totals.price,
                 }
 
             } else {
@@ -80,11 +77,11 @@ const CartUpdater = (state: CartState,  action: any) => {
                 
 
         
-                // block double-adds due to React strict mode for useReducer hook
+                // block double-adds due to React strict mode for useReducer hook using cart_id
                 if (!new_basket_items.find(item => item.item_cart_id === new_basket_item.basketItemId)){
                 
                     new_basket_items.push(new_basket_item)
-                    const totals = reduceTotals(new_basket_items)
+                    const totals = reduceCartTotals(new_basket_items)
 
                     return {
                         ...state,
