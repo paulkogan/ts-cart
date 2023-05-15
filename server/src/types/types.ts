@@ -12,31 +12,20 @@ export interface Product {
 
 export interface OrderItem extends Product{
     item_cart_id: number;
-    product_id: string | null;
+    product_id: string;
     order_uuid: string
     num_units: number;
-    tax: number;
+    tax: number; //total tax
+    cost: number; //total cost
     order_item_status: string;
     discount?: number;
 }
-
 
 
 export interface TaxByState {
    [key: string]: number
  } 
 
-
-export interface CartState {
-    cart_id: string | undefined;
-    user_uuid: string | undefined;
-    next_item_id: number,
-    basket_items: OrderItem[];
-    delivery_us_state: string | undefined,  
-    us_tax_rates: TaxByState | {} | any;
-    price_total: number,
-    tax_total: number
-}
 
 
 

@@ -1,7 +1,8 @@
-import React, {useState, useEffect, useMemo} from 'react';
+//import React, {useState, useEffect, useMemo} from 'react';
 import moment from 'moment';
-import { useTable } from "react-table"
+import { useTable, useSortBy} from "react-table"
 import {Order} from "../types/types"
+import {toDollarString} from "../utils"
 import './Orders.css';
 
 interface Props {
@@ -34,15 +35,23 @@ const  OrdersTable:React.FC <Props> = ({ordersList}) => {
         },
         {
           Header: "Items Total",
-          accessor: "items_total",
+          accessor: (order:Order) => {
+            return toDollarString(order.items_total)
+  
+          }
         },
         {
           Header: "Tax Total",
-          accessor: "tax_total",
+          accessor: (order:Order) => {
+            return toDollarString(order.tax_total)
+  
+          }
         }
       ]
 
     const TableContainer = ({columns, data}:any, ) => {
+      //use the useTable hook to define the table
+      //that tableInstance object has all the elements
       const {
         getTableProps,
         getTableBodyProps,
@@ -52,7 +61,9 @@ const  OrdersTable:React.FC <Props> = ({ordersList}) => {
       } = useTable({
         columns,
         data,
-      })
+      }, 
+      useSortBy
+      )
     
       return (
         // If you're curious what props we get as a result of calling our getter functions (getTableProps(), getRowProps())
@@ -74,7 +85,8 @@ const  OrdersTable:React.FC <Props> = ({ordersList}) => {
               return (
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell:any) => {
-                    return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    //const disp = cell.content + "a";
+                    return <td  {...cell.getCellProps()}>{cell.render("Cell")} </td>
                   })}
                 </tr>
               )

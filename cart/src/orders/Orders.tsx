@@ -47,11 +47,11 @@ const Orders:React.FC = () => {
   return (
     <div>
       
-      <div className="cart-inner">
+      <div className="orders-outer">
         <h2>Orders List</h2>
 
   
-          <div className="cart-prod-list">
+          <div className="orders-inner">
             {isLoading ? <div> PLEASE WAIT - ORDERS LOADING !!!</div> : 
                   <OrdersTable ordersList = {ordersList} />        
             }

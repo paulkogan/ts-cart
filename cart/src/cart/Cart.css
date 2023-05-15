@@ -17,12 +17,12 @@
   width: 50%;
   margin-left: 10px;
   padding: 5px;
-  border: 3px solid purple;
+  border: 0px solid purple;
   vertical-align:middle;
 }
 
 .cart-prod-list {
-  border: 2px solid orange;
+  border: 0px solid orange;
   padding: 5px;
   margin-top: 10px;
   margin-left: 10px;
@@ -45,13 +45,13 @@
   margin-top: 10px;
 }
 .cart-app-2 {
-  border: 2px solid brown;
+  border: 0px solid brown;
   padding: 5px;
   margin-top: 10px;
 }
 
 .cart-app-3 {
-  border: 2px solid navy;
+  border: 0px solid navy;
   padding: 5px;
   margin-top: 10px;
 }
@@ -89,11 +89,54 @@
 
 
 .basket-list {
-  border: 1px solid purple;
+  border: 1px solid red;
 }
 
-.basket-plank {
+.selected-plank {
   border: 1px solid navy;
+  white-space: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
+  padding: 5px;
+}
+
+
+.selected-plank-img {
+  display: inline-block;
+  border: 0px solid green;
+  padding-right: 5px
+
+}
+
+.selected-img {
+  height: 15vmin;
+}
+
+.z-plank-info {
+  border: 0px solid green;
+  vertical-align:top;
+  text-align: right;
+  padding-top: 5px;
+  margin: 0px;
+  width: 100%;
+
+}
+
+.z-plank-item {
+  border: 0px solid purple;
+  width: 100%;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+
+}
+
+
+
+
+.basket-plank {
+  border: 0px solid orange;
   white-space: nowrap;
   display: flex;
   flex-wrap: nowrap;
@@ -105,38 +148,30 @@
 
 .basket-plank-img {
   display: inline-block;
-  border: 0px solid green;
+  border: 1px solid green;
   padding-right: 5px
 
 }
 
 
-
 .basket-plank-info {
-  display: inline-block;
-  border: 0px solid black;
+  border: 0px solid green;
   vertical-align:top;
   padding-top: 5px;
-  width: 40%;
+  margin: 15px;
+  width: auto;
 
 }
 .basket-plank-item {
-  border: 1px solid purple;
+  border: 0px solid purple;
+  width: 100%;
+  text-align: right;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding-right: 3px;
 
 }
 
-.basket-plank-cost {
-  display: inline-block;
-  border: 0px solid orange;
-  vertical-align:top;
-  width: 60%;
-  padding-left: 10px;
-  padding-top: 5px;
-
-
-}
 
 
 

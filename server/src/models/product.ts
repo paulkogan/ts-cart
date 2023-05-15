@@ -23,7 +23,7 @@ const productModel = (sequelize, DataTypes) => {
 
         price: {
           allowNull: false,
-          type: DataTypes.DECIMAL(10,2)
+          type: DataTypes.INTEGER
         },
         inventory: {
           allowNull: false,
@@ -59,9 +59,6 @@ const productModel = (sequelize, DataTypes) => {
       // Product.removeAttribute('createdat');
       // Product.removeAttribute('updatedAt');
 
-      Product.associate = function(models) {
-        // associations can be defined here
-      };
     //sequelize.sync({alter:true})
     return Product;
   };

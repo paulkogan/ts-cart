@@ -1,5 +1,6 @@
 import React from 'react';
 import {Product} from "../types/types"
+import {toDollarString} from "../utils"
 import './Admin.css';
 
 interface Props {
@@ -20,7 +21,7 @@ const  AdminProductPlank:React.FC <Props> = ({item}) => {
               </div>
               <div className="basket-plank-info">
                   <div> {item.name} </div> 
-                  <div> Price: {item.price} </div>
+                  <div> Price: {toDollarString(item.price)} </div>
                   <div> Inventory: {item.inventory} </div>
                   <div> {item.product_id} </div>
                   <div className="prod-list-add">

@@ -30,11 +30,11 @@ module.exports = {
       },
       cost: {
         allowNull: false,
-        type: Sequelize.DECIMAL(10,2)
+        type: Sequelize.INTEGER
       },
       tax: {
         allowNull: false,
-        type: Sequelize.DECIMAL(10,2)
+        type: Sequelize.INTEGER
       },
       order_item_status: {
         allowNull: false,
