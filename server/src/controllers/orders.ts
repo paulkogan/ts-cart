@@ -20,34 +20,7 @@ const reduceOrderTotals = (basket_items: OrderItemType[]) => {
 }
 
 const createNew = async (req, res) => {
-    const payload = JSON.stringify(req.body)
-    console.log(`\n\nBE orders req.BODY ${payload}\n\n`)
-    // res.status(200).send({
-    //     message: `Create Product Body is ${payload}`
-    // });
-    // return
-
-    // if (!req.body.price || parseFloat(req.body.price) < 0.00) {
-    //     console.log(`\n\nFAIL BE: Error (400): price must be >= 0 but is ${req.body.price}`)
-    //     return res.status(400).send({
-    //         message: `Error (400): price must be >= 0 but is ${req.body.price}`
-    //       });
-     
-    // }
-    
-    // //check for duplicate order
-    // const dup_product =  await Order.findAll({ where: { 
-    //     name: { [Op.like]: `%${req.body.name}%` } 
-    // }  })
-
-    // if (dup_product.length > 0) {
-    //     return res.status(400).send({
-    //         "data": dup_product,
-    //         "errors": "Duplicate Product",
-    //         "message": `Error (400): Duplicate product  ${req.body.name}`
-
-    //     });
-    // }     
+    const payload = JSON.stringify(req.body)   
     const orderItems = req.body.order_items
     const newOrderUUID = uuidv4()
     const totals =  reduceOrderTotals(orderItems)
@@ -63,21 +36,7 @@ const createNew = async (req, res) => {
         order_status: "accepted"
     }
     
-    console.log(`\nserver - New Order OBJECT is: ${JSON.stringify(new_order)}\n\n`)
-
-    // let oi = orderItems[0]
-    // let new_order_item = {
-    //                 order_item_uuid: uuidv4(),
-    //                 item_cart_id: oi.item_cart_id,
-    //                 product_id: oi.product_id,
-    //                 order_uuid: newOrderUUID,
-    //                 num_units: oi.num_units,
-    //                 cost: oi.cost,
-    //                 tax: oi.tax,
-    //                 order_item_status: "accepted"
-    //             }
-    // console.log(`\nServer - New Order ITEM is: ${JSON.stringify(new_order_item)}\n\n`)            
-    // OrderItem.createNew(new_order_item)
+    console.log(`\n\nserver - New Order OBJECT is: ${JSON.stringify(new_order)}\n\n`)
 
 
 

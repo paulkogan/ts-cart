@@ -1,7 +1,7 @@
 import React from 'react';
 import {Product} from "../types/types"
 import {toDollarString} from "../utils"
-import './Cart.css';
+import './Shopping.css';
 
 
 interface Props {
@@ -12,19 +12,19 @@ interface Props {
 const  ShoppingProductPlank:React.FC <Props> = ({item, handleAdd}) => {
 
       return (
-          <div className="prod-list-plank" >
-              <div className="basket-plank-img">
-                    <img className="prod-list-img" src={item.image_url}></img>
+          <div className="shopping-plank" >
+              <div className="shopping-plank-img">
+                    <img className="shopping-img" src={item.image_url}></img>
               </div>
-              <div className="basket-plank-info">
+              <div className="shopping-plank-info">
+                  <div className="shopping-add-button">
+                        <button onClick={() => handleAdd(item)}>Add to Cart</button>
+                  </div> 
                   <div> {item.name} </div> 
                   <div> ${toDollarString(item.price)} </div>
                   <div> inv: {item.inventory} </div>
-                  <div className="prod-list-add">
-                    <button onClick={() => handleAdd(item)}>Add to Cart</button>
-                  </div> 
-
               </div>
+
 
 
 
@@ -35,5 +35,4 @@ const  ShoppingProductPlank:React.FC <Props> = ({item, handleAdd}) => {
 
 
 export default ShoppingProductPlank;
-
 

@@ -59,9 +59,6 @@ const productModel = (sequelize, DataTypes) => {
       // Product.removeAttribute('createdat');
       // Product.removeAttribute('updatedAt');
 
-      Product.associate = function(models) {
-        // associations can be defined here
-      };
     //sequelize.sync({alter:true})
     return Product;
   };

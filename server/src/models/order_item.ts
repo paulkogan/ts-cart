@@ -55,19 +55,19 @@ const orderItemModel = (sequelize, DataTypes) => {
     },
     // example of associate code in model
     // we do it in the index instead
-    // {
-    //   classMethods:{
-    //     associate:(models)=> {
-    //       OrderItem.belongsTo(models.Order,{foreignKey:'order_uuid'})
-    //     }
-    //   }
+    {
+      classMethods:{
+        associate:(models)=> {
+          OrderItem.belongsTo(models.Order,{foreignKey:'order_uuid'})
+        }
+      }
       
     // }
     
     );
 
     OrderItem.createNew = async (new_order_item) => {
-        console.log(`\nMODEL - OrderITEM.Create: ${JSON.stringify(new_order_item)}\n\n`)
+        //console.log(`\nMODEL - OrderITEM.Create: ${JSON.stringify(new_order_item)}\n\n`)
         return await OrderItem.create(new_order_item)
     }
 

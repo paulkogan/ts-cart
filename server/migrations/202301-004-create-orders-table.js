@@ -34,15 +34,15 @@ module.exports = {
       },
       items_total: {
         allowNull: true,
-        type: Sequelize.DECIMAL(10,2)
+        type: Sequelize.INTEGER
       },
       tax_total: {
         allowNull: true,
-        type: Sequelize.DECIMAL(10,2)
+        type: Sequelize.INTEGER
       },
       shipping_total: {
         allowNull: true,
-        type: Sequelize.DECIMAL(10,2)
+        type: Sequelize.INTEGER
       }
 
     });

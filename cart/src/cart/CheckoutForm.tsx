@@ -16,12 +16,6 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
 
     
     const us_tax_states = Object.keys(cartState.us_tax_rates)
-    //const [buyerState, setBuyerState] = useState(us_tax_states[0].toString())  
-
-    // const handleChange = (fieldName: string, fieldValue: string | number): void => {
-    //   console.log(`HandleChange: ${fieldName} ${fieldValue}`)
-    //   setBuyerState(fieldValue.toString())
-    // };
 
     const submitCreateOrder = async () => {
       console.log(`Submit Order with ${cartState.basket_items.length} items`)
@@ -44,8 +38,8 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
       try {
           const response= await fetch(submit_order_url , submitOptions)
           const data = await response.json()
-          console.log("order response status ", response.status)
-          console.log("NEW ORDER DATA is  ", data)
+          // console.log("order response status ", response.status)
+          // console.log("NEW ORDER DATA is  ", data)
           if (response.status > 300) {
               setUserMessage(data.message)
               //setRegStatus("error")

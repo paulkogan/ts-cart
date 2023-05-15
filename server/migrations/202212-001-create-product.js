@@ -24,6 +24,11 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING
       },
+
+      price: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+      },
     });
   },
 down: async (queryInterface) => {

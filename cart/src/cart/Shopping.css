@@ -1,0 +1,37 @@
+.shopping-plank {
+  border: 1px solid navy;
+  white-space: nowrap;
+}
+
+.shopping-plank-img {
+  display: inline-block;
+  border: 0px solid green;
+  padding-right: 5px
+}
+
+.shopping-img {
+  width: 100px;
+}
+
+.shopping-plank-info {
+  display: inline-block;
+  border: 0px solid green;
+  vertical-align:top;
+  padding-top: 5px;
+  margin: 15px;
+ 
+
+}
+
+
+
+.shopping-add-button {
+  display: inline-block;
+  border: 0px solid orange;
+  vertical-align:top;
+  padding-left: 10px;
+  padding-bottom: 5px;
+}
+
+
+
