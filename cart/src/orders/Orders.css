@@ -17,3 +17,13 @@
   text-align: left;
 }
 
+
+.cell-normal{
+  color: black;
+}
+
+.cell-highlight{
+  color: red;
+}
+
+

@@ -33,7 +33,7 @@ const  OrdersTable:React.FC <Props> = ({ordersList}) => {
           disableSortBy: true,
           Cell: (props: { value: string }) => {
             const formattedName  = props.value.includes("Paul") ? 
-            <span><b>{props.value}</b></span> : <span>{props.value}</span>
+            <span className="cell-highlight">{props.value}</span> : <span className="cell-normal">{props.value}</span>
             return formattedName ;
           },
         },
@@ -57,7 +57,7 @@ const  OrdersTable:React.FC <Props> = ({ordersList}) => {
         }
       ], []
   );
-    const ordersListMemo = useMemo(() => ordersList, []);
+    const ordersListMemo = useMemo(() => ordersList, [ordersList]);
 
 
     const TableContainer = ({columns, data}:any, ) => {
@@ -74,7 +74,8 @@ const  OrdersTable:React.FC <Props> = ({ordersList}) => {
         columns,
         data
       }, 
-      useSortBy, 
+      useSortBy,
+      
    
       )
       //this should be printing once, not 4 times

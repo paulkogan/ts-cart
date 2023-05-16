@@ -52,15 +52,15 @@ const orderItemModel = (sequelize, DataTypes) => {
         updatedAt: false,
         createdAt: false
 
-    },
+    }
     // example of associate code in model
-    // we do it in the index instead
-    {
-      classMethods:{
-        associate:(models)=> {
-          OrderItem.belongsTo(models.Order,{foreignKey:'order_uuid'})
-        }
-      }
+    // // we do it in the index instead
+    // {
+    //   classMethods:{
+    //     associate:(models)=> {
+    //       OrderItem.belongsTo(models.Order,{foreignKey:'order_uuid'})
+    //     }
+    //   }
       
     // }
     
