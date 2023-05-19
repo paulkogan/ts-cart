@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import {User} from "../types/types"
 import './Admin.css';
-// we will set UUID on the backend
-// import {v4 as uuidv4} from 'uuid';
 
 
 // interface Props {
@@ -15,8 +13,6 @@ const  RegisterUserForm:React.FC = () => {
 
 
   const getNewUserObj = () :User => {
-      //let newUUIDString = uuidv4().toString();
-
       return {
         user_uuid: "",
         name: "",

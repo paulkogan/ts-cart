@@ -21,7 +21,6 @@ const ProductAdmin:React.FC = () => {
            const response= await fetch(url)
            const body = await response.json()
            const data = body.data
-           //console.log("PRODUCTS BODY: ", data)
            setProductList(data)
            setIsLoading(false)
       } catch(error) {
@@ -43,7 +42,7 @@ const ProductAdmin:React.FC = () => {
 
   }, []) // pass in a dependency array
 
-  // onst handleSubmit = async (): Promise<string | undefined> => {
+  // const handleSubmit = async (): Promise<string | undefined> => {
   const submitAddProduct = async (product: Product) => {
 
     // product.cart_id = CartState.next_cart_id //this works!
@@ -61,7 +60,7 @@ const ProductAdmin:React.FC = () => {
         body: JSON.stringify({ 
           name: product.name,
           description: product.description,
-          price: product.price,
+          price: Math.floor(product.price*100),
           inventory: product.inventory,
           image_url: product.image_url,
 
@@ -71,24 +70,17 @@ const ProductAdmin:React.FC = () => {
  
     try {
         const response= await fetch(regitser_user_url , requestOptions)
-        const data = await response.json()
+        const payload = await response.json()
         console.log("response status ", response.status)
-        console.log("NEW PRODUCT DATA is  ", data)
+        console.log("NEW PRODUCT RESPONSE payload is  ", payload )
         if (response.status > 300) {
-            setUserMessage(data.message)
-            //setRegStatus("error")
-
-
+            setUserMessage(payload.message)
         } else {
-            setUserMessage(`Success! Added: ${data.name}.`)
-
+            setUserMessage(`Success! Added: ${payload.data.name}.`)
             setProductList(
-              [...productList, data]
+              [...productList, payload.data]
             )
-
         }
-        
-
       } catch(error) {
             setUserMessage(`Error: failed to add product with:  ${error}`)
             console.log("Error: failed to add product with: ", error)

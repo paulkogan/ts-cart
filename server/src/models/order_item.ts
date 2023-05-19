@@ -29,10 +29,6 @@ const orderItemModel = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER
       },
-      item_cart_id: {
-        allowNull: true,
-        type: DataTypes.INTEGER
-      },
       order_item_status: {
         allowNull: false,
         type: DataTypes.TEXT

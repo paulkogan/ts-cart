@@ -1,18 +1,19 @@
 const Sequelize = require("sequelize");
 const {models, sequelize} = require("../models/index.js");
-import {OrderItem as OrderItemType} from "../types/types"
+
 const Order = models.Order;
 const OrderItem = models.OrderItem;
 const User = models.User;
 const Product = models.Product;
 const Op = Sequelize.Op;
-import {cloneDeep} from 'lodash'
+// import {cloneDeep} from 'lodash'
 
+import {OrderItem, BaseOrderItem, Product, BaseProduct } from "../domain/product.interface"
 
 import { v4 as uuidv4 } from 'uuid';
 
 
-const reduceOrderTotals = (basket_items: OrderItemType[]) => {
+const reduceOrderTotals = (basket_items: OrderItem[]) => {
     return basket_items.reduce((tots:any, item) => {
         tots.price = tots.price+item.cost;
         tots.tax = tots.tax+item.tax;
@@ -62,7 +63,6 @@ const createNew = async (req, res) => {
             orderItems.forEach (oi => {
                 let new_order_item = {
                     order_item_uuid: uuidv4(),
-                    item_cart_id: oi.item_cart_id,
                     product_id: oi.product_id,
                     order_uuid: newOrderUUID,
                     num_units: oi.num_units,
@@ -121,10 +121,17 @@ const listOrders = async (req, res) => {
                 }]
             }
         ],
-        where: condition })  
+        where: condition }) 
     .then(data => { 
-
+        return data.map((row, indx) => {
+            row = row.toJSON() //returns a plain object
+            row.index = indx+1
+            return row //dont need to convert back
+        })
+    }) 
+    .then(data => { 
         res.status(200).send({
+        //res.json({
             "data":  paginateData(data, pageIndex, rowsPerPage),
             "rows": data.length,
             "pageIndex": pageIndex,

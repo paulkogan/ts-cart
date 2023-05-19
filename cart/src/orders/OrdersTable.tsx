@@ -10,10 +10,13 @@ interface Props {
 }
 
 const  OrdersTable:React.FC <Props> = ({ordersList}) => {
-
+  console.log(`calling OrdersTable `, ordersList.length)   
   const columns = React.useMemo(
     () => [
-
+        {
+          Header: "Ord.Seq.",
+          accessor: "index",
+        },
         {
           Header: "Date Placed ",
           accessor: (order:Order) => {
@@ -57,7 +60,7 @@ const  OrdersTable:React.FC <Props> = ({ordersList}) => {
         }
       ], []
   );
-    const ordersListMemo = useMemo(() => ordersList, [ordersList]);
+    const ordersListMemo = useMemo(() => ordersList, []);
 
 
     const TableContainer = ({columns, data}:any, ) => {
@@ -75,17 +78,16 @@ const  OrdersTable:React.FC <Props> = ({ordersList}) => {
         data
       }, 
       useSortBy,
-      
-   
       )
-      //this should be printing once, not 4 times
-      console.log(rows[1])   
+      //this should be printing once, not 4 times 
+      console.log(`calling TableContainer `, rows.length)   
 
       return (
         // If you're curious what props we get as a result of calling our getter functions (getTableProps(), getRowProps())
         // Feel free to use console.log()  This will help you better understand how react table works underhood.
+        // <div>{`Cell Value: ${rows[0]?.cells[2]?.value}`}</div>   
+
       <div>
-        <div>{`Cell Value: ${rows[0]?.cells[2]?.value}`}</div>      
         <table {...getTableProps()}>
           <thead>
             {headerGroups.map(headerGroup => (

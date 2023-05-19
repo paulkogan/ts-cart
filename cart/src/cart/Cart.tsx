@@ -40,9 +40,7 @@ const Cart:React.FC = () => {
   const [userDetails, setUserDetails] = useState(initialUserDetails)
 
   const InitialCartState = {
-    "cart_id": undefined,
     "user_uuid": undefined,
-    "next_item_id": 100,
     "basket_items" : [],
     "delivery_us_state": "",
     "us_tax_rates": {},

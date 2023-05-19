@@ -6,13 +6,12 @@ export interface Product {
     image_url: string;
     price: number;
     description?: string;
-    inventory: number;
+    inventory: number | null;
   
 }
 // 
 export interface OrderItem extends Product{
     order_item_uuid: string | null;
-    item_cart_id: number;
     product_id: string;
     order_uuid: string;
     num_units: number;
@@ -28,18 +27,15 @@ export interface TaxByState {
    [key: string]: number
  } 
 
-
+//this is a singleton object. Configured correctly?
 export interface CartState {
-    cart_id: string | undefined;
     user_uuid: string | undefined;
-    next_item_id: number,
     basket_items: OrderItem[];
     delivery_us_state: string | undefined,  
     us_tax_rates: TaxByState | {} | any;
     price_total: number,
     tax_total: number
 }
-
 
 
 export interface Order {

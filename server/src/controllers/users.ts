@@ -4,7 +4,6 @@ const {models, sequelize} = require("../models/index.js");
 const User = models.User;
 const Op = Sequelize.Op;
 
-//import { randomUUID } from 'crypto'
 import { v4 as uuidv4 } from 'uuid';
 
 

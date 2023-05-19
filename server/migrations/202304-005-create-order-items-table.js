@@ -39,10 +39,6 @@ module.exports = {
       order_item_status: {
         allowNull: false,
         type: Sequelize.STRING
-      },
-      item_cart_id: {
-        allowNull: false,
-        type: Sequelize.INTEGER
       }
     });
   },
