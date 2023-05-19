@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import {Product} from "../types/types"
 import './Admin.css';
-import {v4 as uuidv4} from 'uuid';
-
 
 interface Props {
   submitAddProduct: (new_product:Product) => any;
@@ -13,15 +11,13 @@ const  ProductForm:React.FC <Props> = (props) => {
   const {submitAddProduct} = props;
 
   const getNewProdObj = () :Product => {
-      //let newUUIDString = uuidv4().toString();
-
       return {
         product_id: null,
         name: "",
-        image_url: "https://m.media-amazon.com/images/I/61IB1hj+ZfL._AC_SL1500_.jpg",
+        image_url: "",
         description: "", 
-        price: 0.00, 
-        inventory: 10
+        price: 0, 
+        inventory: null
       }
   }
   

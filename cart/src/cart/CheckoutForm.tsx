@@ -1,4 +1,4 @@
-import React, {useState, useReducer} from 'react';
+import React, {useState} from 'react';
 import {CartState} from "../types/types"
 import {toDollarString} from "../utils"
 import './Cart.css';
@@ -88,7 +88,6 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
             <div>Number of Items: {cartState.basket_items.length}</div>
             <div> Price Total: {toDollarString(cartState.price_total)} </div>
             <div> Tax Total: {toDollarString(cartState.tax_total)} </div>
-            <div>Next Cart id: {cartState.next_item_id}</div>
           </div>
           <div>
             {renderUSTaxRates()} 

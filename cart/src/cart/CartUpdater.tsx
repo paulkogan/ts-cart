@@ -17,7 +17,6 @@ const CartUpdater = (state: CartState,  action: any) => {
 
     const {
         basket_items, 
-        next_item_id, 
         delivery_us_state,
         us_tax_rates, 
         user_uuid,
@@ -70,29 +69,27 @@ const CartUpdater = (state: CartState,  action: any) => {
 
             } else {
                 //new non-dup item
-                new_basket_item.basketItemId = next_item_id
                 new_basket_item.num_units = 1
                 new_basket_item.tax = tax_amount
                 new_basket_item.cost = new_basket_item.price
                 
 
         
-                // block double-adds due to React strict mode for useReducer hook using cart_id
-                if (!new_basket_items.find(item => item.item_cart_id === new_basket_item.basketItemId)){
+                // block double-adds due to React strict mode for useReducer hook using product_id
+                if (!new_basket_items.find(item => item.product_id === new_basket_item.product_id)){
                 
                     new_basket_items.push(new_basket_item)
                     const totals = reduceCartTotals(new_basket_items)
 
                     return {
                         ...state,
-                        next_item_id: next_item_id+1,
                         basket_items: new_basket_items,
                         tax_total: totals.tax,
                         price_total: totals.price
                     }
                         
                 } else {
-                    console.log(`DUPLICATE, not adding:  ${new_basket_item.basketItemId} `)
+                    console.log(`DUPLICATE, not adding:  ${new_basket_item.product_id} `)
                     return state
                 }
             }    

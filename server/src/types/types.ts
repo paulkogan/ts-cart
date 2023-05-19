@@ -1,25 +1,25 @@
 
 
-export interface Product {
-    product_id: string | null;
-    name: string;
-    image_url: string;
-    price: number;
-    description?: string;
-    inventory: number;
+// export interface Product {
+//     product_id: string | null;
+//     name: string;
+//     image_url: string;
+//     price: number;
+//     description?: string;
+//     inventory: number;
   
-}
+// }
 
-export interface OrderItem extends Product{
-    item_cart_id: number;
-    product_id: string;
-    order_uuid: string
-    num_units: number;
-    tax: number; //total tax
-    cost: number; //total cost
-    order_item_status: string;
-    discount?: number;
-}
+// export interface OrderItem extends Product{
+//   order_item_uuid: string | null;
+//   product_id: string;
+//   order_uuid: string;
+//   num_units: number;
+//   cost: number; //total cost
+//   tax: number;  //total tax
+//   order_item_status: string;
+// }
+import {OrderItem } from "../domain/product.interface"
 
 
 export interface TaxByState {

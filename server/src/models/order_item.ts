@@ -29,10 +29,6 @@ const orderItemModel = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER
       },
-      item_cart_id: {
-        allowNull: true,
-        type: DataTypes.INTEGER
-      },
       order_item_status: {
         allowNull: false,
         type: DataTypes.TEXT
@@ -52,15 +48,15 @@ const orderItemModel = (sequelize, DataTypes) => {
         updatedAt: false,
         createdAt: false
 
-    },
+    }
     // example of associate code in model
-    // we do it in the index instead
-    {
-      classMethods:{
-        associate:(models)=> {
-          OrderItem.belongsTo(models.Order,{foreignKey:'order_uuid'})
-        }
-      }
+    // // we do it in the index instead
+    // {
+    //   classMethods:{
+    //     associate:(models)=> {
+    //       OrderItem.belongsTo(models.Order,{foreignKey:'order_uuid'})
+    //     }
+    //   }
       
     // }
     

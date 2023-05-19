@@ -106,10 +106,10 @@ describe("POST /products/create", () => {
     it("should properly add a new product", async () => {
         const response = await request(baseURL).post('/products/create').send(test_product_3);
         //console.log("new product create============\n",JSON.stringify(response.body, null,4))
-        expect(response.statusCode).toBe(200);
+        expect(response.statusCode).toBe(201);
         expect(response.body.errors).toBe(undefined);
-        expect(response.body.name).toBe('Glowing Moon Lamp-D');
-        expect(response.body.inventory).toBe(12);
+        expect(response.body.data.name).toBe('Glowing Moon Lamp-D');
+        expect(response.body.data.inventory).toBe(12);
     });
     
 
@@ -151,7 +151,7 @@ describe("GET /products", () => {
     it("should return catalog products", async () => {
     const response = await request(baseURL).get("/products");
     expect(response.body.data.length).toBeGreaterThan(1);
-    expect(response.body.data[0].price).toBe("10000");
+    expect(response.body.data[0].price).toBe(10000);
     });
 });
 

@@ -1,16 +1,19 @@
 const Sequelize = require("sequelize");
 const {models, sequelize} = require("../models/index.js");
-import {OrderItem as OrderItemType} from "../types/types"
+
 const Order = models.Order;
 const OrderItem = models.OrderItem;
 const User = models.User;
 const Product = models.Product;
 const Op = Sequelize.Op;
+// import {cloneDeep} from 'lodash'
+
+import {OrderItem, BaseOrderItem, Product, BaseProduct } from "../domain/product.interface"
 
 import { v4 as uuidv4 } from 'uuid';
 
 
-const reduceOrderTotals = (basket_items: OrderItemType[]) => {
+const reduceOrderTotals = (basket_items: OrderItem[]) => {
     return basket_items.reduce((tots:any, item) => {
         tots.price = tots.price+item.cost;
         tots.tax = tots.tax+item.tax;
@@ -18,6 +21,21 @@ const reduceOrderTotals = (basket_items: OrderItemType[]) => {
       }, {price:0, tax:0});
 
 }
+
+const paginateData = (data: any, pageIndex: number, rowsPerPage: number) => {
+    const totalRows = data.length
+    if (totalRows <= rowsPerPage) return data
+
+    const firstRow = rowsPerPage * (pageIndex-1)
+    const lastPageRow = totalRows - Math.max(totalRows % rowsPerPage, 1)
+
+    if (firstRow > totalRows-1) {
+        return data.slice(lastPageRow)
+    } else {
+        return data.slice(firstRow, firstRow+rowsPerPage)
+    }
+
+} 
 
 const createNew = async (req, res) => {
     const payload = JSON.stringify(req.body)   
@@ -39,14 +57,12 @@ const createNew = async (req, res) => {
     console.log(`\n\nserver - New Order OBJECT is: ${JSON.stringify(new_order)}\n\n`)
 
 
-
     Order.createNew(new_order)
     .then(data => {
         if (data) {
             orderItems.forEach (oi => {
                 let new_order_item = {
                     order_item_uuid: uuidv4(),
-                    item_cart_id: oi.item_cart_id,
                     product_id: oi.product_id,
                     order_uuid: newOrderUUID,
                     num_units: oi.num_units,
@@ -83,7 +99,9 @@ const createNew = async (req, res) => {
 
 const listOrders = async (req, res) => {
     const order_uuid = req.query.uuid;
-    var condition = order_uuid ? { order_uuid: { [Op.eq]: `%${order_uuid}%` } } : null;
+    const rowsPerPage = parseInt(req.query.rows_page) > 0 ? parseInt(req.query.rows_page) : 5
+    const pageIndex = parseInt(req.query.page) > 0 ? parseInt(req.query.page) : 1
+    const condition = order_uuid ? { order_uuid: { [Op.eq]: `%${order_uuid}%` } } : null;
 
     Order.findAll({ 
         include: [{
@@ -103,10 +121,21 @@ const listOrders = async (req, res) => {
                 }]
             }
         ],
-        where: condition })
-    .then(data => {
+        where: condition }) 
+    .then(data => { 
+        return data.map((row, indx) => {
+            row = row.toJSON() //returns a plain object
+            row.index = indx+1
+            return row //dont need to convert back
+        })
+    }) 
+    .then(data => { 
         res.status(200).send({
-            "data":data,
+        //res.json({
+            "data":  paginateData(data, pageIndex, rowsPerPage),
+            "rows": data.length,
+            "pageIndex": pageIndex,
+            "rowsPerPage": rowsPerPage,
             "errors": null
         });
     })
