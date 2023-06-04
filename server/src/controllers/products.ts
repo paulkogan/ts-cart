@@ -41,7 +41,7 @@ const createNew = async (req, res) => {
         });
     }
 
-
+}
 
 
 const listProducts = async (req, res) => {
