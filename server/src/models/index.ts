@@ -29,6 +29,7 @@ const models = {
 };
 
 //models.Order.belongsTo(models.User,
+//https://sequelize.org/docs/v6/core-concepts/assocs/
 
 models.User.hasMany(models.Order,
     {

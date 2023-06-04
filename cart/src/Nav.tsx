@@ -39,7 +39,7 @@ const Nav:React.FC = () => {
             </div>
 
             <Routes>
-            <Route path="/"  element={<ProductAdmin/>} />
+              <Route path="/"  element={<ProductAdmin/>} />
               <Route path="/cart"  element={<Cart/>} />
               <Route path="/productadmin"  element={<ProductAdmin/>} />
               <Route path="/orders"  element={<Orders/>} />
