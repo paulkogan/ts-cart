@@ -15,10 +15,17 @@ const ProductAdmin:React.FC = () => {
   useEffect(() => {
     const products_url = "http://localhost:3001/products"
 
+
     const fetchBEProducts = async (url: string) => {
+
+      const tokenString = `Bearer ${sessionStorage.getItem('sessionToken')}`
+      const fetchOptions = {
+        headers: {'Authorization': tokenString}
+      }
+  
       setIsLoading(true)
       try {
-           const response= await fetch(url)
+           const response= await fetch(url, fetchOptions)
            const body = await response.json()
            const data = body.data
            setProductList(data)

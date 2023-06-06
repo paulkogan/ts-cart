@@ -34,4 +34,5 @@ export const MOCK_PRODUCTS = [
 ]
 
 // https://m.media-amazon.com/images/I/61IB1hj+ZfL._AC_SL1500_.jpg
+//https://cdn.shopify.com/s/files/1/0550/8487/5830/products/100-Wood-Blocks-Set-000481-1-Assembled-Decorated.jpg
 

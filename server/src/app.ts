@@ -1,23 +1,30 @@
 import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
-// import helmet from 'helmet';
-// import morgan from 'morgan';
-// import dotenv from "dotenv";
-import router from './routes/routes_main.js';
-// Could not find a declaration file for module '../routes/routes_main.js
+import jsonWebToken from 'jsonwebtoken'   
+import {expressjwt} from 'express-jwt';
+import cookieParser from 'cookie-parser'
+import 'dotenv/config'
 
-//dotenv.config()
+
+import router from './routes/routes_main.js';
+
+
 const port = 3001
 const app = express();
-
+const secret = process.env.JWT_SECRET || "abcd";
 
 app.use(cors());
+app.use(expressjwt(  {secret: secret,  algorithms: ['HS256'] }).unless({
+    path:[
+      '/users/login',
+    ]}));
+app.use(cookieParser());
 // appends requerst to req.body
 app.use(bodyParser.urlencoded({ extended: false }));
-//app.use(express.json()); //thru body parser?
 app.use(bodyParser.json())
+
 app.use(router)
 
-app.listen(port, () => console.log(`TS-Cart API listening on port ${port}!`))
+app.listen(port, () => console.log(`TS-Cart API listening on port ${port} with:  ${secret}!`))
 

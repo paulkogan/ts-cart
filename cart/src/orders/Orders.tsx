@@ -3,6 +3,7 @@ import './Orders.css';
 import {Order, OrderItem} from "../types/types"
 import OrdersTable from './OrdersTable';
 import Pagination from './Pagination';
+import axiosGetRequest from '../utils/api_service'
 
 const Orders:React.FC = () => {
 
@@ -29,12 +30,12 @@ const Orders:React.FC = () => {
       const orders_url = `http://localhost:3001/orders?page=${pageIndex}`
       
       try {
-           const response= await fetch(orders_url)
-           const body = await response.json()
-           const data = body.data
-           
+
+           const response = await axiosGetRequest(orders_url)
+
+           const data = response.data.data           
            dataFetchedRef.current = true; //controlled load
-           console.log("ORDERS BODY: ", data)
+           console.log("AXIOS RERSPONSE.data: ", data)
            setOrdersList(data)
            setIsLoading(false)
       } catch(error) {

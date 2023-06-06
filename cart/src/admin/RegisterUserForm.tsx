@@ -42,7 +42,7 @@ const  RegisterUserForm:React.FC = () => {
   const handleSubmit = async (): Promise<string | undefined> => {
       //submit new registration to BE
 
-      const regitser_user_url = "http://localhost:3001/users/register"
+      const register_user_url = "http://localhost:3001/users/register"
 
       console.log(`Submit: NewUser is: ${JSON.stringify(newUser)}`)
       const requestOptions = {
@@ -58,7 +58,7 @@ const  RegisterUserForm:React.FC = () => {
       
  
       try {
-          const response= await fetch(regitser_user_url , requestOptions)
+          const response= await fetch(register_user_url , requestOptions)
           const data = await response.json()
           console.log("response status ", response.status)
           console.log("REGISTER DATA is  ", data)

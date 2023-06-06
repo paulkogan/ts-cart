@@ -6,7 +6,7 @@ import ShoppingProductList from './ShoppingProductList';
 import CheckoutForm from './CheckoutForm';
 import LoginPage from './LoginPage';
 import CartUpdater from './CartUpdater';
-
+import jwt from 'jwt-decode';
 
 
 const initialUserDetails = {
@@ -50,7 +50,7 @@ const Cart:React.FC = () => {
   
 
   const [cartState, updateCartDispatch] = useReducer(CartUpdater, InitialCartState);
-
+  const [decodedToken, setDecodedToken] = useState(null);
 
   useEffect(() => {
     // console.log("render: " + cartState.num_units)
@@ -135,20 +135,20 @@ loginState:
 
   const handleLogin = async (login: string, password: string)  =>  {
     // start with just finding user
-    const find_user_url = "http://localhost:3001/users/find_user"
+    const login_url = "http://localhost:3001/users/login"
     setLoginState("in_progress")
 
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: login})
+        body: JSON.stringify({ userid: login, password})
     };
 
     try {
-        const response= await fetch(find_user_url, requestOptions)
+        const response= await fetch(login_url , requestOptions)
         const body = await response.json()
         //console.log("response status ", response.status)
-        console.log("LOGIN body is  ", body)
+        console.log("LOGIN result body is  ", body)
         if (response.status > 300) {
             setLoginState("error")
             setUserMessage(body.message)
@@ -156,13 +156,17 @@ loginState:
 
         } else {
             let data = body.data
+            let user = data.user
+            let token = data.token
             setLoginState("success")
-            setUserMessage(`Success! User: ${data} is logged in`)
+            setUserMessage(`Success! User: ${user.name} is logged in`)
+            setDecodedToken(jwt(token))
+            sessionStorage.setItem('sessionToken', token);
             await setUserDetails({...userDetails,
-                email: data.email,
-                name: data.name,
-                home_state: data.home_state, 
-                user_uuid: data.user_uuid
+                email: user.email,
+                name: user.name,
+                home_state: user.home_state, 
+                user_uuid: user.user_uuid
             })
 
             updateCartDispatch({
@@ -184,7 +188,9 @@ loginState:
   };
 
 
-
+  // var iat = new Date(1572468316 * 1000);
+  // var exp = new Date(1572468916 * 1000);
+  //               <div>IAT {new Date(decodedToken * 1000).toISOString()}</div> 
   return (
     <div>
       
@@ -193,6 +199,14 @@ loginState:
 
         <div className="user-info">User: {userDetails.name}</div> 
         <div>Home_state: {userDetails.home_state}</div>
+        {decodedToken && 
+            <>
+              <div>Decoded Token {JSON.stringify(decodedToken)}</div> 
+
+            </>
+        }
+        <div> Session Storage {sessionStorage.getItem('sessionToken')}</div>
+    
         <div className="cart-left">
           { loginState != "success" ? 
               <div className="cart-login">

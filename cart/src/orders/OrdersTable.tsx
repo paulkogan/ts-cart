@@ -10,7 +10,6 @@ interface Props {
 }
 
 const  OrdersTable:React.FC <Props> = ({ordersList}) => {
-  console.log(`calling OrdersTable `, ordersList.length)   
   const columns = React.useMemo(
     () => [
         {
@@ -80,7 +79,7 @@ const  OrdersTable:React.FC <Props> = ({ordersList}) => {
       useSortBy,
       )
       //this should be printing once, not 4 times 
-      console.log(`calling TableContainer `, rows.length)   
+      //console.log(`calling TableContainer `, rows.length)   
 
       return (
         // If you're curious what props we get as a result of calling our getter functions (getTableProps(), getRowProps())
