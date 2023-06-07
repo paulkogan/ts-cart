@@ -27,11 +27,11 @@ const Orders:React.FC = () => {
         return; //flag to stop multiple loads with strict mode
       }
 
-      const orders_url = `http://localhost:3001/orders?page=${pageIndex}`
-      
+      const orders_url = `http://localhost:3001/orders`
+      const orders_params = {'page':pageIndex}
       try {
 
-           const response = await axiosGetRequest(orders_url)
+           const response = await axiosGetRequest(orders_url, orders_params)
 
            const data = response.data.data           
            dataFetchedRef.current = true; //controlled load

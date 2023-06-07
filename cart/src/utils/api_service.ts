@@ -21,14 +21,18 @@ import url from 'url';
 
 //            'Content-Type': 'application/json', 
 
-const axiosGetRequest = async (baseUrl: string, rawParams: string = "", payload=null, ) => {
+//params from array
+//const params = new URLSearchParams([['answer', 42]]);
+//const res = await axios.get(url, { params });
+
+const axiosGetRequest = async (baseUrl:string, queryParams={}, payload={}, ) => {
     //const API = axios.create({ string: null, baseURL: baseUrl });
-    //const queryParams = new url.URLSearchParams(rawParams);
+    //const queryParams = url.URLSearchParams(rawParams);
     const axiosOptions: AxiosRequestConfig = {    
         //string: null, 
         method: "GET",
         url: baseUrl,
-        //params: queryParams,
+        params: queryParams,
         headers: {
             'Authorization': `Bearer ${sessionStorage.getItem('sessionToken')}`,
             'Content-Type': 'application/json',

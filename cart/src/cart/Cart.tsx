@@ -160,8 +160,11 @@ loginState:
             let token = data.token
             setLoginState("success")
             setUserMessage(`Success! User: ${user.name} is logged in`)
+            const dt = await jwt(token)
             setDecodedToken(jwt(token))
-            sessionStorage.setItem('sessionToken', token);
+            await sessionStorage.setItem('sessionToken', token);
+            await sessionStorage.setItem('decodedToken', JSON.stringify(dt));
+            await sessionStorage.setItem('user', JSON.stringify(user));
             await setUserDetails({...userDetails,
                 email: user.email,
                 name: user.name,
@@ -172,8 +175,8 @@ loginState:
             updateCartDispatch({
               type: "SET_customer_details", 
               payload: {
-                delivery_us_state: data.home_state,
-                user_uuid: data.user_uuid
+                delivery_us_state: user.home_state,
+                user_uuid: user.user_uuid
                }
             }) 
             return "success"
@@ -197,15 +200,17 @@ loginState:
       <div className="cart-inner">
         <h2>Shopping Cart</h2>
 
+        <div>User message: {userMessage}</div>
         <div className="user-info">User: {userDetails.name}</div> 
         <div>Home_state: {userDetails.home_state}</div>
+        
         {decodedToken && 
             <>
               <div>Decoded Token {JSON.stringify(decodedToken)}</div> 
 
             </>
         }
-        <div> Session Storage {sessionStorage.getItem('sessionToken')}</div>
+        <div> Session Token {sessionStorage.getItem('sessionToken')}</div>
     
         <div className="cart-left">
           { loginState != "success" ? 
@@ -250,3 +255,4 @@ loginState:
 
 export default Cart;
 
+//<div>Decoded Token Storage {JSON.stringify(sessionStorage.getItem('decodedToken'))}</div> 

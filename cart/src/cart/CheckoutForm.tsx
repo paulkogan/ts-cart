@@ -16,12 +16,18 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
 
     
     const us_tax_states = Object.keys(cartState.us_tax_rates)
+    
 
     const submitCreateOrder = async () => {
-      console.log(`Submit Order with ${cartState.basket_items.length} items`)
+      // console.log(`Submit Order with ${cartState.basket_items.length} items`)
   
+
+      
       const submit_order_url = "http://localhost:3001/orders/create"
   
+      const sessionUser = await sessionStorage.getItem('user')
+      console.log(`Submit order - Session User ${JSON.stringify(sessionUser)}`)
+
       const newOrderDetails = {
         user_uuid: cartState.user_uuid,
         delivery_us_state: cartState.delivery_us_state,
@@ -85,6 +91,8 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
           <div className="cart-status">
             <div> User: {cartState.user_uuid}</div>
             <div>home_state: {cartState.delivery_us_state}</div>
+            <div>Session storage User {sessionStorage.user}</div> 
+            <div>Session User Name {JSON.parse(sessionStorage.user).name}</div> 
             <div>Number of Items: {cartState.basket_items.length}</div>
             <div> Price Total: {toDollarString(cartState.price_total)} </div>
             <div> Tax Total: {toDollarString(cartState.tax_total)} </div>

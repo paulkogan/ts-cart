@@ -18,6 +18,8 @@ app.use(cors());
 app.use(expressjwt(  {secret: secret,  algorithms: ['HS256'] }).unless({
     path:[
       '/users/login',
+      '/products',
+      '/orders/create'
     ]}));
 app.use(cookieParser());
 // appends requerst to req.body
