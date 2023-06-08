@@ -1,8 +1,8 @@
 import React, {useState, useEffect, useMemo} from 'react';
 import moment from 'moment';
 import { useTable, useSortBy} from "react-table"
-import {Order} from "../types/types"
-import {toDollarString} from "../utils"
+import {Order} from "../../types/types"
+import {toDollarString} from "../../utils"
 import './Orders.css';
 
 interface Props {

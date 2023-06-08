@@ -1,6 +1,6 @@
 import React from 'react';
-import {OrderItem} from "../types/types"
-import {toDollarString} from "../utils"
+import {OrderItem} from "../../types/types"
+import {toDollarString} from "../../utils"
 import './Cart.css';
 
 interface Props {

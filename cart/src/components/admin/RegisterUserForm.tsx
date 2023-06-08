@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import {User} from "../types/types"
+import {User} from "../../types/types"
 import './Admin.css';
+import {axiosPostRequest} from '../../services/api_service'
 
 
 // interface Props {
@@ -40,27 +41,23 @@ const  RegisterUserForm:React.FC = () => {
   };
 
   const handleSubmit = async (): Promise<string | undefined> => {
-      //submit new registration to BE
 
-      const register_user_url = "http://localhost:3001/users/register"
 
+      const register_user_url = "users/register"
       console.log(`Submit: NewUser is: ${JSON.stringify(newUser)}`)
-      const requestOptions = {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
+
+      const newUserPayload = JSON.stringify({ 
             email: newUser.email,
             name: newUser.name,
             password: newUser.password,
             home_state: newUser.home_state
           })
-      };
+   
       
  
       try {
-          const response= await fetch(register_user_url , requestOptions)
-          const data = await response.json()
-          console.log("response status ", response.status)
+         const response = await axiosPostRequest(register_user_url, newUserPayload)
+         const data = await response.data
           console.log("REGISTER DATA is  ", data)
           if (response.status > 300) {
               setUserMessage(data.message)

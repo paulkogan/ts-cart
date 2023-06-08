@@ -1,9 +1,9 @@
 import React, {useState, useEffect, useRef} from 'react';
 import './Orders.css';
-import {Order, OrderItem} from "../types/types"
+import {Order, OrderItem} from "../../types/types"
 import OrdersTable from './OrdersTable';
 import Pagination from './Pagination';
-import axiosGetRequest from '../utils/api_service'
+import {axiosGetRequest} from '../../services/api_service'
 
 const Orders:React.FC = () => {
 
@@ -27,7 +27,7 @@ const Orders:React.FC = () => {
         return; //flag to stop multiple loads with strict mode
       }
 
-      const orders_url = `http://localhost:3001/orders`
+      const orders_url = `orders`
       const orders_params = {'page':pageIndex}
       try {
 
@@ -35,11 +35,13 @@ const Orders:React.FC = () => {
 
            const data = response.data.data           
            dataFetchedRef.current = true; //controlled load
-           console.log("AXIOS RERSPONSE.data: ", data)
+           //console.log("AXIOS Orders RESPONSE.data: ", data)
            setOrdersList(data)
            setIsLoading(false)
       } catch(error) {
-           console.log("Error!: failed to fetch orders data", error)
+           console.log("FE API Error!: failed to fetch orders data", error)
+           // redirect to login
+           
       }
     }
     setIsLoading(true)

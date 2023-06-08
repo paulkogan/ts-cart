@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import {Product, OrderItem} from "../types/types"
+import {Product} from "../../types/types"
 import './Admin.css';
 import ProductForm from './ProductForm';
 import AdminProductList from './AdminProductList';
-
+import {axiosGetRequest, axiosPostRequest} from '../../services/api_service'
 
 
 const ProductAdmin:React.FC = () => {
@@ -12,22 +12,16 @@ const ProductAdmin:React.FC = () => {
   const [productList, setProductList] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(false)
 
+
   useEffect(() => {
-    const products_url = "http://localhost:3001/products"
+    const products_url = "products"
 
 
-    const fetchBEProducts = async (url: string) => {
-
-      const tokenString = `Bearer ${sessionStorage.getItem('sessionToken')}`
-      const fetchOptions = {
-        headers: {'Authorization': tokenString}
-      }
-  
+    const fetchBEProducts = async () => {
       setIsLoading(true)
       try {
-           const response= await fetch(url, fetchOptions)
-           const body = await response.json()
-           const data = body.data
+           const response = await axiosGetRequest(products_url)
+           const data = response.data.data
            setProductList(data)
            setIsLoading(false)
       } catch(error) {
@@ -43,7 +37,7 @@ const ProductAdmin:React.FC = () => {
         console.log("Cart SETUP runs once!")
         if (productList.length === 0) {
               console.log("Fetching BE products!")
-              fetchBEProducts(products_url)               
+              fetchBEProducts()               
         }
     }
 
@@ -52,40 +46,33 @@ const ProductAdmin:React.FC = () => {
   // const handleSubmit = async (): Promise<string | undefined> => {
   const submitAddProduct = async (product: Product) => {
 
-    // product.cart_id = CartState.next_cart_id //this works!
-    console.log("New Item at Cart: "+JSON.stringify(product))
- 
-
-
-    const regitser_user_url = "http://localhost:3001/products/create"
-
-    console.log(`Submit: New Productis: ${JSON.stringify(product)}`)
-
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          name: product.name,
-          description: product.description,
-          price: Math.floor(product.price*100),
-          inventory: product.inventory,
-          image_url: product.image_url,
-
-        })
-    };
+  
+    console.log("Adding New Product: "+JSON.stringify(product))
+    const add_product_url = "products/create"
       
- 
+    const newProductPayload = JSON.stringify({
+      name: product.name,
+      description: product.description,
+      price: Math.floor(product.price*100),
+      inventory: product.inventory,
+      image_url: product.image_url,
+
+    })
+    
+
+
     try {
-        const response= await fetch(regitser_user_url , requestOptions)
-        const payload = await response.json()
-        console.log("response status ", response.status)
-        console.log("NEW PRODUCT RESPONSE payload is  ", payload )
+
+        const response = await axiosPostRequest(add_product_url, newProductPayload)
+        //console.log("response status ", response.status)
+        const data = await response.data
+        //console.log("NEW PRODUCT RESPONSE data is  ", data )
         if (response.status > 300) {
-            setUserMessage(payload.message)
+            setUserMessage(data.message)
         } else {
-            setUserMessage(`Success! Added: ${payload.data.name}.`)
+            setUserMessage(`Success! Added: ${data.data.name}.`)
             setProductList(
-              [...productList, payload.data]
+              [...productList, data.data]
             )
         }
       } catch(error) {

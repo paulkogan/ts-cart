@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-import {CartState} from "../types/types"
-import {toDollarString} from "../utils"
+import {CartState} from "../../types/types"
+import {toDollarString} from "../../utils"
 import './Cart.css';
+import {axiosPostRequest} from '../../services/api_service'
 
 
 
@@ -23,7 +24,7 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
   
 
       
-      const submit_order_url = "http://localhost:3001/orders/create"
+      const submit_order_url = "orders/create"
   
       const sessionUser = await sessionStorage.getItem('user')
       console.log(`Submit order - Session User ${JSON.stringify(sessionUser)}`)
@@ -34,16 +35,14 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
         order_items: cartState.basket_items
       }  
   
-      const submitOptions = {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(newOrderDetails)
-      };
-        
+      const orderPayload = JSON.stringify(newOrderDetails)
+
    
       try {
-          const response= await fetch(submit_order_url , submitOptions)
-          const data = await response.json()
+
+          const response = await axiosPostRequest(submit_order_url, orderPayload)
+          //console.log("order response  ", response)
+          const data = await response.data
           // console.log("order response status ", response.status)
           // console.log("NEW ORDER DATA is  ", data)
           if (response.status > 300) {
@@ -87,15 +86,20 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
 
     return (
       <div>
+         
 
           <div className="cart-status">
-            <div> User: {cartState.user_uuid}</div>
-            <div>home_state: {cartState.delivery_us_state}</div>
+            <div>LocalUser Message:  {userMessage}</div>
             <div>Session storage User {sessionStorage.user}</div> 
-            <div>Session User Name {JSON.parse(sessionStorage.user).name}</div> 
+            {sessionStorage.user &&
+              <div>Session User Name {JSON.parse(sessionStorage.user).name}</div>  
+            }
             <div>Number of Items: {cartState.basket_items.length}</div>
             <div> Price Total: {toDollarString(cartState.price_total)} </div>
             <div> Tax Total: {toDollarString(cartState.tax_total)} </div>
+            {/* <div> User: {cartState.user_uuid}</div>
+            <div>home_state: {cartState.delivery_us_state}</div> */}
+
           </div>
           <div>
             {renderUSTaxRates()} 
@@ -107,5 +111,3 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
 }
 
 export default CheckoutForm;
-
-

@@ -1,5 +1,5 @@
 //import React, {useState, useReducer} from 'react';
-import {CartState, OrderItem} from "../types/types"
+import {CartState, OrderItem} from "../../types/types"
 import {cloneDeep} from 'lodash'
 
 

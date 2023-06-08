@@ -17,12 +17,10 @@ const secret = process.env.JWT_SECRET || "abcd";
 app.use(cors());
 app.use(expressjwt(  {secret: secret,  algorithms: ['HS256'] }).unless({
     path:[
-      '/users/login',
-      '/products',
-      '/orders/create'
+      '/users/login', 
+      '/products'
     ]}));
 app.use(cookieParser());
-// appends requerst to req.body
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 
