@@ -1,10 +1,5 @@
 import React, {useState, useEffect} from 'react';
-//import useLocalStorage from './hooks/useLocalStorage'
-
-
-interface Props {
-    handleLogin: (login: string, password: string) => Promise<string | undefined>
-  }
+import {handleLogin} from '../../services/auth_service'
   
 
 const initialLoginObj = {
@@ -13,8 +8,7 @@ const initialLoginObj = {
 }
 
 
-
-const LoginPage: React.FC <Props>  = ({handleLogin}) => {
+const LoginPage: React.FC = () => {
 
     const [loginObj, setLoginObj] = useState(initialLoginObj)
     const [loginState, setLoginState] = useState("none")
@@ -29,7 +23,7 @@ const LoginPage: React.FC <Props>  = ({handleLogin}) => {
     const handleSubmit = async () => {
 
         await handleLogin(loginObj.email, loginObj.password).then(result => {
-                // console.log("LOGIN result is: "+result)
+                console.log("LOGIN result is: "+result)
                 if (result) {
                     setLoginState(result);
                 } else {
@@ -43,7 +37,8 @@ const LoginPage: React.FC <Props>  = ({handleLogin}) => {
 
     return (
         <div>
-
+            <div>Login State {loginState}</div>
+            <div>Login Object email: {loginObj.email}   pwrd: {loginObj.email}</div>
 
             <div>
                 <input
@@ -73,8 +68,3 @@ const LoginPage: React.FC <Props>  = ({handleLogin}) => {
 }
 
 export default LoginPage
-
-
-// <div>{loginObj.email}..{loginObj.password}</div>
-
-//<div> Local Login State: {loginState}</div>

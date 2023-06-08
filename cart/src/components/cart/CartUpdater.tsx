@@ -1,5 +1,5 @@
 //import React, {useState, useReducer} from 'react';
-import {CartState, OrderItem} from "../types/types"
+import {CartState, OrderItem} from "../../types/types"
 import {cloneDeep} from 'lodash'
 
 
@@ -50,7 +50,7 @@ const CartUpdater = (state: CartState,  action: any) => {
                 tax_amount = Math.round(new_basket_item.price * tax_rate)
               
             }
-            console.log(`REDUCE: Tax amount ${tax_amount} with rate ${tax_rate} for ${new_basket_item.price}`)
+            //console.log(`REDUCE: Tax amount ${tax_amount} with rate ${tax_rate} for ${new_basket_item.price}`)
             //new_tax_by_state[us_state] = new_tax_by_state[us_state as keyof typeof USTaxState] + tax_amount
 
             const same_in_basket = new_basket_items.find(item => item.product_id === new_basket_item.product_id)

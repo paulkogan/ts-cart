@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import {User} from "../types/types"
+import {User} from "../../types/types"
 import './Admin.css';
 import RegisterUserForm from './RegisterUserForm';
 import UserList from './UserList';
+import {axiosGetRequest} from '../../services/api_service'
 
 
 
@@ -13,15 +14,14 @@ const UserAdmin:React.FC = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    const fetch_url = "http://localhost:3001/users"
+    const list_users_url = "users"
 
-    const fetchBEData = async (url: string) => {
+    const fetchUsers = async () => {
       setIsLoading(true)
       try {
-           const response= await fetch(url)
-           const body = await response.json()
-           const data = body.data
-           console.log("FETCH BODY: ", data)
+           const response = await axiosGetRequest(list_users_url)
+           const data = response.data.data
+           //console.log("FETCH BODY: ", data)
            setUserList(data)
            setIsLoading(false)
       } catch(error) {
@@ -34,7 +34,7 @@ const UserAdmin:React.FC = () => {
         console.log("Cart SETUP runs once!")
         if (userList.length === 0) {
               console.log("Fetching BE users!")
-              fetchBEData(fetch_url)               
+              fetchUsers()               
         }
     }
 

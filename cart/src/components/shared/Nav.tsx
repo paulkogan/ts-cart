@@ -5,12 +5,13 @@ import {
   Route,
   Link, 
 } from "react-router-dom";
-import Cart from './cart/Cart';
-import UserAdmin from './admin/UserAdmin';
-import ProductAdmin from './admin/ProductAdmin';
-import Orders from './orders/Orders';
-import Practice from './practice/Practice';
-import './App.css';
+import Login from './LoginPage';
+import Cart from '../cart/Cart';
+import UserAdmin from '../admin/UserAdmin';
+import ProductAdmin from '../admin/ProductAdmin';
+import Orders from '../orders/Orders';
+import Practice from '../practice/Practice';
+import '../App.css';
  
 
 
@@ -20,7 +21,10 @@ const Nav:React.FC = () => {
   return (
     <Router>
       <div className="nav-outer" >
-            <div className="home-links"> 
+            <div className="home-links">
+              <div className="nav-link"> 
+                <Link to="/login">Login</Link>
+              </div> 
               <div className="nav-link"> 
                 <Link to="/cart">Cart</Link>
               </div>
@@ -39,7 +43,8 @@ const Nav:React.FC = () => {
             </div>
 
             <Routes>
-              <Route path="/"  element={<ProductAdmin/>} />
+              <Route path="/"  element={<Login/>} />
+              <Route path="/login"  element={<Login/>} />
               <Route path="/cart"  element={<Cart/>} />
               <Route path="/productadmin"  element={<ProductAdmin/>} />
               <Route path="/orders"  element={<Orders/>} />

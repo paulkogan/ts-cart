@@ -14,5 +14,6 @@ router.post('/products/create', productsController.createNew);
 router.get('/users', usersController.listUsers);
 router.post('/users/find_user', usersController.findUser)
 router.post('/users/register', usersController.registerNew)
+router.post('/users/login', usersController.loginUser)
 
 export default router;

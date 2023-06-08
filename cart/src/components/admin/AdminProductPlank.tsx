@@ -1,6 +1,6 @@
 import React from 'react';
-import {Product} from "../types/types"
-import {toDollarString} from "../utils"
+import {Product} from "../../types/types"
+import {toDollarString} from "../../utils"
 import './Admin.css';
 
 interface Props {
