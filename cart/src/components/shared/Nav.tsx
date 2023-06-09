@@ -12,7 +12,7 @@ import ProductAdmin from '../admin/ProductAdmin';
 import Orders from '../orders/Orders';
 import Practice from '../practice/Practice';
 import '../App.css';
- 
+import {CartStateProvider} from '../../hooks/CartStateContext'
 
 
 
@@ -42,6 +42,7 @@ const Nav:React.FC = () => {
               </div>
             </div>
 
+        <CartStateProvider>
             <Routes>
               <Route path="/"  element={<Login/>} />
               <Route path="/login"  element={<Login/>} />
@@ -51,6 +52,7 @@ const Nav:React.FC = () => {
               <Route path="/useradmin"  element={<UserAdmin/>} />
               <Route path="/practice"  element={<Practice/>} />
             </Routes>
+          </CartStateProvider>
       </div>
     </Router>
   );

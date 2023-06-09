@@ -1,34 +1,13 @@
-import React, {useState, useEffect, useReducer} from 'react';
+import React, {useState, useEffect, useReducer, useContext} from 'react';
 import {Product, OrderItem, CartState} from "../../types/types"
 import './Cart.css';
 import BasketList from './BasketList';
 import ShoppingProductList from './ShoppingProductList';
 import CheckoutForm from './CheckoutForm';
-import CartUpdater from './CartUpdater';
+import CartUpdater from '../../hooks/CartReducer';
 //import jwt from 'jwt-decode';
 import {axiosGetRequest} from '../../services/api_service'
-
-
-// const initialUserDetails = {
-//   user_uuid: null,
-//   email: "",
-//   name: "",
-//   avatar: "",
-//   home_state: "", 
-// }
-
-/*
-loginState:
-    none
-    in_progress
-    success
-    error
-
-*/
-
-
-
-
+import {CartStateContext}  from '../../hooks/CartStateContext'
 
 const Cart:React.FC = () => {
 
@@ -47,7 +26,9 @@ const Cart:React.FC = () => {
   }
   
 
-  const [cartState, updateCartDispatch] = useReducer(CartUpdater, InitialCartState);
+  //const [cartState, updateCartDispatch] = useReducer(CartUpdater, InitialCartState);
+  //const [cartState, updateCartDispatch] = useCartStateContext(CartStateContext);
+  const {cartState, updateCartDispatch}   = useContext(CartStateContext);
 
   useEffect(() => {
 
@@ -128,8 +109,8 @@ const Cart:React.FC = () => {
       <div className="cart-inner">
         <h2>Shopping Cart</h2>
         <div>User message: {userMessage}</div>
-        {/* <div> CART STATE ========= {JSON.stringify(cartState)}</div>
-        <div className="user-info">User: {sessionStorage.name}</div> 
+        <div> CART STATE ========= {JSON.stringify(cartState)}</div>
+        {/* <div className="user-info">User: {sessionStorage.name}</div> 
         <div>Home_state: {sessionStorage.home_state}</div>
          */}
         {sessionStorage.decodedToken && 

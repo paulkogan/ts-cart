@@ -1,5 +1,5 @@
 //import React, {useState, useReducer} from 'react';
-import {CartState, OrderItem} from "../../types/types"
+import {CartState, OrderItem} from "../types/types"
 import {cloneDeep} from 'lodash'
 
 
@@ -94,10 +94,10 @@ const CartUpdater = (state: CartState,  action: any) => {
                 }
             }    
 
-        case "SET_customer_details":
+        case "SET_CUSTOMER_DETAILS":
     
                 state = {...state, 
-                    delivery_us_state: action.payload.delivery_us_state, 
+                    delivery_us_state: action.payload.home_state, 
                     user_uuid: action.payload.user_uuid
                 }
                 return state

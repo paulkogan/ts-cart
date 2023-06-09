@@ -26,8 +26,8 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
       
       const submit_order_url = "orders/create"
   
-      const sessionUser = await sessionStorage.getItem('user')
-      console.log(`Submit order - Session User ${JSON.stringify(sessionUser)}`)
+      //const sessionUser = await sessionStorage.getItem('user')
+      //console.log(`Submit order - Session User ${JSON.stringify(sessionUser)}`)
 
       const newOrderDetails = {
         user_uuid: cartState.user_uuid,
