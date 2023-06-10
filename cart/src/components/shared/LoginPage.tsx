@@ -31,10 +31,9 @@ loginState:
     };
 
     const handleSubmit = async () => {
-
+        //handle login responds with {status, message}
         handleLogin(loginObj.email, loginObj.password, updateCartDispatch)
-        .then(response => {
-                console.log("LOGIN response from auth service is: "+response)              
+        .then(response => {           
                 if (response) {
                     setLoginState(response.status);
                     setUserMessage(response.message)

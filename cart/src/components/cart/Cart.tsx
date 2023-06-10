@@ -1,20 +1,20 @@
-import React, {useState, useEffect, useReducer, useContext} from 'react';
-import {Product, OrderItem, CartState} from "../../types/types"
+import React, {useState, useEffect, useContext} from 'react';
+import {Product} from "../../types/types"
 import './Cart.css';
 import BasketList from './BasketList';
 import ShoppingProductList from './ShoppingProductList';
 import CheckoutForm from './CheckoutForm';
-import CartUpdater from '../../hooks/CartReducer';
-//import jwt from 'jwt-decode';
 import {axiosGetRequest} from '../../services/api_service'
-import {CartStateContext}  from '../../hooks/CartStateContext'
+import {hasValidSession} from '../../services/auth_service'
+ import {CartStateContext}  from '../../hooks/CartStateContext'
+
 
 const Cart:React.FC = () => {
 
   const [productList, setProductList] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [taxStatesLoaded, setTaxStatesLoaded] = useState(false)
-  const [userMessage, setUserMessage] = useState("Please Log In")
+  const [userMessage, setUserMessage] = useState("Happy shopping!")
 
   const InitialCartState = {
     "user_uuid": "",
@@ -103,23 +103,29 @@ const Cart:React.FC = () => {
   // var iat = new Date(1572468316 * 1000);
   // var exp = new Date(1572468916 * 1000);
   // <div>IAT {new Date(decodedToken * 1000).toISOString()}</div> 
+  // <div> Session Token {sessionStorage.getItem('sessionToken')}</div>
+  //   <div> CART STATE ========= {JSON.stringify(cartState.user_uuid)}</div>
   return (
     <div>
       
       <div className="cart-inner">
         <h2>Shopping Cart</h2>
         <div>User message: {userMessage}</div>
-        <div> CART STATE ========= {JSON.stringify(cartState)}</div>
+        <div> CartState - user: {cartState.user_uuid}</div>
+
         {/* <div className="user-info">User: {sessionStorage.name}</div> 
         <div>Home_state: {sessionStorage.home_state}</div>
          */}
         {sessionStorage.decodedToken && 
             <>
               <div>Decoded Token {sessionStorage.decodedToken}</div> 
+              <div>Exp Time {sessionStorage.expDisplayTime}</div>
+              <div>Session exp.: {Math.floor((JSON.parse(sessionStorage.decodedToken).exp*1000-Date.now())/1000)}</div>
+              <div>{hasValidSession() ? "SESSION" : "NO SESSION"}</div>
 
             </>
         }
-        <div> Session Token {sessionStorage.getItem('sessionToken')}</div>
+   
     
         <div className="cart-left">
                 <div className="cart-prod-list">
@@ -149,3 +155,8 @@ const Cart:React.FC = () => {
 export default Cart;
 
 
+{/* <div> Now at Create Milis {sessionStorage.nowAtCreate}</div>   
+<div> Now .......{Date.now()}</div>
+<div> Exp Milis {Number(sessionStorage.exp)*1000}</div>
+<div> Diff {Number(sessionStorage.exp*1000)-Date.now()}</div>
+<div> Minutes {moment.duration(    Number(sessionStorage.exp*1000) - Date.now() ).minutes()}</div> */}
