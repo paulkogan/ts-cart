@@ -13,6 +13,7 @@ interface Props {
 
 
 const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
+    //console.log("cartState ============>",cartState ) 
     const [userMessage, setUserMessage] = useState("Please checkout now.")
 
     

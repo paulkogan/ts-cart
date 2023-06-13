@@ -50,8 +50,12 @@ export const handleLogin = async (login: string, password: string, updateCartDis
         
 
    } catch(error:any) {
-        console.log("Error!: Axios ERROR.")
+        console.log("User Failed to Log In - Axios ERROR.")
         console.log(JSON.stringify(error.response.data))
+        const loginError = new Error(error.response.data.message)
+        //loginError.code = "401"
+        throw loginError
+        //this is wrong
         return {'status':'error', 'message':error.response.data.message}
    }
 

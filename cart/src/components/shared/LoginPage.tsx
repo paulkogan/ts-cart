@@ -42,27 +42,28 @@ loginState:
                     const destPage = sessionStorage.getItem("lastPage") || "/cart"
                     setLoginState(response.status);
                     setUserMessage(response.message)
-                    navigate(-2)
+                    console.log("REDIRECTING after LOGIN: "+destPage)
+                    navigate(destPage)
                 } else {
                     setLoginState('error')
                     setUserMessage('something went wrong')
                 }
                 
 
-        }).catch(err => {
+        }).catch(err => {      //handleLogin return error
+            console.log("LOGIN PAGE ERROR: "+err.message)
             setLoginState("error");
             setUserMessage(err.message || 'no message')
         });
     
-
     };
 
 
 
     return (
         <div>
-            <div>Message {userMessage}</div>
-            <div>Login State {loginState}</div>
+            <div>Message: {userMessage}</div>
+            <div>Login State: {loginState}</div>
             <div>
                 <input
                     type="text"

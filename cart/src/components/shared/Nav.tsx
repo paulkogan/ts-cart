@@ -50,6 +50,14 @@ const Nav:React.FC = () => {
               <Route path="/cart"  element={<Cart/>} />
               <Route path="/productadmin"  element={<ProductAdmin/>} />
 
+              <Route path="/useradmin"
+                  element={
+                    <ProtectedRoute path="/useradmin">
+                        <UserAdmin/>
+                    </ProtectedRoute>
+                  }
+              />
+
               <Route path="/orders"
                   element={
                     <ProtectedRoute path="/orders">
@@ -60,7 +68,7 @@ const Nav:React.FC = () => {
 
               <Route path="/practice"
                   element={
-                    <ProtectedRoute>
+                    <ProtectedRoute path="/practice">
                         <Practice/>
                     </ProtectedRoute>
                   }

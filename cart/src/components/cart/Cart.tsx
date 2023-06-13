@@ -16,15 +16,7 @@ const Cart:React.FC = () => {
   const [taxStatesLoaded, setTaxStatesLoaded] = useState(false)
   const [userMessage, setUserMessage] = useState("Happy shopping!")
 
-  const InitialCartState = {
-    "user_uuid": "",
-    "basket_items" : [],
-    "delivery_us_state": "",
-    "us_tax_rates": {},
-    price_total:0.0,
-    tax_total:0.0
-  }
-  
+
 
   //const [cartState, updateCartDispatch] = useReducer(CartUpdater, InitialCartState);
   //const [cartState, updateCartDispatch] = useCartStateContext(CartStateContext);
