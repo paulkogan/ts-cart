@@ -112,6 +112,7 @@ const Cart:React.FC = () => {
         <h2>Shopping Cart</h2>
         <div>User message: {userMessage}</div>
         <div> CartState - user: {cartState.user_uuid}</div>
+        <div>Session: {hasValidSession() ? "VALID" : "NOT VALID"}</div>
 
         {/* <div className="user-info">User: {sessionStorage.name}</div> 
         <div>Home_state: {sessionStorage.home_state}</div>
@@ -121,7 +122,7 @@ const Cart:React.FC = () => {
               <div>Decoded Token {sessionStorage.decodedToken}</div> 
               <div>Exp Time {sessionStorage.expDisplayTime}</div>
               <div>Session exp.: {Math.floor((JSON.parse(sessionStorage.decodedToken).exp*1000-Date.now())/1000)}</div>
-              <div>{hasValidSession() ? "SESSION" : "NO SESSION"}</div>
+
 
             </>
         }

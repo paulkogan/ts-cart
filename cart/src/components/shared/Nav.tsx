@@ -11,6 +11,7 @@ import UserAdmin from '../admin/UserAdmin';
 import ProductAdmin from '../admin/ProductAdmin';
 import Orders from '../orders/Orders';
 import Practice from '../practice/Practice';
+import { ProtectedRoute } from "./ProtectedRoute";
 import '../App.css';
 import {CartStateProvider} from '../../hooks/CartStateContext'
 
@@ -48,9 +49,23 @@ const Nav:React.FC = () => {
               <Route path="/login"  element={<Login/>} />
               <Route path="/cart"  element={<Cart/>} />
               <Route path="/productadmin"  element={<ProductAdmin/>} />
-              <Route path="/orders"  element={<Orders/>} />
-              <Route path="/useradmin"  element={<UserAdmin/>} />
-              <Route path="/practice"  element={<Practice/>} />
+
+              <Route path="/orders"
+                  element={
+                    <ProtectedRoute path="/orders">
+                        <Orders/>
+                    </ProtectedRoute>
+                  }
+              />
+
+              <Route path="/practice"
+                  element={
+                    <ProtectedRoute>
+                        <Practice/>
+                    </ProtectedRoute>
+                  }
+              />
+       
             </Routes>
           </CartStateProvider>
       </div>

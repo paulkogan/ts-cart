@@ -7,7 +7,12 @@ import {axiosPostRequest} from '../services/api_service'
 
 export const hasValidSession = ():Boolean => {
 
-    return JSON.parse(sessionStorage.decodedToken).exp*1000 > Date.now()
+    if (sessionStorage.getItem("decodedToken") === null) {
+        return false
+    } else {
+        return JSON.parse(sessionStorage.decodedToken).exp*1000 > Date.now()
+    }
+   
 
 }
 

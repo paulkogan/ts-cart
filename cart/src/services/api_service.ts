@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-
 export const axiosGetRequest = async (requestURL:string, queryParams={}) => {
+    
     const fullURL = process.env.REACT_APP_DEV_API_URL+requestURL
 
 
@@ -27,6 +27,7 @@ export const axiosGetRequest = async (requestURL:string, queryParams={}) => {
         return response
     } catch(error){
         console.log("AXIOS GET ERR: "+error)
+        
         return Promise.reject(error)
     }   
 }

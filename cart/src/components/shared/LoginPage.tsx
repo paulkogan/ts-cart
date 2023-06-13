@@ -1,6 +1,8 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {handleLogin} from '../../services/auth_service'
-import {CartStateContext}  from '../../hooks/CartStateContext'  
+import {CartStateContext}  from '../../hooks/CartStateContext' 
+import { Navigate, useNavigate, useLocation } from "react-router-dom"; 
+//const history = useHistory();
 
 const initialLoginObj = {
     email: "",
@@ -22,6 +24,8 @@ loginState:
 */
     const [userMessage, setUserMessage] = useState("Please login.")
     const {cartState, updateCartDispatch}   = useContext(CartStateContext);
+    const navigate = useNavigate(); 
+
 
     const doChange = (fieldName:string, fieldValue: string | null ):void => {
         setLoginObj({
@@ -35,8 +39,10 @@ loginState:
         handleLogin(loginObj.email, loginObj.password, updateCartDispatch)
         .then(response => {           
                 if (response) {
+                    const destPage = sessionStorage.getItem("lastPage") || "/cart"
                     setLoginState(response.status);
                     setUserMessage(response.message)
+                    navigate(-2)
                 } else {
                     setLoginState('error')
                     setUserMessage('something went wrong')
