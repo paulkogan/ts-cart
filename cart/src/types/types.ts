@@ -32,7 +32,6 @@ export interface CartState {
     user_uuid: string | undefined;
     basket_items: OrderItem[];
     delivery_us_state: string | undefined,  
-    us_tax_rates: TaxByState | {} | any;
     price_total: number,
     tax_total: number
 }

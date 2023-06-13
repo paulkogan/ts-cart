@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {CartState} from "../../types/types"
+import {CartState, TaxByState} from "../../types/types"
 import {toDollarString} from "../../utils"
 import './Cart.css';
 import {axiosPostRequest} from '../../services/api_service'
-
+import {getTaxRates} from "../../utils"
 
 
 interface Props {
@@ -16,9 +16,10 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
     //console.log("cartState ============>",cartState ) 
     const [userMessage, setUserMessage] = useState("Please checkout now.")
 
-    
-    const us_tax_states = Object.keys(cartState.us_tax_rates)
-    
+    const taxRatesDict = getTaxRates()
+    //console.log("US TAX DICT CHECKOUT "+JSON.stringify(taxRatesDict))
+    const us_tax_states = Object.keys(taxRatesDict)
+    //console.log("STATES KEYS CHECKOUT "+us_tax_states)
 
     const submitCreateOrder = async () => {
       // console.log(`Submit Order with ${cartState.basket_items.length} items`)
@@ -75,10 +76,11 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
 
   const renderUSTaxRates = ():JSX.Element[]  => {
 
-    return us_tax_states.map(state =>  {
+    return us_tax_states.map((state) =>  {
       return (
         <div key={state} className="basket-outer-item" >
-              {state} {cartState.us_tax_rates[state].toFixed(2)}%
+              {state} {(taxRatesDict as any) [state]} %
+
         </div>
       )
     })

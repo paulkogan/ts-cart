@@ -1,17 +1,16 @@
 import React, {useReducer} from 'react';
 import CartReducer from './CartReducer';
 
+const initialCartState = {
+    "user_uuid": "",
+    "basket_items" : [],
+    "delivery_us_state": "",
+    price_total:0.0,
+    tax_total:0.0
+}
 
 const initializeCartState = () => {
 
-    const initialCartState = {
-        "user_uuid": "",
-        "basket_items" : [],
-        "delivery_us_state": "",
-        "us_tax_rates": {},
-        price_total:0.0,
-        tax_total:0.0
-    }
 
     //check session storage for user info    
     const user = sessionStorage.getItem('user')

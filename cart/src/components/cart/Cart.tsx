@@ -6,8 +6,8 @@ import ShoppingProductList from './ShoppingProductList';
 import CheckoutForm from './CheckoutForm';
 import {axiosGetRequest} from '../../services/api_service'
 import {hasValidSession} from '../../services/auth_service'
- import {CartStateContext}  from '../../hooks/CartStateContext'
-
+import {CartStateContext}  from '../../hooks/CartStateContext'
+import {getTaxRates} from "../../utils"
 
 const Cart:React.FC = () => {
 
@@ -25,6 +25,7 @@ const Cart:React.FC = () => {
   useEffect(() => {
 
     const products_url = "products"
+    const sourceTaxRates = getTaxRates()
 
     const fetchBEProducts = async () => {
       setIsLoading(true)
@@ -41,36 +42,11 @@ const Cart:React.FC = () => {
    }
 
 
-    const fetchTaxRates = () => {
-      try {
-        // later will fetch from BE
-        const sourceTaxRates = 
-          { 
-          "NY": 8.125,
-          "AZ": 10.25,
-          "FL": 5.0,
-          }
-        
-
-        updateCartDispatch({
-              type: "UPDATE_STATE_TAX_RATES", 
-              payload: {
-                us_tax_rates:  sourceTaxRates,
-              }
-        })
-        setTaxStatesLoaded(true)
-      } catch(error) {
-        console.log("Error!: failed to fetch tax rates", error)
-      }
-
-    }
-
     //need to fetch inside useEffect (or useCallback)
     return () => {
         console.log("Cart SETUP runs once!")
         if (productList.length === 0) {            
-              fetchBEProducts()
-              fetchTaxRates()                  
+              fetchBEProducts()              
         }
     }
 

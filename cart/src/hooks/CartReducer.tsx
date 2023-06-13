@@ -1,7 +1,7 @@
 //import React, {useState, useReducer} from 'react';
 import {CartState, OrderItem} from "../types/types"
 import {cloneDeep} from 'lodash'
-
+import {getTaxRates, getTaxRateForState} from "../utils"
 
 const reduceCartTotals = (basket_items: OrderItem[]) : {price: number, tax: number} => {
     return basket_items.reduce((tots, item: OrderItem) => {
@@ -18,7 +18,6 @@ const CartUpdater = (state: CartState,  action: any) => {
     const {
         basket_items, 
         delivery_us_state,
-        us_tax_rates, 
         user_uuid,
         price_total,
         tax_total
@@ -26,7 +25,7 @@ const CartUpdater = (state: CartState,  action: any) => {
     // need to clone the array to avoid double execution under TS Strict in DEV 
     
     const new_basket_items = cloneDeep(basket_items)
-    
+    const us_tax_rates = getTaxRates()
 
     switch(action.type) {
 
@@ -46,7 +45,8 @@ const CartUpdater = (state: CartState,  action: any) => {
             let tax_amount = 0
 
             if (delivery_us_state) {
-                tax_rate = us_tax_rates[delivery_us_state]/100
+                tax_rate = getTaxRateForState(delivery_us_state)/100
+                console.log("Tax Rate: "+tax_rate)
                 tax_amount = Math.round(new_basket_item.price * tax_rate)
               
             }
@@ -101,15 +101,6 @@ const CartUpdater = (state: CartState,  action: any) => {
                     user_uuid: action.payload.user_uuid
                 }
                 return state
-
-        //REMOVE!
-        case "UPDATE_STATE_TAX_RATES":
-            const new_tax_rates = action.payload.us_tax_rates
-
-            state = {...state, 
-                us_tax_rates: new_tax_rates
-            }
-            return state
 
         default:
             return state 
