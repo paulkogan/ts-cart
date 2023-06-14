@@ -1,12 +1,77 @@
 .App {
+  border: 1px solid pink;
   text-align: center;
 }
 
 .nav-outer {
-  border: 1px solid green;
+  border: 0px solid blue;
   padding: 5px;
   margin-left: 20px;
   width: 90%;
   text-align: left;
+}
 
+
+.home-links {
+  border: 0px solid purple;
+  padding: 5px;
+  margin-left: 10px;
+  width: 90%;
+  text-align: left;
+}
+
+
+.nav-link {
+  border: 1px solid grey;
+  display: inline-block;
+  padding: 5px;
+  margin-left: 5px;
+  text-align: left;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.login-outer {
+  border: 1px solid grey;
+  padding: 5px;
+  padding-top: 25px;
+  margin-left: 20px;
+  width: 90%;
+  text-align: left;
+}
+
+
+.login-messages {
+  border: 0px solid orange;
+  padding: 5px;
+  margin-left: 20px;
+  margin-bottom: 15px;
+}
+
+.login-input-div {
+  border: 0px solid purple;
+  padding: 5px;
+  margin-left: 10px;
+  width: 90%;
+  text-align: left;
+}
+
+.login-input-field {
+  border: 1px solid orange;
+  display: inline-block;
+  padding: 5px;
+  margin-left: 5px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+
+.login-sumbit-button {
+  border: 0px solid red;
+  display: inline-block;
+  padding: 5px;
+  margin-bottom: 25px;
+  margin-left: 15px;
+  text-align: left;
+  vertical-align: middle;
 }

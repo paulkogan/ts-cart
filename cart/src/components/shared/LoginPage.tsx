@@ -9,19 +9,21 @@ const initialLoginObj = {
     password: "",
 }
 
+    /*
+    loginState:
+        none
+        in_progress
+        success
+        error
+
+*/
+
 
 const LoginPage: React.FC = () => {
 
     const [loginObj, setLoginObj] = useState(initialLoginObj)
     const [loginState, setLoginState] = useState("none")
-    /*
-loginState:
-    none
-    in_progress
-    success
-    error
 
-*/
     const [userMessage, setUserMessage] = useState("Please login.")
     const {cartState, updateCartDispatch}   = useContext(CartStateContext);
     const navigate = useNavigate(); 
@@ -46,7 +48,8 @@ loginState:
                     navigate(destPage)
                 } else {
                     setLoginState('error')
-                    setUserMessage('something went wrong')
+                    setUserMessage('Problematic Respondse')
+                    
                 }
                 
 
@@ -54,6 +57,7 @@ loginState:
             console.log("LOGIN PAGE ERROR: "+err.message)
             setLoginState("error");
             setUserMessage(err.message || 'no message')
+            setLoginObj({...loginObj, password: ""})
         });
     
     };
@@ -61,26 +65,34 @@ loginState:
 
 
     return (
-        <div>
-            <div>Message: {userMessage}</div>
-            <div>Login State: {loginState}</div>
-            <div>
+        <div className="login-outer" >
+
+            <div className="login-messages">
+                <div>Message: {userMessage}</div>
+                <div>Login State: {loginState}</div>
+            </div> 
+
+            <div className="login-input-div" >
                 <input
+                    className="login-input-field" 
                     type="text"
                     placeholder = "username"
                     name = "email"
+                    value = {loginObj.email}
                     onChange = {(e) => doChange(e.target.name, e.target.value) }                
                 />
 
                 <input
+                    className="login-input-field" 
                     type="text"
                     placeholder = "password"
                     name = "password"
+                    value = {loginObj.password}
                     onChange = {(e) => doChange(e.target.name, e.target.value) }                
                 />
             </div>
 
-            <div>
+            <div className="login-sumbit-button" >
                <button onClick={handleSubmit}>Login</button>
             </div>  
 

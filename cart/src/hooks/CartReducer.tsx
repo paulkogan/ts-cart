@@ -13,7 +13,7 @@ const reduceCartTotals = (basket_items: OrderItem[]) : {price: number, tax: numb
 }
 
 
-const CartUpdater = (state: CartState,  action: any) => {
+const CartUpdater = (state: CartState,  action: {type:string, payload: any}) => {
 
     const {
         basket_items, 
@@ -46,7 +46,6 @@ const CartUpdater = (state: CartState,  action: any) => {
 
             if (delivery_us_state) {
                 tax_rate = getTaxRateForState(delivery_us_state)/100
-                console.log("Tax Rate: "+tax_rate)
                 tax_amount = Math.round(new_basket_item.price * tax_rate)
               
             }
