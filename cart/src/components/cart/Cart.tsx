@@ -13,20 +13,42 @@ const Cart:React.FC = () => {
 
   const [productList, setProductList] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(false)
-  const [taxStatesLoaded, setTaxStatesLoaded] = useState(false)
   const [userMessage, setUserMessage] = useState("Happy shopping!")
-
-
-
-  //const [cartState, updateCartDispatch] = useReducer(CartUpdater, InitialCartState);
-  //const [cartState, updateCartDispatch] = useCartStateContext(CartStateContext);
   const {cartState, updateCartDispatch}   = useContext(CartStateContext);
+
+
 
   useEffect(() => {
 
+    const addUserToCartState = async () => {
+      //check session storage for user info    
+      const user = sessionStorage.getItem('user')
+      if (user) {
+           const userObj = JSON.parse(user)
+           await updateCartDispatch({
+              type: "SET_CUSTOMER_DETAILS", 
+              payload: userObj
+            })
+            console.log("adding user info to cartState - EFFECT")
+
+      } else {
+          console.log("No user info in sessionStorage to add to cartState - NOT ading NA")
+      }
+    }
+      return () => {
+          console.log("add User To Cart State UP?")
+          if (!cartState.user_uuid) {
+              console.log("cartState missing a User, so trying to add!")            
+              addUserToCartState ()              
+          }
+      } 
+  }, []) 
+
+
+
+  useEffect(() => {
     const products_url = "products"
     const sourceTaxRates = getTaxRates()
-
     const fetchBEProducts = async () => {
       setIsLoading(true)
       try {
@@ -44,14 +66,13 @@ const Cart:React.FC = () => {
 
     //need to fetch inside useEffect (or useCallback)
     return () => {
-        console.log("Cart SETUP runs once!")
+        console.log("Cart SETUP runs once - getting PRODUCT list")
         if (productList.length === 0) {            
               fetchBEProducts()              
         }
     }
 
-  }, []) // pass in a dependency array
-
+  }, []) 
 
   const addToBasket = async (product: Product) => {
     //console.log("addToBasket: New Item in Cart: "+JSON.stringify(product))
@@ -62,32 +83,23 @@ const Cart:React.FC = () => {
             product: product,
           }
         })
+        await setUserMessage(`Added ${product.name} to your basket.`)
 
   } 
 
-
-
-
-  // var iat = new Date(1572468316 * 1000);
-  // var exp = new Date(1572468916 * 1000);
-  // <div>IAT {new Date(decodedToken * 1000).toISOString()}</div> 
-  // <div> Session Token {sessionStorage.getItem('sessionToken')}</div>
-  //   <div> CART STATE ========= {JSON.stringify(cartState.user_uuid)}</div>
   return (
     <div>
       
       <div className="cart-inner">
         <h2>Shopping Cart</h2>
         <div>User message: {userMessage}</div>
-        <div> CartState - user: {cartState.user_uuid}</div>
-        <div>Session: {hasValidSession() ? "VALID" : "NOT VALID"}</div>
+        <div>Cart User State: {cartState.delivery_us_state}</div>
+        <div>Session: {hasValidSession() ? "VALID" : "NOT VALID - Please log in"}</div>
 
-        {/* <div className="user-info">User: {sessionStorage.name}</div> 
-        <div>Home_state: {sessionStorage.home_state}</div>
-         */}
+
         {sessionStorage.decodedToken && 
             <>
-              <div>Decoded Token {sessionStorage.decodedToken}</div> 
+              <div>Decoded Token Name: {JSON.parse(sessionStorage.decodedToken).name}</div> 
               <div>Exp Time {sessionStorage.expDisplayTime}</div>
               <div>Session exp.: {Math.floor((JSON.parse(sessionStorage.decodedToken).exp*1000-Date.now())/1000)}</div>
 
@@ -99,7 +111,7 @@ const Cart:React.FC = () => {
         <div className="cart-left">
                 <div className="cart-prod-list">
                 {isLoading ? <div> PLEASE WAIT - PRODUCTS LOADING !!!</div> : 
-                      <ShoppingProductList productList = {productList} addToBasket={addToBasket}/>        
+                      <ShoppingProductList productList = {productList} addToBasket={addToBasket} />        
                 }
               </div>
         </div>
@@ -108,7 +120,7 @@ const Cart:React.FC = () => {
 
         <div className="cart-right">
             <div className="cart-app-3">
-                <CheckoutForm cartState = {cartState} updateCartDispatch={updateCartDispatch}  />
+                <CheckoutForm cartState = {cartState} updateCartDispatch={updateCartDispatch} updateMessage = {setUserMessage} />
             </div>
 
             <div className="cart-app-3">
