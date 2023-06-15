@@ -3,6 +3,17 @@
   text-align: center;
 }
 
+
+.app-outer {
+  border: 0px solid red;
+  padding: 5px;
+  margin-left: 20px;
+  width: 90%;
+  text-align: left;
+}
+
+
+
 .nav-outer {
   border: 0px solid blue;
   padding: 5px;

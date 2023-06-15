@@ -1,7 +1,7 @@
 
 import React, {useState, useEffect, useReducer, useContext} from 'react';
 //import jwt from 'jwt-decode';
-import {axiosPostRequest} from '../services/api_service'
+import {axiosPostRequest, axiosGetRequest} from '../services/api_service'
 //import moment from 'moment'
 
 
@@ -16,6 +16,41 @@ export const hasValidSession = ():Boolean => {
 
 }
 
+export const handleLogout = async (updateCartDispatch:any) => {
+    const logout_url = "users/logout"
+
+    try {
+
+        // const response = await axiosGetRequest(logout_url)
+        // const body = await response.data
+        // console.log("LOGOUT response body is  ", body)
+        // console.log("LOGOOUT response status is  ", response.status)
+   
+
+        //clear user info in CartState
+        updateCartDispatch({
+            type: "SET_CUSTOMER_DETAILS", 
+            payload: {
+                home_state: null,
+                user_uuid: null
+            }          
+        })
+        await sessionStorage.clear();
+        console.log("Clearing Session Storage-----------")
+
+        return {'status':'success', 'message':"body.message"}   
+
+    } catch(error:any) {
+        console.log("User Failed to LogOut - Axios ERROR.")
+        console.log(JSON.stringify(error.response.data))
+        const logoutError = new Error(error.response.data.message)
+        //loginError.code = "401"
+        throw logoutError
+        //this is wrong
+        return {'status':'error', 'message':error.response.data.message}
+    }
+
+}
 
 export const handleLogin = async (login: string, password: string, updateCartDispatch: any) => {
     

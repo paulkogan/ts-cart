@@ -93,7 +93,7 @@ const Cart:React.FC = () => {
       <div className="cart-inner">
         <h2>Shopping Cart</h2>
         <div>User message: {userMessage}</div>
-        <div>Cart User State: {cartState.delivery_us_state}</div>
+        <div>Cart State User: {cartState.delivery_us_state || 'none'}</div>
         <div>Session: {hasValidSession() ? "VALID" : "NOT VALID - Please log in"}</div>
 
 
