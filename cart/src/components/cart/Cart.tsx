@@ -1,58 +1,54 @@
-import React, {useState, useEffect, useReducer} from 'react';
-import {Product, OrderItem, CartState} from "../../types/types"
+import React, {useState, useEffect, useContext} from 'react';
+import {Product} from "../../types/types"
 import './Cart.css';
 import BasketList from './BasketList';
 import ShoppingProductList from './ShoppingProductList';
 import CheckoutForm from './CheckoutForm';
-import CartUpdater from './CartUpdater';
-//import jwt from 'jwt-decode';
 import {axiosGetRequest} from '../../services/api_service'
-
-
-// const initialUserDetails = {
-//   user_uuid: null,
-//   email: "",
-//   name: "",
-//   avatar: "",
-//   home_state: "", 
-// }
-
-/*
-loginState:
-    none
-    in_progress
-    success
-    error
-
-*/
-
-
-
-
+import {hasValidSession} from '../../services/auth_service'
+import {CartStateContext}  from '../../hooks/CartStateContext'
+import {getTaxRates} from "../../utils"
 
 const Cart:React.FC = () => {
 
   const [productList, setProductList] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(false)
-  const [taxStatesLoaded, setTaxStatesLoaded] = useState(false)
-  const [userMessage, setUserMessage] = useState("Please Log In")
+  const [userMessage, setUserMessage] = useState("Happy shopping!")
+  const {cartState, updateCartDispatch}   = useContext(CartStateContext);
 
-  const InitialCartState = {
-    "user_uuid": "",
-    "basket_items" : [],
-    "delivery_us_state": "",
-    "us_tax_rates": {},
-    price_total:0.0,
-    tax_total:0.0
-  }
-  
 
-  const [cartState, updateCartDispatch] = useReducer(CartUpdater, InitialCartState);
 
   useEffect(() => {
 
-    const products_url = "products"
+    const addUserToCartState = async () => {
+      //check session storage for user info    
+      const user = sessionStorage.getItem('user')
+      if (user) {
+           const userObj = JSON.parse(user)
+           await updateCartDispatch({
+              type: "SET_CUSTOMER_DETAILS", 
+              payload: userObj
+            })
+            console.log("adding user info to cartState - EFFECT")
 
+      } else {
+          console.log("No user info in sessionStorage to add to cartState - NOT ading NA")
+      }
+    }
+      return () => {
+          console.log("add User To Cart State UP?")
+          if (!cartState.user_uuid) {
+              console.log("cartState missing a User, so trying to add!")            
+              addUserToCartState ()              
+          }
+      } 
+  }, []) 
+
+
+
+  useEffect(() => {
+    const products_url = "products"
+    const sourceTaxRates = getTaxRates()
     const fetchBEProducts = async () => {
       setIsLoading(true)
       try {
@@ -68,41 +64,15 @@ const Cart:React.FC = () => {
    }
 
 
-    const fetchTaxRates = () => {
-      try {
-        // later will fetch from BE
-        const sourceTaxRates = 
-          { 
-          "NY": 8.125,
-          "AZ": 10.25,
-          "FL": 5.0,
-          }
-        
-
-        updateCartDispatch({
-              type: "UPDATE_STATE_TAX_RATES", 
-              payload: {
-                us_tax_rates:  sourceTaxRates,
-              }
-        })
-        setTaxStatesLoaded(true)
-      } catch(error) {
-        console.log("Error!: failed to fetch tax rates", error)
-      }
-
-    }
-
     //need to fetch inside useEffect (or useCallback)
     return () => {
-        console.log("Cart SETUP runs once!")
+        console.log("Cart SETUP runs once - getting PRODUCT list")
         if (productList.length === 0) {            
-              fetchBEProducts()
-              fetchTaxRates()                  
+              fetchBEProducts()              
         }
     }
 
-  }, []) // pass in a dependency array
-
+  }, []) 
 
   const addToBasket = async (product: Product) => {
     //console.log("addToBasket: New Item in Cart: "+JSON.stringify(product))
@@ -113,37 +83,35 @@ const Cart:React.FC = () => {
             product: product,
           }
         })
+        await setUserMessage(`Added ${product.name} to your basket.`)
 
   } 
 
-
-
-
-  // var iat = new Date(1572468316 * 1000);
-  // var exp = new Date(1572468916 * 1000);
-  // <div>IAT {new Date(decodedToken * 1000).toISOString()}</div> 
   return (
     <div>
       
       <div className="cart-inner">
         <h2>Shopping Cart</h2>
         <div>User message: {userMessage}</div>
-        {/* <div> CART STATE ========= {JSON.stringify(cartState)}</div>
-        <div className="user-info">User: {sessionStorage.name}</div> 
-        <div>Home_state: {sessionStorage.home_state}</div>
-         */}
+        <div>Cart State User: {cartState.delivery_us_state || 'none'}</div>
+        <div>Session: {hasValidSession() ? "VALID" : "NOT VALID - Please log in"}</div>
+
+
         {sessionStorage.decodedToken && 
             <>
-              <div>Decoded Token {sessionStorage.decodedToken}</div> 
+              <div>Decoded Token Name: {JSON.parse(sessionStorage.decodedToken).name}</div> 
+              <div>Exp Time {sessionStorage.expDisplayTime}</div>
+              <div>Session exp.: {Math.floor((JSON.parse(sessionStorage.decodedToken).exp*1000-Date.now())/1000)}</div>
+
 
             </>
         }
-        <div> Session Token {sessionStorage.getItem('sessionToken')}</div>
+   
     
         <div className="cart-left">
                 <div className="cart-prod-list">
                 {isLoading ? <div> PLEASE WAIT - PRODUCTS LOADING !!!</div> : 
-                      <ShoppingProductList productList = {productList} addToBasket={addToBasket}/>        
+                      <ShoppingProductList productList = {productList} addToBasket={addToBasket} />        
                 }
               </div>
         </div>
@@ -152,7 +120,7 @@ const Cart:React.FC = () => {
 
         <div className="cart-right">
             <div className="cart-app-3">
-                <CheckoutForm cartState = {cartState} updateCartDispatch={updateCartDispatch}  />
+                <CheckoutForm cartState = {cartState} updateCartDispatch={updateCartDispatch} updateMessage = {setUserMessage} />
             </div>
 
             <div className="cart-app-3">
@@ -168,3 +136,8 @@ const Cart:React.FC = () => {
 export default Cart;
 
 
+{/* <div> Now at Create Milis {sessionStorage.nowAtCreate}</div>   
+<div> Now .......{Date.now()}</div>
+<div> Exp Milis {Number(sessionStorage.exp)*1000}</div>
+<div> Diff {Number(sessionStorage.exp*1000)-Date.now()}</div>
+<div> Minutes {moment.duration(    Number(sessionStorage.exp*1000) - Date.now() ).minutes()}</div> */}

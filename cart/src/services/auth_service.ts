@@ -1,75 +1,97 @@
 
-import React, {useState, useEffect, useReducer} from 'react';
-// import {Product, OrderItem, CartState} from "../types/types"
-// import './Cart.css';
-// import BasketList from './BasketList';
-// import ShoppingProductList from './ShoppingProductList';
-// import CheckoutForm from './CheckoutForm';
-// import LoginPage from './LoginPage';
-//import CartUpdater from './CartUpdater';
-import jwt from 'jwt-decode';
-import {axiosGetRequest} from '../services/api_service'
-/*
-loginState:
-    none
-    in_progress
-    success
-    error
-
-*/
+import React, {useState, useEffect, useReducer, useContext} from 'react';
+//import jwt from 'jwt-decode';
+import {axiosPostRequest, axiosGetRequest} from '../services/api_service'
+//import moment from 'moment'
 
 
+export const hasValidSession = ():Boolean => {
 
-export const handleLogin = async (login: string, password: string)  =>  {
-    // start with just finding user
-    //const [cartState, updateCartDispatch] = useReducer(CartUpdater, InitialCartState);
-    const login_url = "http://localhost:3001/users/login"
-    //setLoginState("in_progress")
+    if (sessionStorage.getItem("decodedToken") === null) {
+        return false
+    } else {
+        return JSON.parse(sessionStorage.decodedToken).exp*1000 > Date.now()
+    }
+   
 
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userid: login, password})
-    };
+}
+
+export const handleLogout = async (updateCartDispatch:any) => {
+    const logout_url = "users/logout"
 
     try {
-        const response= await fetch(login_url , requestOptions)
-        const body = await response.json()
-        //console.log("response status ", response.status)
-        console.log("LOGIN result body is  ", body)
-        if (response.status > 300) {
-            // setLoginState("error")
-            // setUserMessage(body.message)
-            return "error"+body.message
 
-        } else {
-            let data = body.data
-            let user = data.user
-            let token = data.token
-            // setLoginState("success")
-            // setUserMessage(`Success! User: ${user.name} is logged in`)
-            const dt = await jwt(token)
-            await sessionStorage.setItem('sessionToken', token);
-            await sessionStorage.setItem('decodedToken', JSON.stringify(jwt(token)));
-            await sessionStorage.setItem('user', JSON.stringify(user));
+        // const response = await axiosGetRequest(logout_url)
+        // const body = await response.data
+        // console.log("LOGOUT response body is  ", body)
+        // console.log("LOGOOUT response status is  ", response.status)
+   
 
-            //this is the real problem
-            //do you pass in UpdateCartDispatch through props
-            //or make it a Context provider
+        //clear user info in CartState
+        updateCartDispatch({
+            type: "SET_CUSTOMER_DETAILS", 
+            payload: {
+                home_state: null,
+                user_uuid: null
+            }          
+        })
+        await sessionStorage.clear();
+        console.log("Clearing Session Storage-----------")
 
-            // updateCartDispatch({
-            //   type: "SET_customer_details", 
-            //   payload: {
-            //     delivery_us_state: user.home_state,
-            //     user_uuid: user.user_uuid
-            //    }
-            // }) 
-            return "success"
-        }
+        return {'status':'success', 'message':"body.message"}   
+
+    } catch(error:any) {
+        console.log("User Failed to LogOut - Axios ERROR.")
+        console.log(JSON.stringify(error.response.data))
+        const logoutError = new Error(error.response.data.message)
+        //loginError.code = "401"
+        throw logoutError
+        //this is wrong
+        return {'status':'error', 'message':error.response.data.message}
+    }
+
+}
+
+export const handleLogin = async (login: string, password: string, updateCartDispatch: any) => {
+    
+    const login_url = "users/login"
+    const loginPayload = JSON.stringify({ userid: login, password})
+
+    try {
+
+        const response = await axiosPostRequest(login_url , loginPayload)
+        const body = await response.data
+        //console.log("LOGIN response body is  ", body)
+        //console.log("LOGIN response status is  ", response.status)
+   
+        let data = body.data
+        let user = data.user
+        let token = data.token
+        //const decoded_token = AWAIT jwt(token)
+        const decoded_token = JSON.parse(atob(token.split(".")[1]))
+        const expireTime = new Date(decoded_token.exp*1000);
+        await sessionStorage.setItem('sessionToken', token);
+        await sessionStorage.setItem('decodedToken', JSON.stringify(decoded_token));
+        await sessionStorage.setItem('user', JSON.stringify(user));
+        await sessionStorage.setItem('expDisplayTime', JSON.stringify(expireTime));
+
+
+        updateCartDispatch({
+            type: "SET_CUSTOMER_DETAILS", 
+            payload: user           
+        })
+
+        return {'status':'success', 'message':body.message}
         
 
-   } catch(error) {
-        console.log("Error!: failed to submit login info.", error)
+   } catch(error:any) {
+        console.log("User Failed to Log In - Axios ERROR.")
+        console.log(JSON.stringify(error.response.data))
+        const loginError = new Error(error.response.data.message)
+        //loginError.code = "401"
+        throw loginError
+        //this is wrong
+        return {'status':'error', 'message':error.response.data.message}
    }
 
 

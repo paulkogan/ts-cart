@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {User} from "../../types/types"
 import './Admin.css';
 import {axiosPostRequest} from '../../services/api_service'
-
+import {getTaxRates} from "../../utils"
 
 // interface Props {
 //   submitAddProduct: (new_product:Product) => any;
@@ -27,7 +27,7 @@ const  RegisterUserForm:React.FC = () => {
   const [userMessage, setUserMessage] = useState("Please enter registration details.")
   const [regStatus, setRegStatus] = useState("none")
 
-  const us_tax_states =  ["--", "NY", "FL","AZ"]
+  const us_tax_states = ["--"].concat(Object.keys(getTaxRates()));
 
   const handleChange = (fieldName: string, fieldValue: string | number): void => {
     if(fieldName == "home_state" && fieldValue == "--" ) {
