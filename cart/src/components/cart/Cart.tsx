@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {Product} from "../../types/types"
-import './Cart.css';
 import BasketList from './BasketList';
 import ShoppingProductList from './ShoppingProductList';
 import CheckoutForm from './CheckoutForm';
@@ -8,6 +7,8 @@ import {axiosGetRequest} from '../../services/api_service'
 import {hasValidSession} from '../../services/auth_service'
 import {CartStateContext}  from '../../hooks/CartStateContext'
 import {getTaxRates} from "../../utils"
+import './Cart.css';
+
 
 const Cart:React.FC = () => {
 

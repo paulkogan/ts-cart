@@ -6,6 +6,7 @@ export const axiosGetRequest = async (requestURL:string, queryParams={}) => {
 
     const getConfig: AxiosRequestConfig = {    
         params: queryParams,
+        withCredentials: true
       }
 
 
@@ -40,7 +41,8 @@ export const axiosPostRequest = async (requestURL:string, payload={}) => {
         headers: {
             'Authorization': `Bearer ${sessionStorage.getItem('sessionToken')}`,
             'Content-Type': 'application/json',
-        }
+        }, 
+        withCredentials: true,
       }
 
     const response: AxiosResponse = await axios.post(fullURL, payload, postConfig)

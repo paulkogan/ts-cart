@@ -14,11 +14,19 @@ const port = 3001
 const app = express();
 const secret = process.env.JWT_SECRET || "abcd";
 
-app.use(cors());
+//app.use(cors());
+
+app.use(
+  cors({
+      origin: "http://localhost:3000",
+      credentials: true,
+  })
+);
 app.use(expressjwt(  {secret: secret,  algorithms: ['HS256'] }).unless({
     path:[
-      '/users/login', 
-      '/products'
+      '/auth/login',
+      '/auth/verify', 
+      '/products'  //dont check JWT for this route
     ]}));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));

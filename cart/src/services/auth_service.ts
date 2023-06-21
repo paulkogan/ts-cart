@@ -1,7 +1,7 @@
 
-import React, {useState, useEffect, useReducer, useContext} from 'react';
+//import React, {useState, useEffect, useReducer, useContext} from 'react';
 //import jwt from 'jwt-decode';
-import {axiosPostRequest, axiosGetRequest} from '../services/api_service'
+import {axiosPostRequest} from '../services/api_service'
 //import moment from 'moment'
 
 
@@ -17,15 +17,10 @@ export const hasValidSession = ():Boolean => {
 }
 
 export const handleLogout = async (updateCartDispatch:any) => {
-    const logout_url = "users/logout"
+    //no backend call yet for logout
+    //const logout_url = "auth/logout"
 
     try {
-
-        // const response = await axiosGetRequest(logout_url)
-        // const body = await response.data
-        // console.log("LOGOUT response body is  ", body)
-        // console.log("LOGOOUT response status is  ", response.status)
-   
 
         //clear user info in CartState
         updateCartDispatch({
@@ -46,15 +41,15 @@ export const handleLogout = async (updateCartDispatch:any) => {
         const logoutError = new Error(error.response.data.message)
         //loginError.code = "401"
         throw logoutError
-        //this is wrong
-        return {'status':'error', 'message':error.response.data.message}
+        //this is old way:
+        // return {'status':'error', 'message':error.response.data.message}
     }
 
 }
 
 export const handleLogin = async (login: string, password: string, updateCartDispatch: any) => {
     
-    const login_url = "users/login"
+    const login_url = "auth/login"
     const loginPayload = JSON.stringify({ userid: login, password})
 
     try {

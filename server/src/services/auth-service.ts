@@ -3,7 +3,7 @@
 import jsonWebToken from 'jsonwebtoken'   
 import 'dotenv/config'
 
-const generateToken = (user) => {
+export const generateToken = (user) => {
   //1. Dont use password and other sensitive fields
   //2. Use fields that are useful in other parts of the     
 
@@ -24,4 +24,23 @@ const generateToken = (user) => {
   return token
 }
 
-export default generateToken
+export const authorization = async (req, res, next) => {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.sendStatus(403);
+  }
+  try {
+    const secret = await process.env.JWT_SECRET;
+    const data = secret ? jsonWebToken.verify(token, secret) : null
+    req.session = data
+    // req.userId = data.id;
+    // req.userRole = data.role;
+    return next();
+  } catch {
+    return res.sendStatus(403);
+  }
+};
+
+
+
+//export default generateToken
