@@ -1,16 +1,16 @@
 
 import React, {useState, useEffect, useContext} from 'react';
 import {axiosGetRequest} from '../../services/api_service'
+import {expToRemainingHMS} from '../../utils'
 import '../App.css';
 
 const ProfilePage: React.FC = () => {
     const [sessionData, setSessionData] = useState({})
+    const [expTime, setExpTime] = useState("no exp data")
 
-
-
+    //this should be in the auth service
     useEffect(() => {
         const verify_session_url = "auth/verify"
-
         const verifySession = async () => {
     
           try {
@@ -20,7 +20,7 @@ const ProfilePage: React.FC = () => {
                console.log("SESSION COOKIE VERIFY RESPONSE: ", response)
                setSessionData(data)
           } catch(error) {
-               console.log("Error!: failed to verify session cookie data", error)
+               console.log("Error on PROFILE PAGE: failed to verify session cookie data", error)
           }
        }
     
@@ -33,14 +33,20 @@ const ProfilePage: React.FC = () => {
     
       }, []) 
 
-      
+      useEffect(() => { 
+        const interval = setInterval(() => {
+          setExpTime(expToRemainingHMS(JSON.parse(sessionStorage.decodedToken).exp))
+        }, 1000);   
+        return () => clearInterval(interval);
+
+      }, [])
 
       return (
         <div>
           
           <div className="app-outer">
             <h2>Profile Page</h2>
-            <div>SessionData: {JSON.stringify(sessionData)}</div>
+            <div>SessionData from /verify: {JSON.stringify(sessionData)}</div>
 
     
     
@@ -48,7 +54,7 @@ const ProfilePage: React.FC = () => {
                 <div>
                   <div>Decoded Token Name: {JSON.parse(sessionStorage.decodedToken).name}</div> 
                   <div>Exp Time {sessionStorage.expDisplayTime}</div>
-                  <div>Session exp.: {Math.floor((JSON.parse(sessionStorage.decodedToken).exp*1000-Date.now())/1000)}</div>
+                  <div>Session {expTime}</div>
     
     
                 </div>
