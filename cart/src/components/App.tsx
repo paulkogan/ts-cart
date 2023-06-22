@@ -7,9 +7,10 @@ import {
   Route,
   Link, 
 } from "react-router-dom";
-import Login from './shared/LoginPage';
 import { ProtectedRoute } from "./shared/ProtectedRoute";
+import Login from './shared/LoginPage';
 import Nav from './shared/Nav';
+import ProfilePage from './shared/ProfilePage';
 import Cart from './cart/Cart';
 import UserAdmin from './admin/UserAdmin';
 import ProductAdmin from './admin/ProductAdmin';
@@ -33,7 +34,9 @@ function App() {
             <Routes>
                 <Route path="/"  element={<Login/>} />
                 <Route path="/login"  element={<Login/>} />
+                {/* no route for logout */}
                 <Route path="/cart"  element={<Cart/>} />
+                <Route path="/profile"  element={<ProfilePage/>} />
                 <Route path="/productadmin"  element={<ProductAdmin/>} />
 
                 <Route path="/useradmin"
@@ -45,10 +48,8 @@ function App() {
                 />
 
                 <Route path="/orders"
-                    element={
-                      <ProtectedRoute path="/orders">
+                    element={               
                           <Orders/>
-                      </ProtectedRoute>
                     }
                 />
 

@@ -4,7 +4,6 @@ import {
   Link, 
 } from "react-router-dom";
 import {handleLogout} from '../../services/auth_service'
-import '../App.css';
 import {CartStateContext}  from '../../hooks/CartStateContext' 
 import '../App.css';
 
@@ -37,6 +36,9 @@ const Nav:React.FC = () => {
               </div>
               <div className="nav-link"> 
                 <Link to="/useradmin">User Admin</Link>
+              </div>
+              <div className="nav-link"> 
+                <Link to="/profile">Profile</Link>
               </div>
               <div className="nav-link"> 
                 <Link to="/practice">Practice</Link>

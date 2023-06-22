@@ -57,8 +57,8 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch, updateMe
           }
           
   
-        } catch(error) {
-              updateMessage(`Error: failed to create order with:  ${error}`)
+        } catch(error:any) {
+              updateMessage(`Error: failed to create order with:  ${error.response.data}`)
               console.log("Error: failed to create order with: ", error)
               //setRegStatus("error")
         }  
