@@ -22,12 +22,13 @@ app.use(
       credentials: true,
   })
 );
-app.use(expressjwt(  {secret: secret,  algorithms: ['HS256'] }).unless({
-    path:[
-      '/auth/login',
-      '/auth/verify', 
-      '/products'  //dont check JWT for this route
-    ]}));
+// app.use(expressjwt(  {secret: secret,  algorithms: ['HS256'] }).unless({
+//     path:[
+//       '/auth/login',
+//       '/auth/verify', 
+//       '/products'  //dont check JWT for this route
+//     ]}));
+
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())

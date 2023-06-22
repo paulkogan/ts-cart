@@ -23,7 +23,7 @@ const Cart:React.FC = () => {
 
     const addUserToCartState = async () => {
       //check session storage for user info    
-      const user = sessionStorage.getItem('user')
+      const user = sessionStorage.getItem('sessionData')
       if (user) {
            const userObj = JSON.parse(user)
            await updateCartDispatch({
@@ -33,11 +33,10 @@ const Cart:React.FC = () => {
             console.log("adding user info to cartState - EFFECT")
 
       } else {
-          console.log("No user info in sessionStorage to add to cartState - NOT ading NA")
+          console.log("No user info in sessionStorage to add to cartState.")
       }
     }
       return () => {
-          console.log("add User To Cart State UP?")
           if (!cartState.user_uuid) {
               console.log("cartState missing a User, so trying to add!")            
               addUserToCartState ()              
@@ -63,7 +62,6 @@ const Cart:React.FC = () => {
            console.log("Error!: failed to fetch product data", error)
       }
    }
-
 
     //need to fetch inside useEffect (or useCallback)
     return () => {
@@ -94,19 +92,9 @@ const Cart:React.FC = () => {
       <div className="cart-inner">
         <h2>Shopping Cart</h2>
         <div>User message: {userMessage}</div>
-        <div>Cart State User: {cartState.delivery_us_state || 'none'}</div>
-        <div>Session: {hasValidSession() ? "VALID" : "NOT VALID - Please log in"}</div>
+        <div>Cart State: {cartState.delivery_us_state || 'none'}</div>
+        <div>Session: {hasValidSession() ? JSON.parse(sessionStorage.sessionData).name : "NO SESSION - Please log in"}</div>
 
-
-        {sessionStorage.decodedToken && 
-            <>
-              <div>Decoded Token Name: {JSON.parse(sessionStorage.decodedToken).name}</div> 
-              <div>Exp Time {sessionStorage.expDisplayTime}</div>
-              <div>Session exp.: {Math.floor((JSON.parse(sessionStorage.decodedToken).exp*1000-Date.now())/1000)}</div>
-
-
-            </>
-        }
    
     
         <div className="cart-left">

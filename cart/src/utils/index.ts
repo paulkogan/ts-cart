@@ -5,7 +5,7 @@ const buffWithZero = (rawNum: number): string => {
     return rawNum < 10 ? "0"+rawNum : rawNum.toString()
 }
 
-export const expToRemainingHMS = (expMillis: number): string => {
+export const expTimeInHMS = (expMillis: number): string => {
     const remainingSecs = Math.floor((expMillis*1000-Date.now())/1000)
     const inPast = remainingSecs < 0 ? true : false
     //const absRemainSecs = (2*60*60)+(11*60)+15

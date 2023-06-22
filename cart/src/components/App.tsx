@@ -48,10 +48,8 @@ function App() {
                 />
 
                 <Route path="/orders"
-                    element={
-                      <ProtectedRoute path="/orders">
+                    element={               
                           <Orders/>
-                      </ProtectedRoute>
                     }
                 />
 

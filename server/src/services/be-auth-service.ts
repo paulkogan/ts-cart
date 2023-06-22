@@ -25,19 +25,18 @@ export const generateToken = (user) => {
 }
 
 export const authorization = async (req, res, next) => {
-  const token = req.cookies.token;
+  const token = req.cookies.tsToken;
   if (!token) {
-    return res.sendStatus(403);
+    return res.status(401).send('Authorization Error: no token present in cookies');
   }
   try {
     const secret = await process.env.JWT_SECRET;
     const data = secret ? jsonWebToken.verify(token, secret) : null
     req.session = data
-    // req.userId = data.id;
-    // req.userRole = data.role;
+
     return next();
   } catch {
-    return res.sendStatus(403);
+    return res.status(401).send('Authorization Error: cookies token not verified or expired');
   }
 };
 

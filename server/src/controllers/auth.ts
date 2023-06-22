@@ -5,15 +5,12 @@ const User = models.User;
 const Op = Sequelize.Op;
 
 //import { v4 as uuidv4 } from 'uuid';
-import {generateToken} from '../services/auth-service'
+import {generateToken} from '../services/be-auth-service'
 
 
 const verifySession = async (req, res) => {
-    console.log(`Auth cont - VERIFY SESSION ======= `)
     return res.json({ 
-        //session: "this is session",
-        session: req.session,
-        token: "abcd"
+        session: req.session
     });
 
 }
@@ -48,10 +45,10 @@ const loginUser = async (req, res) => {
             user_uuid: matchUser.user_uuid
         }
 
-        var token = generateToken(matchUser);
-
+        const token = generateToken(matchUser);
+        const decoded_token = JSON.parse(atob(token.split(".")[1]))
         /**res.cookie('token', token, { 
-         *  httpOnly: true, 
+         *  httpOnly: true, //can only be modified server-side
          *  secure: prod? true, // cookie only works in https
          *  SameSite: "none", // allow 3rd party sites, but requires secure https not for local use
          *  domain: __prod__ ? ".kreddit.vercel.app" : undefined,
@@ -59,12 +56,12 @@ const loginUser = async (req, res) => {
          **/
 
 
-        res.cookie('token', token, { 
+        res.cookie('tsToken', token, { 
             httpOnly: true,
          });
 
         return res.status(200).json({
-            data: {user: returnUser, token},
+            data: decoded_token,
             errors: null, 
             message: `Login Successful for ${returnUser.name}`
           });

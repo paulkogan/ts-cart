@@ -12,10 +12,10 @@ export const axiosGetRequest = async (requestURL:string, queryParams={}) => {
 
     axios.interceptors.request.use(
         config => {
-            const token = sessionStorage.getItem('sessionToken');
-            if (token) {
-                config.headers['Authorization'] = 'Bearer ' + token;
-            }
+            // const token = sessionStorage.getItem('sessionToken');
+            // if (token) {
+            //     config.headers['Authorization'] = 'Bearer ' + token;
+            // }
             config.headers['Content-Type'] = 'application/json';
             return config;
         },
@@ -39,7 +39,7 @@ export const axiosPostRequest = async (requestURL:string, payload={}) => {
 
     const postConfig: AxiosRequestConfig = {    
         headers: {
-            'Authorization': `Bearer ${sessionStorage.getItem('sessionToken')}`,
+            //'Authorization': `Bearer ${sessionStorage.getItem('sessionToken')}`,
             'Content-Type': 'application/json',
         }, 
         withCredentials: true,
