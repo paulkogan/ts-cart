@@ -17,6 +17,8 @@ router.get('/users', usersController.listUsers);
 router.post('/users/find_user', usersController.findUser)
 router.post('/users/register', usersController.registerNew)
 router.post('/auth/login', authController.loginUser)
+router.post('/auth/logout', authController.logoutUser)
 router.get('/auth/verify', authorization, authController.verifySession)
+
 
 export default router;

@@ -1,8 +1,7 @@
 
-const Sequelize = require("sequelize");
+//const Sequelize = require("sequelize");
 const {models, sequelize} = require("../models/index.js");
 const User = models.User;
-const Op = Sequelize.Op;
 
 //import { v4 as uuidv4 } from 'uuid';
 import {generateToken} from '../services/be-auth-service'
@@ -15,9 +14,33 @@ const verifySession = async (req, res) => {
 
 }
 
+const logoutUser = async (req, res) => {
+    //console.log(`LOGOUT BODY ======= ${JSON.stringify(req.body)}`)
+    const logoutUser = JSON.parse(req.body.user)
+    if (!logoutUser) {
+        return res.status(404).json({
+            data: null,
+            errors: 'Missing Logout User', 
+            message: 'Missing Logout User'
+          });
+    }
+
+
+    res.cookie('tsToken', "none", { 
+        httpOnly: true,
+        expires: new Date(Date.now() + 3 * 1000)
+
+     });
+
+    return res.status(200).json({
+        data: null,
+        errors: null, 
+        message: `Logout Successful for ${logoutUser.email}`
+      });
+
+}
+
 const loginUser = async (req, res) => {
-    let success = false
-    //console.log(`LOGIN BODY ======= ${JSON.stringify(req.body)}`)
     const tryEmail = req.body.userid
     const tryPassword = req.body.password
 
@@ -33,11 +56,6 @@ const loginUser = async (req, res) => {
     const matchUser = await User.findByEmail(tryEmail)
 
     if (matchUser && (tryPassword == matchUser.password)) {
-            success = true
-    }
-
-    if (success) {
-        // user = utils.getCleanUser(user);
         const returnUser = {
             name: matchUser.name,
             email: matchUser.email,
@@ -52,12 +70,16 @@ const loginUser = async (req, res) => {
          *  secure: prod? true, // cookie only works in https
          *  SameSite: "none", // allow 3rd party sites, but requires secure https not for local use
          *  domain: __prod__ ? ".kreddit.vercel.app" : undefined,
+         *  maxAge: in miliseconds
+         *  expires:  in miliseconds
 
          **/
 
+        const minutes5millis = 60 * 5 * 1000
 
         res.cookie('tsToken', token, { 
             httpOnly: true,
+            maxAge: minutes5millis, 
          });
 
         return res.status(200).json({
@@ -92,4 +114,4 @@ const loginUser = async (req, res) => {
 
 
 
-export default {loginUser, verifySession}
+export default {loginUser, logoutUser, verifySession}

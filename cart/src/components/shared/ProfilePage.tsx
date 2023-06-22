@@ -10,13 +10,11 @@ const ProfilePage: React.FC = () => {
     const [expTime, setExpTime] = useState("no exp data")
     const {cartState, updateCartDispatch}   = useContext(CartStateContext);
 
-    //this should be in the auth service
+    //is there a more elegant and repeatable way to do this?
+    //you dont need the data
     useEffect(() => {
-
-        const profileVerifySession = async () => {
-    
-          try {
-    
+        const profileVerifySession = async () => {  
+          try {  
                const response = await verifySessionWithBE()
                console.log("Profile Page: SESSION COOKIE VERIFY RESPONSE: ", response)
                setVerifyData(response.data)
@@ -32,6 +30,7 @@ const ProfilePage: React.FC = () => {
     
       }, []) 
 
+      // update expiration timer
       useEffect(() => { 
         if(sessionStorage.sessionData) {
           const interval = setInterval(() => {

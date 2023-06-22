@@ -7,17 +7,18 @@ export const verifySessionWithBE = async () => {
       const verify_session_url = "auth/verify"
       try {
            const response = await axiosGetRequest(verify_session_url)
+           //you dont really need the response data
            const data = response.data
            if (response.status < 300) {
             
-            console.log("AS: VERIFY SESSION BE RESPONSE: ", data)
+            console.log("AS: VERIFY SESSION - SESSION ACTIVE ", data)
             return {status: response.status, data: data.session, message: null}
           } else {
-            console.log("AS: PROBLEM with VERIFY SESSION BE RESPONSE: ", response.status)
+            console.log("AS: VERIFY SESSION - PROBLEM STATUS ", response.status)
             return {status: response.status, data: data, message: null}
           }
       } catch(error:any) {
-           console.error("AS: VERIFY SESSION error", error)
+           console.error("AS: VERIFY SESSION - NO SESSION ", error)
            return {status: error.response.status, data: null, message: error.response.data}
       }
 }
@@ -35,12 +36,22 @@ export const hasValidSession= ():Boolean => {
 
 
 export const handleLogout = async (updateCartDispatch:any) => {
-    //no backend call yet for logout
-    //const logout_url = "auth/logout"
 
+    //call backend logout endpoint to clear cookies
+    const logout_url = "auth/logout"
+    const user = await sessionStorage.getItem('sessionData')
+    const logoutPayload = {user}
+
+
+    //this should be status saved and three tries
     try {
-
+        const response = await axiosPostRequest(logout_url, logoutPayload)
+        const body = await response.data
+        console.log("LOGOUT response body is ", body)   
+          
         //clear user info in CartState
+        console.log("Clearing Cart and Session Storage-----------")
+
         updateCartDispatch({
             type: "SET_CUSTOMER_DETAILS", 
             payload: {
@@ -49,16 +60,13 @@ export const handleLogout = async (updateCartDispatch:any) => {
             }          
         })
         await sessionStorage.clear();
-        console.log("Clearing Session Storage-----------")
 
-        //TODO: clear cookies with key = tsToken
-        return {'status':'success', 'message':"body.message"}   
+        return {'status':'success', 'message':body.message}        
+
 
     } catch(error:any) {
-        console.log("User Failed to LogOut - Axios ERROR."+ JSON.stringify(error.response.data))
-        const logoutError = new Error(error.response.data.message)
-        throw logoutError
-
+        console.log("Logout failed with" + JSON.stringify(error.response.data))
+        return {'status':'fail', 'message':error.response.data}
     }
 
 }
