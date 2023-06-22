@@ -29,7 +29,7 @@ export const axiosGetRequest = async (requestURL:string, queryParams={}) => {
         const response: AxiosResponse = await axios.get(fullURL, getConfig)
         return response
     } catch(error){
-        console.log("AXIOS GET ERR: "+error)        
+        //console.log("AXIOS GET ERR: "+error)        
         return Promise.reject(error)
     }   
 }

@@ -24,13 +24,10 @@ import './App.css';
 function App() {
   return (
     <Router>
-      <div className="app-outer" >
       <CartStateProvider>
-        <Nav/>
-      </CartStateProvider>  
-      </div>
-
-      <CartStateProvider>
+            <div className="app-outer" >
+                 <Nav/>
+            </div>
             <Routes>
                 <Route path="/"  element={<Login/>} />
                 <Route path="/login"  element={<Login/>} />

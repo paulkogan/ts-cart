@@ -20,7 +20,8 @@ const CartUpdater = (state: CartState,  action: {type:string, payload: any}) => 
         delivery_us_state,
         user_uuid,
         price_total,
-        tax_total
+        tax_total, 
+        user_message
     } = state
     // need to clone the array to avoid double execution under TS Strict in DEV 
     
@@ -100,6 +101,14 @@ const CartUpdater = (state: CartState,  action: {type:string, payload: any}) => 
                     user_uuid: action.payload.user_uuid
                 }
                 return state
+
+        case "UPDATE_MESSAGE":
+                state = {...state, 
+                    user_message: action.payload.user_message, 
+
+                }
+                return state
+
 
         default:
             return state 

@@ -10,11 +10,10 @@ type UpdateStringState = Dispatch<SetStateAction<string>>
 interface Props {
   cartState: CartState;
   updateCartDispatch: (action: {type: string, payload: {}}) => any 
-  updateMessage: UpdateStringState
 }
 
 
-const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch, updateMessage}) => {
+const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
 
     const taxRatesDict = getTaxRates()
     const us_tax_states = Object.keys(taxRatesDict)
@@ -40,16 +39,26 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch, updateMe
           // console.log("order response status ", response.status)
           console.log("NEW ORDER DATA is  ", data)
           if (response.status > 300) {
-              updateMessage(data.message)
-              //setRegStatus("error")
+
+            await updateCartDispatch({
+              type: "UPDATE_MESSAGE", 
+              payload: {
+                user_message: `Problem placing order: ${data.message}`,
+              }
+            })
   
   
           } else {
-              const order_total = (data.items_total+data.tax_total+data.shipping_total)
-              updateMessage(`Success! order submitted. Total is: $${toDollarString(order_total)}.`)
-  
+              const order_total = (data.items_total+data.tax_total+data.shipping_total)  
+              await updateCartDispatch({
+                type: "UPDATE_MESSAGE", 
+                payload: {
+                  user_message: `Success!! Submitted order with ${cartState.basket_items.length} items. Total is: $${toDollarString(order_total)}.`
+                }
+              })
+
               //clear cart
-              updateCartDispatch({
+              await updateCartDispatch({
                 type: "SUBMIT_ORDER", 
                 payload: {}
               })
@@ -58,9 +67,12 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch, updateMe
           
   
         } catch(error:any) {
-              updateMessage(`Error: failed to create order with:  ${error.response.data}`)
-              console.log("Error: failed to create order with: ", error)
-              //setRegStatus("error")
+              await updateCartDispatch({
+                type: "UPDATE_MESSAGE", 
+                payload: {
+                  user_message: `Error: failed to create order with:  ${error.response.data}`
+                }
+              })
         }  
       }   
   
@@ -86,11 +98,11 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch, updateMe
 
           <div className="cart-status">
       
-            {sessionStorage.user? 
+            {sessionStorage.sessionData ? 
             (
               <div> 
-                <div>Session User Name: {JSON.parse(sessionStorage.user).name}</div>  
-                <div>Session User State: {JSON.parse(sessionStorage.user).home_state}</div>  
+                <div>Session User Name: {JSON.parse(sessionStorage.sessionData).name}</div>  
+                <div>Session User State: {JSON.parse(sessionStorage.sessionData).home_state}</div>  
               </div>
             ) :
             (<div> NO Session User </div>)

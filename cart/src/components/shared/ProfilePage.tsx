@@ -1,30 +1,27 @@
 
 import React, {useState, useEffect, useContext} from 'react';
-import {verifySessionWithBE} from '../../services/auth_service'
+import {verifySessionWithBE, hasValidSession} from '../../services/auth_service'
 import {CartStateContext}  from '../../hooks/CartStateContext'
 import {expTimeInHMS} from '../../utils'
 import '../App.css';
 
 const ProfilePage: React.FC = () => {
-    const [verifyData, setVerifyData] = useState({})
     const [expTime, setExpTime] = useState("no exp data")
     const {cartState, updateCartDispatch}   = useContext(CartStateContext);
 
-    //is there a more elegant and repeatable way to do this?
-    //you dont need the data
+    // doing it here as an exception on an unprotercted page
     useEffect(() => {
         const profileVerifySession = async () => {  
           try {  
-               const response = await verifySessionWithBE()
-               console.log("Profile Page: SESSION COOKIE VERIFY RESPONSE: ", response)
-               setVerifyData(response.data)
+               await verifySessionWithBE("profilePage", updateCartDispatch)
+
           } catch(error) {
-               console.log("Error on PROFILE PAGE: failed to verify session cookie data", error)
+               // this does not return error 
+               console.error("Error on PROFILE PAGE: failed to verify session cookie data", error)
           }
        }
   
         return () => {
-            console.log("Profile Page: Verifying Cookie Data on BE")
             profileVerifySession()                      
         }
     
@@ -45,22 +42,11 @@ const ProfilePage: React.FC = () => {
           
           <div className="app-outer">
             <h2>Profile Page</h2>
-            <div>Response from BE verify: {JSON.stringify(verifyData)}</div>
+            <div>Session Data: {hasValidSession() ? "VALID for " + JSON.parse(sessionStorage.sessionData).name : "NO SESSION - Please log in"}</div>
+            <div>Session {expTime}</div>
             <div>Cart State: {cartState.delivery_us_state || 'none'}</div>
-
-    
-    
-            {sessionStorage.sessionData && 
-                <div>
-                  <div>SessionData Name: {JSON.parse(sessionStorage.sessionData).name}</div> 
-                  <div>Session {expTime}</div>
-    
-    
-                </div>
-            }
-       
-
-    
+            <div>Verify Cookies Status: {'TBD'}</div>
+                
           </div>
         </div>
       );

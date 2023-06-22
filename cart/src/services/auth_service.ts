@@ -2,7 +2,7 @@
 import {axiosGetRequest, axiosPostRequest} from '../services/api_service'
 
 
-export const verifySessionWithBE = async () => {
+export const verifySessionWithBE = async (path:string, updateCartDispatch:any) => {
 
       const verify_session_url = "auth/verify"
       try {
@@ -11,20 +11,38 @@ export const verifySessionWithBE = async () => {
            const data = response.data
            if (response.status < 300) {
             
-            console.log("AS: VERIFY SESSION - SESSION ACTIVE ", data)
+            //console.log("AS: VERIFY SESSION - SESSION ACTIVE ", data)
+            await updateCartDispatch({
+                type: "UPDATE_MESSAGE", 
+                payload: {
+                  user_message: `AS: ${path} Cookie Session Token OK `
+                }
+              })
             return {status: response.status, data: data.session, message: null}
           } else {
-            console.log("AS: VERIFY SESSION - PROBLEM STATUS ", response.status)
+            //console.log("AS: VERIFY SESSION - PROBLEM STATUS ", response.status)
+            await updateCartDispatch({
+                type: "UPDATE_MESSAGE", 
+                payload: {
+                  user_message: `AS: PROBLEM  - ${path} - No Cookie Session Token`
+                }
+              })
             return {status: response.status, data: data, message: null}
           }
       } catch(error:any) {
-           console.error("AS: VERIFY SESSION - NO SESSION ", error)
+           //console.error("AS: VERIFY SESSION - NO SESSION ", error)
+           await updateCartDispatch({
+            type: "UPDATE_MESSAGE", 
+            payload: {
+              user_message: `AS: ERROR - ${path} - No Cookie Session Token`
+            }
+          })
            return {status: error.response.status, data: null, message: error.response.data}
       }
 }
 
 
-
+// I need this funtion to update carState once session expired
 export const hasValidSession= ():Boolean => {
     if (sessionStorage.getItem("sessionData") === null) {
         return false
@@ -89,9 +107,8 @@ export const handleLogin = async (login: string, password: string, updateCartDis
 
         const response = await axiosPostRequest(login_url , loginPayload)
         const body = await response.data
-        console.log("LOGIN response body is  ", body)
+        //console.log("LOGIN response body is  ", body)
         await sessionStorage.setItem('sessionData', JSON.stringify(body.data));
-   
 
 
         updateCartDispatch({

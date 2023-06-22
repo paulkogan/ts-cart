@@ -23,13 +23,39 @@ const LoginPage: React.FC = () => {
 
     const [loginObj, setLoginObj] = useState(initialLoginObj)
     const [loginState, setLoginState] = useState("none")
-
-    const [userMessage, setUserMessage] = useState("Please login.")
     const {cartState, updateCartDispatch}   = useContext(CartStateContext);
     const navigate = useNavigate(); 
 
 
-    const doChange = (fieldName:string, fieldValue: string | null ):void => {
+    //this should run once on pageload
+    useEffect(() => {
+        const setInitialMessage = async () => { 
+            const destPage = sessionStorage.getItem("lastPage") || "direct" 
+            await updateCartDispatch({
+                type: "UPDATE_MESSAGE", 
+                payload: {
+                  user_message: `Please Login (${destPage})`
+                }
+              })
+       }
+  
+        return () => {
+            console.log("LOGIN STATE IS : "+loginState)
+            console.log("cart user is IS : "+JSON.stringify(cartState))
+            if (loginState == "none") {
+                setInitialMessage()  
+            }
+                                
+        }
+    
+      }, []) 
+
+
+
+
+
+    const doChange = async (fieldName:string, fieldValue: string | null ) => {
+        await setLoginState('in_progress')
         setLoginObj({
             ...loginObj, 
             [fieldName]:fieldValue
@@ -38,24 +64,40 @@ const LoginPage: React.FC = () => {
 
     const handleSubmit = async () => {
         handleLogin(loginObj.email, loginObj.password, updateCartDispatch)
-        .then(response => {           
+        .then( async (response) => {           
                 if (response) {
                     const destPage = sessionStorage.getItem("lastPage") || "/cart"
-                    setLoginState(response.status);
-                    setUserMessage(response.message)
-                    console.log("REDIRECTING after LOGIN: "+destPage)
+                    await setLoginState('success');
+                    // setUserMessage(response.message)
+                    console.log("SUCCESS - REDIRECTING after LOGIN: "+destPage)
+                    await updateCartDispatch({
+                        type: "UPDATE_MESSAGE", 
+                        payload: {
+                          user_message: `Thank you for logging in. Redirecting to (${destPage})`
+                        }
+                      })
                     navigate(destPage)
                 } else {
                     setLoginState('error')
-                    setUserMessage('Problematic Respondse')
+                    await updateCartDispatch({
+                        type: "UPDATE_MESSAGE", 
+                        payload: {
+                          user_message: `Login Error - no response`
+                        }
+                      })
                     
                 }
                 
 
         }).catch(err => {      //handleLogin return error
-            console.log("LOGIN PAGE ERROR: "+err.message)
+            //console.log("LOGIN PAGE ERROR: "+err.message)
             setLoginState("error");
-            setUserMessage(err.message || 'no message')
+            updateCartDispatch({
+                type: "UPDATE_MESSAGE", 
+                payload: {
+                  user_message: `Login Error - ${err.message}`
+                }
+              })
             setLoginObj({...loginObj, password: ""})
         });
     
@@ -67,7 +109,6 @@ const LoginPage: React.FC = () => {
         <div className="login-outer" >
 
             <div className="login-messages">
-                <div>Message: {userMessage}</div>
                 <div>Login State: {loginState}</div>
             </div> 
 

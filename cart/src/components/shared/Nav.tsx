@@ -16,34 +16,38 @@ const Nav:React.FC = () => {
       <div className="nav-outer" >
             <div className="home-links">
 
-              <div className="nav-link"> 
-                <Link to="/login" onClick={() => handleLogout(updateCartDispatch)} >Logout Link</Link>
-              </div>
- 
-   
-              <div className="nav-link"> 
-                <Link to="/login">Login</Link>
-              </div> 
+                <div className="nav-link"> 
+                  <Link to="/login" onClick={() => handleLogout(updateCartDispatch)} >Logout</Link>
+                </div>
+  
+    
+                <div className="nav-link"> 
+                  <Link to="/login">Login</Link>
+                </div> 
 
-              <div className="nav-link"> 
-                <Link to="/cart">Cart</Link>
-              </div>
-              <div className="nav-link"> 
-                <Link to="/orders">Orders</Link>
-              </div>
-              <div className="nav-link"> 
-                <Link to="/productadmin">Product Admin</Link>
-              </div>
-              <div className="nav-link"> 
-                <Link to="/useradmin">User Admin</Link>
-              </div>
-              <div className="nav-link"> 
-                <Link to="/profile">Profile</Link>
-              </div>
-              <div className="nav-link"> 
-                <Link to="/practice">Practice</Link>
-              </div>
+                <div className="nav-link"> 
+                  <Link to="/cart">Cart</Link>
+                </div>
+                <div className="nav-link"> 
+                  <Link to="/orders">Orders</Link>
+                </div>
+                <div className="nav-link"> 
+                  <Link to="/productadmin">Product Admin</Link>
+                </div>
+                <div className="nav-link"> 
+                  <Link to="/useradmin">User Admin</Link>
+                </div>
+                <div className="nav-link"> 
+                  <Link to="/profile">Profile</Link>
+                </div>
+                <div className="nav-link"> 
+                  <Link to="/practice">Practice</Link>
+                </div>
             </div>
+            <div className="nav-message">
+              {cartState.user_message}
+            </div>
+
       </div>
   );
 }

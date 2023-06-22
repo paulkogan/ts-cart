@@ -6,7 +6,8 @@ const initialCartState = {
     "basket_items" : [],
     "delivery_us_state": "",
     price_total:0.0,
-    tax_total:0.0
+    tax_total:0.0, 
+    user_message: "Welcome!"
 }
 
 // dont need this because not updating cartState on initialization, rather on cart page load

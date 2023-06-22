@@ -14,7 +14,6 @@ const Cart:React.FC = () => {
 
   const [productList, setProductList] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(false)
-  const [userMessage, setUserMessage] = useState("Happy shopping!")
   const {cartState, updateCartDispatch}   = useContext(CartStateContext);
 
 
@@ -45,7 +44,7 @@ const Cart:React.FC = () => {
   }, []) 
 
 
-
+  //get product list
   useEffect(() => {
     const products_url = "products"
     const sourceTaxRates = getTaxRates()
@@ -82,7 +81,13 @@ const Cart:React.FC = () => {
             product: product,
           }
         })
-        await setUserMessage(`Added ${product.name} to your basket.`)
+        await updateCartDispatch({
+          type: "UPDATE_MESSAGE", 
+          payload: {
+            user_message: `Added ${product.name} to your basket.`,
+          }
+        })
+
 
   } 
 
@@ -91,7 +96,6 @@ const Cart:React.FC = () => {
       
       <div className="cart-inner">
         <h2>Shopping Cart</h2>
-        <div>User message: {userMessage}</div>
         <div>Cart State: {cartState.delivery_us_state || 'none'}</div>
         <div>Session: {hasValidSession() ? JSON.parse(sessionStorage.sessionData).name : "NO SESSION - Please log in"}</div>
 
@@ -109,7 +113,7 @@ const Cart:React.FC = () => {
 
         <div className="cart-right">
             <div className="cart-app-3">
-                <CheckoutForm cartState = {cartState} updateCartDispatch={updateCartDispatch} updateMessage = {setUserMessage} />
+                <CheckoutForm cartState = {cartState} updateCartDispatch={updateCartDispatch} />
             </div>
 
             <div className="cart-app-3">
@@ -123,10 +127,3 @@ const Cart:React.FC = () => {
 }
 
 export default Cart;
-
-
-{/* <div> Now at Create Milis {sessionStorage.nowAtCreate}</div>   
-<div> Now .......{Date.now()}</div>
-<div> Exp Milis {Number(sessionStorage.exp)*1000}</div>
-<div> Diff {Number(sessionStorage.exp*1000)-Date.now()}</div>
-<div> Minutes {moment.duration(    Number(sessionStorage.exp*1000) - Date.now() ).minutes()}</div> */}
