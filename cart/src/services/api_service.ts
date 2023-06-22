@@ -1,6 +1,8 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+
 export const axiosGetRequest = async (requestURL:string, queryParams={}) => {
-    
+
+
     const fullURL = process.env.REACT_APP_DEV_API_URL+requestURL
 
 
@@ -27,8 +29,7 @@ export const axiosGetRequest = async (requestURL:string, queryParams={}) => {
         const response: AxiosResponse = await axios.get(fullURL, getConfig)
         return response
     } catch(error){
-        console.log("AXIOS GET ERR: "+error)
-        
+        console.log("AXIOS GET ERR: "+error)        
         return Promise.reject(error)
     }   
 }
@@ -39,7 +40,6 @@ export const axiosPostRequest = async (requestURL:string, payload={}) => {
 
     const postConfig: AxiosRequestConfig = {    
         headers: {
-            //'Authorization': `Bearer ${sessionStorage.getItem('sessionToken')}`,
             'Content-Type': 'application/json',
         }, 
         withCredentials: true,
@@ -50,4 +50,3 @@ export const axiosPostRequest = async (requestURL:string, payload={}) => {
 
 }
 
-//export default {axiosGetRequest, axiosPostRequest};

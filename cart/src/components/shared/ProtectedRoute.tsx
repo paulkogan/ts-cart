@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
 import { Navigate } from "react-router-dom";
-import {hasValidSession} from '../../services/auth_service'
 import {verifySessionWithBE} from '../../services/auth_service'
 
 
@@ -13,7 +12,6 @@ export const ProtectedRoute = ( {children, path}:any) => {
       try {
 
            const response = await verifySessionWithBE()
-           //console.log("protected Route: SESSION COOKIE VERIFY RESPONSE: ", response)
            if (response.status < 300) {
             setSessionState("session")
            } else {
@@ -21,7 +19,6 @@ export const ProtectedRoute = ( {children, path}:any) => {
            }
            
       } catch(error) {
-           //console.log("Error on PROFILE PAGE: failed to verify session cookie data", error)
            setSessionState("no session")
       }
    }
@@ -35,7 +32,7 @@ export const ProtectedRoute = ( {children, path}:any) => {
 
   console.log(`protected Route: ${path} sessionState is: ${sessionState}`)
   if (sessionState==="waiting") {
-    return null
+    return null //will force reload - or return spinner
   } else if (sessionState==="no session") {
      sessionStorage.setItem("lastPage", path)
      return <Navigate to="/login" />;

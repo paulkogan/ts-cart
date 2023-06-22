@@ -1,6 +1,4 @@
 
-//import React, {useState, useEffect, useReducer, useContext} from 'react';
-//import jwt from 'jwt-decode';
 import {axiosGetRequest, axiosPostRequest} from '../services/api_service'
 
 
@@ -13,7 +11,6 @@ export const verifySessionWithBE = async () => {
            if (response.status < 300) {
             
             console.log("AS: VERIFY SESSION BE RESPONSE: ", data)
-            //await sessionStorage.setItem('verifyData', JSON.stringify(data));
             return {status: response.status, data: data.session, message: null}
           } else {
             console.log("AS: PROBLEM with VERIFY SESSION BE RESPONSE: ", response.status)
@@ -54,17 +51,14 @@ export const handleLogout = async (updateCartDispatch:any) => {
         await sessionStorage.clear();
         console.log("Clearing Session Storage-----------")
 
-        //clear cookies with key = tsToken
+        //TODO: clear cookies with key = tsToken
         return {'status':'success', 'message':"body.message"}   
 
     } catch(error:any) {
-        console.log("User Failed to LogOut - Axios ERROR.")
-        console.log(JSON.stringify(error.response.data))
+        console.log("User Failed to LogOut - Axios ERROR."+ JSON.stringify(error.response.data))
         const logoutError = new Error(error.response.data.message)
-        //loginError.code = "401"
         throw logoutError
-        //this is old way:
-        // return {'status':'error', 'message':error.response.data.message}
+
     }
 
 }
@@ -79,23 +73,13 @@ export const handleLogin = async (login: string, password: string, updateCartDis
         const response = await axiosPostRequest(login_url , loginPayload)
         const body = await response.data
         console.log("LOGIN response body is  ", body)
-        //console.log("LOGIN response status is  ", response.status)
+        await sessionStorage.setItem('sessionData', JSON.stringify(body.data));
    
-        let data = body.data
-        //let user = data.user
-        //let token = data.token
-        //const decoded_token = AWAIT jwt(token)
-        //const decoded_token = JSON.parse(atob(token.split(".")[1]))
-        //const expireTime = new Date(decoded_token.exp*1000);
-        //await sessionStorage.setItem('sessionToken', token);
-        await sessionStorage.setItem('sessionData', JSON.stringify(data));
-        //await sessionStorage.setItem('user', JSON.stringify(user));
-        //await sessionStorage.setItem('expDisplayTime', JSON.stringify(expireTime));
 
 
         updateCartDispatch({
             type: "SET_CUSTOMER_DETAILS", 
-            payload: data          
+            payload: body.data          
         })
 
         return {'status':'success', 'message':body.message}
@@ -105,10 +89,7 @@ export const handleLogin = async (login: string, password: string, updateCartDis
         console.log("User Failed to Log In - Axios ERROR.")
         console.log(JSON.stringify(error.response.data))
         const loginError = new Error(error.response.data.message)
-        //loginError.code = "401"
         throw loginError
-        //this is wrong
-        return {'status':'error', 'message':error.response.data.message}
    }
 
 

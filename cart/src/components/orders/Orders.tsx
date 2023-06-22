@@ -1,18 +1,18 @@
 import React, {useState, useEffect, useRef} from 'react';
 import './Orders.css';
-import {Order, OrderItem} from "../../types/types"
+import {Order} from "../../types/types"
 import OrdersTable from './OrdersTable';
 import Pagination from './Pagination';
 import {axiosGetRequest} from '../../services/api_service'
+import { useNavigate} from "react-router-dom"; 
 
 const Orders:React.FC = () => {
 
   const [ordersList, setOrdersList] = useState<Order[]>([])
   const [isLoading, setIsLoading] = useState(false)
-  const [loginState, setLoginState] = useState("none")
   const [pageIndex, setPageIndex] = useState(1)
   const dataFetchedRef = useRef(false);
-
+  const navigate = useNavigate(); 
 
   const updatePageIndex = (newPage:number) => {
       dataFetchedRef.current = false; //reset fresh data flag if index changes
@@ -40,7 +40,9 @@ const Orders:React.FC = () => {
            setIsLoading(false)
       } catch(error) {
            console.log("FE API Error!: failed to fetch orders data", error)
-           // redirect to login
+           sessionStorage.setItem("lastPage", "/orders")
+           navigate("/login")
+   
            
       }
     }

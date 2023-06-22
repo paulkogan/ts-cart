@@ -1,6 +1,5 @@
 
 import React, {useState, useEffect, useContext} from 'react';
-import {axiosGetRequest} from '../../services/api_service'
 import {verifySessionWithBE} from '../../services/auth_service'
 import {CartStateContext}  from '../../hooks/CartStateContext'
 import {expTimeInHMS} from '../../utils'

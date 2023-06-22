@@ -37,7 +37,6 @@ const LoginPage: React.FC = () => {
     };
 
     const handleSubmit = async () => {
-        //handle login responds with {status, message}
         handleLogin(loginObj.email, loginObj.password, updateCartDispatch)
         .then(response => {           
                 if (response) {
