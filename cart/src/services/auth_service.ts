@@ -40,10 +40,18 @@ export const handleLogout = async (updateCartDispatch:any) => {
     //call backend logout endpoint to clear cookies
     const logout_url = "auth/logout"
     const user = await sessionStorage.getItem('sessionData')
+    if (!user) {
+        console.log("No user in session data -----------")
+        // need to set this in cart message
+        //nothing to return to
+        //return {'status':'fail', 'message': "No session info found"}     
+    }
     const logoutPayload = {user}
 
 
     //this should be status saved and three tries
+    //this will suceed even if cookies are missing, as the BE just sets a new expired cookie
+    //same with clearing user in CartState
     try {
         const response = await axiosPostRequest(logout_url, logoutPayload)
         const body = await response.data
@@ -65,7 +73,8 @@ export const handleLogout = async (updateCartDispatch:any) => {
 
 
     } catch(error:any) {
-        console.log("Logout failed with" + JSON.stringify(error.response.data))
+        console.log("Auth Service Error: Logout failed with: " + JSON.stringify(error.response.data))
+        // no place to return message
         return {'status':'fail', 'message':error.response.data}
     }
 

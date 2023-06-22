@@ -17,7 +17,7 @@ const verifySession = async (req, res) => {
 const logoutUser = async (req, res) => {
     //console.log(`LOGOUT BODY ======= ${JSON.stringify(req.body)}`)
     const logoutUser = JSON.parse(req.body.user)
-    if (!logoutUser) {
+    if (!logoutUser || !logoutUser.email) {
         return res.status(404).json({
             data: null,
             errors: 'Missing Logout User', 
