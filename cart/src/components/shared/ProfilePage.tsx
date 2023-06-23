@@ -1,37 +1,40 @@
 
-import React, {useState, useEffect, useContext} from 'react';
-import {verifySessionWithBE} from '../../services/auth_service'
+import React, {useState, useEffect, useRef, useContext} from 'react';
+import {verifySessionWithBE, hasValidSession} from '../../services/auth_service'
 import {CartStateContext}  from '../../hooks/CartStateContext'
 import {expTimeInHMS} from '../../utils'
 import '../App.css';
 
 const ProfilePage: React.FC = () => {
-    const [verifyData, setVerifyData] = useState({})
     const [expTime, setExpTime] = useState("no exp data")
     const {cartState, updateCartDispatch}   = useContext(CartStateContext);
+    const runRef = useRef(false);
 
-    //this should be in the auth service
+    // doing it here as an exception on an unprotercted page
     useEffect(() => {
+        const profileVerifySession = async () => {  
+            try {  
+                await verifySessionWithBE("profilePage", updateCartDispatch)
 
-        const profileVerifySession = async () => {
-    
-          try {
-    
-               const response = await verifySessionWithBE()
-               console.log("Profile Page: SESSION COOKIE VERIFY RESPONSE: ", response)
-               setVerifyData(response.data)
-          } catch(error) {
-               console.log("Error on PROFILE PAGE: failed to verify session cookie data", error)
-          }
-       }
+            } catch(error) {
+                // this does not return error 
+                console.error("Error on PROFILE PAGE: failed to verify session cookie data", error)
+            }
+        }
   
         return () => {
-            console.log("Profile Page: Verifying Cookie Data on BE")
-            profileVerifySession()                      
+            //console.log(`in Profile- runRef is ${runRef.current}`)
+            if (!runRef.current) {
+              profileVerifySession() 
+            }
+            
+            runRef.current = true;                      
         }
+
     
       }, []) 
 
+      // update expiration timer
       useEffect(() => { 
         if(sessionStorage.sessionData) {
           const interval = setInterval(() => {
@@ -46,22 +49,14 @@ const ProfilePage: React.FC = () => {
           
           <div className="app-outer">
             <h2>Profile Page</h2>
-            <div>Response from BE verify: {JSON.stringify(verifyData)}</div>
+            <div>Session is: {hasValidSession() ? "VALID for " + JSON.parse(sessionStorage.sessionData).name : "NOT VALID "}</div>
+            <div>Session {expTime}</div>
+            <br/>
+            <div>Session Data: {sessionStorage.sessionData}</div>
+            <br/>
             <div>Cart State: {cartState.delivery_us_state || 'none'}</div>
-
-    
-    
-            {sessionStorage.sessionData && 
-                <div>
-                  <div>SessionData Name: {JSON.parse(sessionStorage.sessionData).name}</div> 
-                  <div>Session {expTime}</div>
-    
-    
-                </div>
-            }
-       
-
-    
+            <div>Verify Cookies Status: {'TBD'}</div>
+                
           </div>
         </div>
       );

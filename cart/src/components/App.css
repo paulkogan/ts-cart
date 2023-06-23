@@ -42,6 +42,15 @@
   vertical-align: middle;
 }
 
+.nav-message {
+  border: 1px solid grey;
+  padding: 5px;
+  font-size: 12px;
+  margin-left: 20px;
+  width: 90%;
+  text-align: left;
+}
+
 .login-outer {
   border: 1px solid grey;
   padding: 5px;

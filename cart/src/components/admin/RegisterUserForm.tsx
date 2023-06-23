@@ -43,7 +43,7 @@ const  RegisterUserForm:React.FC = () => {
   const handleSubmit = async (): Promise<string | undefined> => {
 
 
-      const register_user_url = "users/register"
+      const register_user_url = "/users/register"
       console.log(`Submit: NewUser is: ${JSON.stringify(newUser)}`)
 
       const newUserPayload = JSON.stringify({ 

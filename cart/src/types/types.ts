@@ -31,7 +31,8 @@ export interface CartState {
     basket_items: OrderItem[];
     delivery_us_state: string | undefined,  
     price_total: number,
-    tax_total: number
+    tax_total: number, 
+    user_message: string
 }
 
 

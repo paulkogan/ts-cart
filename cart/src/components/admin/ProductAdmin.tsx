@@ -14,7 +14,7 @@ const ProductAdmin:React.FC = () => {
 
 
   useEffect(() => {
-    const products_url = "products"
+    const products_url = "/products"
 
 
     const fetchBEProducts = async () => {
@@ -48,7 +48,7 @@ const ProductAdmin:React.FC = () => {
 
   
     console.log("Adding New Product: "+JSON.stringify(product))
-    const add_product_url = "products/create"
+    const add_product_url = "/products/create"
       
     const newProductPayload = JSON.stringify({
       name: product.name,
