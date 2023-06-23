@@ -1,17 +1,16 @@
 
 import {axiosGetRequest, axiosPostRequest} from '../services/api_service'
 
-
 export const verifySessionWithBE = async (path:string, updateCartDispatch:any) => {
 
-      const verify_session_url = "auth/verify"
+      const verify_session_url = "/auth/verify"
       try {
            const response = await axiosGetRequest(verify_session_url)
            //you dont really need the response data
            const data = response.data
            if (response.status < 300) {
             
-            //console.log("AS: VERIFY SESSION - SESSION ACTIVE ", data)
+            console.log("AS: VERIFY SESSION - SESSION ACTIVE - SET message", path)
             await updateCartDispatch({
                 type: "UPDATE_MESSAGE", 
                 payload: {
@@ -30,7 +29,7 @@ export const verifySessionWithBE = async (path:string, updateCartDispatch:any) =
             return {status: response.status, data: data, message: null}
           }
       } catch(error:any) {
-           //console.error("AS: VERIFY SESSION - NO SESSION ", error)
+           console.error("AS: VERIFY SESSION - NO SESSION - SET message", path)
            await updateCartDispatch({
             type: "UPDATE_MESSAGE", 
             payload: {
@@ -56,13 +55,11 @@ export const hasValidSession= ():Boolean => {
 export const handleLogout = async (updateCartDispatch:any) => {
 
     //call backend logout endpoint to clear cookies
-    const logout_url = "auth/logout"
+    const logout_url = "/auth/logout"
     const user = await sessionStorage.getItem('sessionData')
     if (!user) {
         console.log("No user in session data -----------")
-        // need to set this in cart message
-        //nothing to return to
-        //return {'status':'fail', 'message': "No session info found"}     
+        return  {'status':'fail', 'message':'Cannot Logout - no user in session data'}     
     }
     const logoutPayload = {user}
 
@@ -73,7 +70,7 @@ export const handleLogout = async (updateCartDispatch:any) => {
     try {
         const response = await axiosPostRequest(logout_url, logoutPayload)
         const body = await response.data
-        console.log("LOGOUT response body is ", body)   
+        //console.log("LOGOUT response body is ", body)   
           
         //clear user info in CartState
         console.log("Clearing Cart and Session Storage-----------")
@@ -100,7 +97,7 @@ export const handleLogout = async (updateCartDispatch:any) => {
 
 export const handleLogin = async (login: string, password: string, updateCartDispatch: any) => {
     
-    const login_url = "auth/login"
+    const login_url = "/auth/login"
     const loginPayload = JSON.stringify({ userid: login, password})
 
     try {

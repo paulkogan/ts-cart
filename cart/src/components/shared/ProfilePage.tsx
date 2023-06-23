@@ -42,8 +42,11 @@ const ProfilePage: React.FC = () => {
           
           <div className="app-outer">
             <h2>Profile Page</h2>
-            <div>Session Data: {hasValidSession() ? "VALID for " + JSON.parse(sessionStorage.sessionData).name : "NO SESSION - Please log in"}</div>
+            <div>Session is: {hasValidSession() ? "VALID for " + JSON.parse(sessionStorage.sessionData).name : "NOT VALID "}</div>
             <div>Session {expTime}</div>
+            <br/>
+            <div>Session Data: {sessionStorage.sessionData}</div>
+            <br/>
             <div>Cart State: {cartState.delivery_us_state || 'none'}</div>
             <div>Verify Cookies Status: {'TBD'}</div>
                 

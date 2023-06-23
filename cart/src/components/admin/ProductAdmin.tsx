@@ -48,7 +48,7 @@ const ProductAdmin:React.FC = () => {
 
   
     console.log("Adding New Product: "+JSON.stringify(product))
-    const add_product_url = "products/create"
+    const add_product_url = "/products/create"
       
     const newProductPayload = JSON.stringify({
       name: product.name,

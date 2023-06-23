@@ -46,7 +46,7 @@ const Cart:React.FC = () => {
 
   //get product list
   useEffect(() => {
-    const products_url = "products"
+    const products_url = "/products"
     const sourceTaxRates = getTaxRates()
     const fetchBEProducts = async () => {
       setIsLoading(true)

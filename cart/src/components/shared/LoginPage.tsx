@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {handleLogin} from '../../services/auth_service'
+import {handleLogin, hasValidSession} from '../../services/auth_service'
 import {CartStateContext}  from '../../hooks/CartStateContext' 
 import { Navigate, useNavigate, useLocation } from "react-router-dom"; 
 //const history = useHistory();
@@ -31,6 +31,7 @@ const LoginPage: React.FC = () => {
     useEffect(() => {
         const setInitialMessage = async () => { 
             const destPage = sessionStorage.getItem("lastPage") || "direct" 
+            console.log("LOGIN SET INITIAL MDESSAGE: ")
             await updateCartDispatch({
                 type: "UPDATE_MESSAGE", 
                 payload: {
@@ -40,9 +41,10 @@ const LoginPage: React.FC = () => {
        }
   
         return () => {
-            console.log("LOGIN STATE IS : "+loginState)
-            console.log("cart user is IS : "+JSON.stringify(cartState))
-            if (loginState == "none") {
+            const sessionData = sessionStorage.getItem("sessionData")
+            // show initial message if not logged in
+            console.log("HVS is : "+hasValidSession())
+            if (!hasValidSession()) {
                 setInitialMessage()  
             }
                                 
@@ -68,8 +70,8 @@ const LoginPage: React.FC = () => {
                 if (response) {
                     const destPage = sessionStorage.getItem("lastPage") || "/cart"
                     await setLoginState('success');
-                    // setUserMessage(response.message)
-                    console.log("SUCCESS - REDIRECTING after LOGIN: "+destPage)
+
+                    //console.log("SUCCESS - REDIRECTING after LOGIN: "+destPage)
                     await updateCartDispatch({
                         type: "UPDATE_MESSAGE", 
                         payload: {
@@ -77,6 +79,7 @@ const LoginPage: React.FC = () => {
                         }
                       })
                     navigate(destPage)
+                    
                 } else {
                     setLoginState('error')
                     await updateCartDispatch({

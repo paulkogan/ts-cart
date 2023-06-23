@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
+
 export const axiosGetRequest = async (requestURL:string, queryParams={}) => {
 
 
@@ -14,6 +15,7 @@ export const axiosGetRequest = async (requestURL:string, queryParams={}) => {
 
     axios.interceptors.request.use(
         config => {
+            // if you want to pass token in headers instead of cookies
             // const token = sessionStorage.getItem('sessionToken');
             // if (token) {
             //     config.headers['Authorization'] = 'Bearer ' + token;

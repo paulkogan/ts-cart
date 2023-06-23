@@ -17,9 +17,10 @@ export const generateToken = (user) => {
   const secret = process.env.JWT_SECRET || "abcd";
   const hours24 =  60 * 60 * 24
   const minutes5 = 60 * 5
+  const minutes1 = 60 * 1
 
   const token = jsonWebToken.sign(returnUser, secret, {
-     expiresIn: minutes5
+     expiresIn: minutes1
   });
   return token
 }

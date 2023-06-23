@@ -27,7 +27,7 @@ const Orders:React.FC = () => {
         return; //flag to stop multiple loads with strict mode
       }
 
-      const orders_url = `orders`
+      const orders_url = `/orders`
       const orders_params = {'page':pageIndex}
       try {
 

@@ -20,7 +20,7 @@ const  CheckoutForm:React.FC <Props> = ({cartState, updateCartDispatch}) => {
 
 
     const submitCreateOrder = async () => {
-      const submit_order_url = "orders/create"
+      const submit_order_url = "/orders/create"
 
       const newOrderDetails = {
         user_uuid: cartState.user_uuid,

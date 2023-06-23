@@ -14,7 +14,7 @@ const UserAdmin:React.FC = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    const list_users_url = "users"
+    const list_users_url = "/users"
 
     const fetchUsers = async () => {
       setIsLoading(true)
