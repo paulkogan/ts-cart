@@ -12,7 +12,8 @@ const Orders:React.FC = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [pageIndex, setPageIndex] = useState(1)
   const dataFetchedRef = useRef(false);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const runRef = useRef(false); 
 
   const updatePageIndex = (newPage:number) => {
       dataFetchedRef.current = false; //reset fresh data flag if index changes
@@ -46,15 +47,21 @@ const Orders:React.FC = () => {
            
       }
     }
-    setIsLoading(true)
-    fetchBEOrders()
+    return () => {
+      //console.log(`in Orders- runRef is ${runRef.current}`)
+      if (!runRef.current) {
+        setIsLoading(true)
+        fetchBEOrders()
+      }
+      
+      runRef.current = true;                      
+  }
+
 
 
     }, [pageIndex]) 
 
 
-
- 
 
   return (
     <div>

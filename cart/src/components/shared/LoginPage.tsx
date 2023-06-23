@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
 import {handleLogin, hasValidSession} from '../../services/auth_service'
 import {CartStateContext}  from '../../hooks/CartStateContext' 
 import { Navigate, useNavigate, useLocation } from "react-router-dom"; 
@@ -25,13 +25,11 @@ const LoginPage: React.FC = () => {
     const [loginState, setLoginState] = useState("none")
     const {cartState, updateCartDispatch}   = useContext(CartStateContext);
     const navigate = useNavigate(); 
+    const runRef = useRef(false);
 
-
-    //this should run once on pageload
     useEffect(() => {
         const setInitialMessage = async () => { 
             const destPage = sessionStorage.getItem("lastPage") || "direct" 
-            console.log("LOGIN SET INITIAL MDESSAGE: ")
             await updateCartDispatch({
                 type: "UPDATE_MESSAGE", 
                 payload: {
@@ -41,14 +39,12 @@ const LoginPage: React.FC = () => {
        }
   
         return () => {
-            const sessionData = sessionStorage.getItem("sessionData")
-            // show initial message if not logged in
-            console.log("HVS is : "+hasValidSession())
-            if (!hasValidSession()) {
-                setInitialMessage()  
+            if (!runRef.current) {
+                setInitialMessage()     
             }
-                                
-        }
+              
+              runRef.current = true;                      
+          }
     
       }, []) 
 

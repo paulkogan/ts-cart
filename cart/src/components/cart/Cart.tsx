@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
 import {Product} from "../../types/types"
 import BasketList from './BasketList';
 import ShoppingProductList from './ShoppingProductList';
@@ -15,7 +15,7 @@ const Cart:React.FC = () => {
   const [productList, setProductList] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const {cartState, updateCartDispatch}   = useContext(CartStateContext);
-
+  const runRef = useRef(false); 
 
 
   useEffect(() => {
@@ -54,7 +54,7 @@ const Cart:React.FC = () => {
 
            const response = await axiosGetRequest(products_url)
            const data = response.data.data
-           //console.log("PRODUCTS RESPONSE: ", response)
+           //console.log("Actual PRODUCTS RESPONSE: ", response)
            setProductList(data)
            setIsLoading(false)
       } catch(error) {
@@ -62,9 +62,10 @@ const Cart:React.FC = () => {
       }
    }
 
-    //need to fetch inside useEffect (or useCallback)
+    
     return () => {
-        console.log("Cart SETUP runs once - getting PRODUCT list")
+        //console.log("-------- Maybe getting PRODUCT list")
+        // instead of useRef - but useRef better
         if (productList.length === 0) {            
               fetchBEProducts()              
         }

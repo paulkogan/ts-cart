@@ -1,5 +1,5 @@
 
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
 import {verifySessionWithBE, hasValidSession} from '../../services/auth_service'
 import {CartStateContext}  from '../../hooks/CartStateContext'
 import {expTimeInHMS} from '../../utils'
@@ -8,22 +8,29 @@ import '../App.css';
 const ProfilePage: React.FC = () => {
     const [expTime, setExpTime] = useState("no exp data")
     const {cartState, updateCartDispatch}   = useContext(CartStateContext);
+    const runRef = useRef(false);
 
     // doing it here as an exception on an unprotercted page
     useEffect(() => {
         const profileVerifySession = async () => {  
-          try {  
-               await verifySessionWithBE("profilePage", updateCartDispatch)
+            try {  
+                await verifySessionWithBE("profilePage", updateCartDispatch)
 
-          } catch(error) {
-               // this does not return error 
-               console.error("Error on PROFILE PAGE: failed to verify session cookie data", error)
-          }
-       }
+            } catch(error) {
+                // this does not return error 
+                console.error("Error on PROFILE PAGE: failed to verify session cookie data", error)
+            }
+        }
   
         return () => {
-            profileVerifySession()                      
+            //console.log(`in Profile- runRef is ${runRef.current}`)
+            if (!runRef.current) {
+              profileVerifySession() 
+            }
+            
+            runRef.current = true;                      
         }
+
     
       }, []) 
 

@@ -122,7 +122,7 @@ describe("POST /products/create", () => {
 
     it("should return 400 if duplicate", async () => {
         const response = await request(baseURL).post('/products/create').send(test_product_3);
-        console.log("DUPLICATE product RESPONSE ============\n",JSON.stringify(response.body, null,4))
+        //console.log("DUPLICATE product RESPONSE ============\n",JSON.stringify(response.body, null,4))
         expect(response.statusCode).toBe(400);
         expect(response.body.message).toContain("Duplicate product");
     });
@@ -150,7 +150,8 @@ describe("GET /products", () => {
     
     it("should return catalog products", async () => {
     const response = await request(baseURL).get("/products");
-    expect(response.body.data.length).toBeGreaterThan(1);
+    //console.log("=========="+JSON.stringify(response))
+    expect(response.body.data.length).toBe(3);
     expect(response.body.data[0].price).toBe(10000);
     });
 });

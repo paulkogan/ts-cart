@@ -14,7 +14,7 @@ const ProductAdmin:React.FC = () => {
 
 
   useEffect(() => {
-    const products_url = "products"
+    const products_url = "/products"
 
 
     const fetchBEProducts = async () => {

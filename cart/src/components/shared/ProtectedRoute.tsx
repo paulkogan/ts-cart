@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
 import { Navigate } from "react-router-dom";
 import {verifySessionWithBE} from '../../services/auth_service'
 import {CartStateContext}  from '../../hooks/CartStateContext'
@@ -7,6 +7,7 @@ import {CartStateContext}  from '../../hooks/CartStateContext'
 export const ProtectedRoute = ( {children, path}:any) => {
   const [sessionState, setSessionState] = useState("waiting")
   const {cartState, updateCartDispatch}   = useContext(CartStateContext);
+  const runRef = useRef(false);
 
   useEffect(() => {
     const profileVerifySession = async () => {
@@ -25,10 +26,19 @@ export const ProtectedRoute = ( {children, path}:any) => {
    }
 
     return () => {
-        profileVerifySession()                      
+        //console.log(`in PR - runRef is ${runRef.current}`)
+        if (!runRef.current) {
+          profileVerifySession()
+        }
+        
+        runRef.current = true;                      
     }
 
   }, []) 
+
+
+
+
 
 
   //console.log(`protected Route: ${path} sessionState is: ${sessionState}`)
