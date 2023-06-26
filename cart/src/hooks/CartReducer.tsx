@@ -45,6 +45,7 @@ const CartUpdater = (state: CartState,  action: {type:string, payload: any}) => 
             let tax_rate = 0.0
             let tax_amount = 0
 
+            //tax amount is just zero if no us_state
             if (delivery_us_state) {
                 tax_rate = getTaxRateForState(delivery_us_state)/100
                 tax_amount = Math.round(new_basket_item.price * tax_rate)

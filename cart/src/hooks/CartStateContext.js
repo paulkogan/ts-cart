@@ -1,5 +1,6 @@
 import React, {useReducer} from 'react';
 import CartReducer from './CartReducer';
+import useAuth from './useAuth'
 
 const initialCartState = {
     "user_uuid": "",
@@ -35,9 +36,14 @@ const CartStateContext = React.createContext();
 export const CartStateProvider = ({ children }) => {
     const [cartState, updateCartDispatch] = useReducer(CartReducer, initialCartState);
 
+
+    //get the useAuth hook -- call it with updateCartDispatch
+    
+    const auth = useAuth(updateCartDispatch) 
+   //wrap in useMemo to avoid double load
  
     return (
-        <CartStateContext.Provider value={{cartState, updateCartDispatch}}>
+        <CartStateContext.Provider value={{cartState, updateCartDispatch, auth}}>
             {children}
         </CartStateContext.Provider>
     );

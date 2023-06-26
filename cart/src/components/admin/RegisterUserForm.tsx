@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useContext, useEffect} from 'react';
 import {User} from "../../types/types"
 import './Admin.css';
 import {axiosPostRequest} from '../../services/api_service'
 import {getTaxRates} from "../../utils"
+import {CartStateContext}  from '../../hooks/CartStateContext' 
 
 // interface Props {
 //   submitAddProduct: (new_product:Product) => any;
@@ -12,6 +13,30 @@ import {getTaxRates} from "../../utils"
 
 const  RegisterUserForm:React.FC = () => {
 
+
+
+  const {cartState, updateCartDispatch, auth}   = useContext(CartStateContext);
+  const runRef = useRef(false);
+
+
+  useEffect(() => {
+    const setInitialMessage = async () => { 
+        await updateCartDispatch({
+            type: "UPDATE_MESSAGE", 
+            payload: {
+              user_message: `Add new Users here!`
+            }
+          })
+   }
+
+    return () => {
+        if (!runRef.current) {
+            setInitialMessage()     
+        }    
+          runRef.current = true;                      
+      }
+
+  }, []) 
 
   const getNewUserObj = () :User => {
       return {
@@ -24,7 +49,6 @@ const  RegisterUserForm:React.FC = () => {
   }
   
   const [newUser, setNewUser] = useState<User>(getNewUserObj());
-  const [userMessage, setUserMessage] = useState("Please enter registration details.")
   const [regStatus, setRegStatus] = useState("none")
 
   const us_tax_states = ["--"].concat(Object.keys(getTaxRates()));
@@ -44,7 +68,7 @@ const  RegisterUserForm:React.FC = () => {
 
 
       const register_user_url = "/users/register"
-      console.log(`Submit: NewUser is: ${JSON.stringify(newUser)}`)
+      //console.log(`Submit: NewUser is: ${JSON.stringify(newUser)}`)
 
       const newUserPayload = JSON.stringify({ 
             email: newUser.email,
@@ -58,14 +82,25 @@ const  RegisterUserForm:React.FC = () => {
       try {
          const response = await axiosPostRequest(register_user_url, newUserPayload)
          const data = await response.data
-          console.log("REGISTER DATA is  ", data)
+          //console.log("REGISTER DATA is  ", data)
           if (response.status > 300) {
-              setUserMessage(data.message)
+              await updateCartDispatch({
+                type: "UPDATE_MESSAGE", 
+                payload: {
+                  user_message: `Error: failed to register user with:  ${data.message}`
+                }
+              })
               setRegStatus("error")
 
   
           } else {
-              setUserMessage(`Success! Registration complete for ${data.email}`)
+              await updateCartDispatch({
+                type: "UPDATE_MESSAGE", 
+                payload: {
+                  user_message: `Success! Registration complete for ${data.email}`
+                }
+              })
+
               setRegStatus("success")
               //reset the form
               setNewUser(getNewUserObj())
@@ -77,7 +112,13 @@ const  RegisterUserForm:React.FC = () => {
           
   
      } catch(error) {
-          setUserMessage(`Error: failed to register user with:  ${error}`)
+          await updateCartDispatch({
+            type: "UPDATE_MESSAGE", 
+            payload: {
+              user_message: `Error: failed to register user with:  ${error}`
+            }
+          })
+
           console.log("Error: failed to register user with: ", error)
           setRegStatus("error")
      }
@@ -89,7 +130,6 @@ const  RegisterUserForm:React.FC = () => {
   return (
     <div>     
         <div className="form-message">
-            <div>{userMessage} </div>
             <div>{/* JSON.stringify(newUser)*/} </div>
         </div>
         {/*  updates newUser directly  - can do it both ways*/}

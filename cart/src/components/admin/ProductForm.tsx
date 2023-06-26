@@ -25,7 +25,7 @@ const  ProductForm:React.FC <Props> = (props) => {
   
 
   const handleChange = (fieldName: string, fieldValue: string | number): void => {
-    console.log(`HandleChange: ${fieldName} ${fieldValue}`)
+    //console.log(`HandleChange: ${fieldName} ${fieldValue}`)
     setNewProd({
       ...newProd,
       [fieldName]: fieldValue

@@ -48,7 +48,12 @@ const listProducts = async (req, res) => {
     const name = req.query.name;
     var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
 
-    Product.findAll({ where: condition })
+    Product.findAll({ 
+        where: condition,
+        order: [
+            ['price', 'DESC'],
+        ],
+     })
     .then(data => {
         //console.log("products "+JSON.stringify(data))
         res.status(200).send({
