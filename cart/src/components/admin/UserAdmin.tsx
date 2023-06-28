@@ -1,17 +1,18 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useRef, useContext, useEffect} from 'react';
 import {User} from "../../types/types"
 import './Admin.css';
 import RegisterUserForm from './RegisterUserForm';
 import UserList from './UserList';
+
 import {axiosGetRequest} from '../../services/api_service'
 
 
 
 const UserAdmin:React.FC = () => {
-
-  const [userMessage, setUserMessage] = useState("Please enter user reg info.")
   const [userList, setUserList] = useState<User[]>([])
   const [isLoading, setIsLoading] = useState(false)
+
+
 
   useEffect(() => {
     const list_users_url = "/users"
@@ -57,8 +58,7 @@ const UserAdmin:React.FC = () => {
         </div>
 
 
-        <div className="cart-right">
-        <div>MESSAGE: {userMessage}</div>     
+        <div className="cart-right"> 
           <div className="admin-app-2">
             <RegisterUserForm />
           </div>

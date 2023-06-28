@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useRef, useContext} from 'react';
-import {handleLogin, hasValidSession} from '../../services/auth_service'
 import {CartStateContext}  from '../../hooks/CartStateContext' 
 import { Navigate, useNavigate, useLocation } from "react-router-dom"; 
 //const history = useHistory();
@@ -22,8 +21,8 @@ const initialLoginObj = {
 const LoginPage: React.FC = () => {
 
     const [loginObj, setLoginObj] = useState(initialLoginObj)
-    const [loginState, setLoginState] = useState("none")
-    const {cartState, updateCartDispatch}   = useContext(CartStateContext);
+    const [loginState, setLoginState] = useState("none") //needed?
+    const {cartState, updateCartDispatch, auth}   = useContext(CartStateContext);
     const navigate = useNavigate(); 
     const runRef = useRef(false);
 
@@ -61,8 +60,8 @@ const LoginPage: React.FC = () => {
     };
 
     const handleSubmit = async () => {
-        handleLogin(loginObj.email, loginObj.password, updateCartDispatch)
-        .then( async (response) => {           
+        auth.handleLoginHook(loginObj.email, loginObj.password)
+        .then( async (response:any) => {           
                 if (response) {
                     const destPage = sessionStorage.getItem("lastPage") || "/cart"
                     await setLoginState('success');
@@ -88,7 +87,7 @@ const LoginPage: React.FC = () => {
                 }
                 
 
-        }).catch(err => {      //handleLogin return error
+        }).catch((err:any) => {      //handleLogin return error
             //console.log("LOGIN PAGE ERROR: "+err.message)
             setLoginState("error");
             updateCartDispatch({
@@ -106,10 +105,6 @@ const LoginPage: React.FC = () => {
 
     return (
         <div className="login-outer" >
-
-            <div className="login-messages">
-                <div>Login State: {loginState}</div>
-            </div> 
 
             <div className="login-input-div" >
                 <input

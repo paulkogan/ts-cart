@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Link, 
 } from "react-router-dom";
-import {handleLogout} from '../../services/auth_service'
 import {CartStateContext}  from '../../hooks/CartStateContext' 
 import { Navigate, useNavigate, useLocation } from "react-router-dom"; 
 import '../App.css';
@@ -11,11 +10,11 @@ import '../App.css';
 
 
 const Nav:React.FC = () => {
-  const {cartState, updateCartDispatch} = useContext(CartStateContext);
+  const {cartState, updateCartDispatch, auth} = useContext(CartStateContext);
   const navigate = useNavigate(); 
 
   const logoutWithNav = async () => {
-    const logoutResult = await handleLogout(updateCartDispatch)
+    const logoutResult = await auth.handleLogoutHook()
     if (logoutResult.status == 'fail') {
       navigate('/login')
     } 

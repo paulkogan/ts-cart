@@ -1,7 +1,7 @@
 import React from 'react';
 import {Product} from "../../types/types"
 import ShoppingProductPlank from "./ShoppingProductPlank"
-import './Cart.css';
+import './Shopping.css';
 
 interface Props {
   productList: Product[]
@@ -17,10 +17,13 @@ const  ShoppingProductList:React.FC <Props> = ({productList, addToBasket}) => {
 
   const renderProductlist = ():JSX.Element[]  => {
 
-    return productList.map(item => {
+    return productList.map((item, idx) => {
+      //console.log(JSON.stringify(item))
       return (
           <div key={item.product_id} className="prod-list-item" >
-            <ShoppingProductPlank  handleAdd = {handleAdd} item = {item} />
+
+            <ShoppingProductPlank  handleAdd = {handleAdd} item = {item} /><br/>
+
           </div>
       )
     })
@@ -35,3 +38,7 @@ const  ShoppingProductList:React.FC <Props> = ({productList, addToBasket}) => {
 }
 
 export default ShoppingProductList;
+
+
+//<ShoppingProductPlank  handleAdd = {handleAdd} item = {item} />
+//<div>{JSON.stringify(item.product_id)}</div>

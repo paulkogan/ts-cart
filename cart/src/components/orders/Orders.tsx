@@ -55,8 +55,7 @@ const Orders:React.FC = () => {
       }
       
       runRef.current = true;                      
-  }
-
+    }
 
 
     }, [pageIndex]) 
@@ -68,15 +67,12 @@ const Orders:React.FC = () => {
       
       <div className="orders-outer">
         <h2>Orders List</h2>
-
-  
           <div className="orders-inner">
             {isLoading ? <div> PLEASE WAIT - ORDERS LOADING !!!</div> : 
                 <div>
                   <OrdersTable ordersList = {ordersList} /> 
                   <Pagination setPageIndex = {updatePageIndex} pageIndex = {pageIndex} /> 
-                </div>  
-                        
+                </div>                    
             }
           </div>
 

@@ -1,19 +1,18 @@
 import React, {useState, useEffect, useRef, useContext} from 'react';
 import { Navigate } from "react-router-dom";
-import {verifySessionWithBE} from '../../services/auth_service'
 import {CartStateContext}  from '../../hooks/CartStateContext'
 
 
 export const ProtectedRoute = ( {children, path}:any) => {
   const [sessionState, setSessionState] = useState("waiting")
-  const {cartState, updateCartDispatch}   = useContext(CartStateContext);
+  const {cartState, updateCartDispatch, auth}   = useContext(CartStateContext);
   const runRef = useRef(false);
 
   useEffect(() => {
     const profileVerifySession = async () => {
       try {
 
-           const response = await verifySessionWithBE("PR-"+path, updateCartDispatch)
+           const response = await auth.verifySessionWithBEHook("PR-"+path)
            if (response.status < 300) {
             setSessionState("session")
            } else {

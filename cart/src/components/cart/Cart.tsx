@@ -4,7 +4,6 @@ import BasketList from './BasketList';
 import ShoppingProductList from './ShoppingProductList';
 import CheckoutForm from './CheckoutForm';
 import {axiosGetRequest} from '../../services/api_service'
-import {hasValidSession} from '../../services/auth_service'
 import {CartStateContext}  from '../../hooks/CartStateContext'
 import {getTaxRates} from "../../utils"
 import './Cart.css';
@@ -14,12 +13,11 @@ const Cart:React.FC = () => {
 
   const [productList, setProductList] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(false)
-  const {cartState, updateCartDispatch}   = useContext(CartStateContext);
+  const {cartState, updateCartDispatch, auth}   = useContext(CartStateContext);
   const runRef = useRef(false); 
 
-
+  // this is a bit of  hack to fix that Context data gets wiped on page reload 
   useEffect(() => {
-
     const addUserToCartState = async () => {
       //check session storage for user info    
       const user = sessionStorage.getItem('sessionData')
@@ -62,14 +60,19 @@ const Cart:React.FC = () => {
       }
    }
 
-    
+  
+
     return () => {
-        //console.log("-------- Maybe getting PRODUCT list")
-        // instead of useRef - but useRef better
-        if (productList.length === 0) {            
-              fetchBEProducts()              
-        }
+      if (!runRef.current) {
+        setIsLoading(true)
+        fetchBEProducts()
+      }
+      
+      runRef.current = true;                      
     }
+
+
+
 
   }, []) 
 
@@ -98,7 +101,7 @@ const Cart:React.FC = () => {
       <div className="cart-inner">
         <h2>Shopping Cart</h2>
         <div>Cart State: {cartState.delivery_us_state || 'none'}</div>
-        <div>Session: {hasValidSession() ? JSON.parse(sessionStorage.sessionData).name : "NO SESSION - Please log in"}</div>
+        <div>Session: {auth.hasValidSessionHook() ? JSON.parse(sessionStorage.sessionData).name : "NO SESSION - Please log in"}</div>
 
    
     

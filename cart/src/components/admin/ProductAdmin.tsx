@@ -1,21 +1,41 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useRef, useContext, useEffect} from 'react';
 import {Product} from "../../types/types"
 import './Admin.css';
 import ProductForm from './ProductForm';
 import AdminProductList from './AdminProductList';
+import {CartStateContext}  from '../../hooks/CartStateContext' 
 import {axiosGetRequest, axiosPostRequest} from '../../services/api_service'
 
 
 const ProductAdmin:React.FC = () => {
-
-  const [userMessage, setUserMessage] = useState("Please enter new product")
   const [productList, setProductList] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const {cartState, updateCartDispatch, auth}   = useContext(CartStateContext);
+  const runRef = useRef(false);
+
+  useEffect(() => {
+      const setInitialMessage = async () => { 
+          await updateCartDispatch({
+              type: "UPDATE_MESSAGE", 
+              payload: {
+                user_message: `Please add new Products!`
+              }
+            })
+     }
+
+      return () => {
+          if (!runRef.current) {
+              setInitialMessage()     
+          }
+            
+            runRef.current = true;                      
+        }
+  
+    }, []) 
 
 
   useEffect(() => {
     const products_url = "/products"
-
 
     const fetchBEProducts = async () => {
       setIsLoading(true)
@@ -29,9 +49,6 @@ const ProductAdmin:React.FC = () => {
       }
    }
 
-
-
-
     //need to fetch inside useEffect (or useCallback)
     return () => {
         console.log("Cart SETUP runs once!")
@@ -43,7 +60,6 @@ const ProductAdmin:React.FC = () => {
 
   }, []) // pass in a dependency array
 
-  // const handleSubmit = async (): Promise<string | undefined> => {
   const submitAddProduct = async (product: Product) => {
 
   
@@ -68,17 +84,35 @@ const ProductAdmin:React.FC = () => {
         const data = await response.data
         //console.log("NEW PRODUCT RESPONSE data is  ", data )
         if (response.status > 300) {
-            setUserMessage(data.message)
+            await updateCartDispatch({
+              type: "UPDATE_MESSAGE", 
+              payload: {
+                user_message: `Problem Adding Product! ${data.message}.`
+              }
+            })
+
         } else {
-            setUserMessage(`Success! Added: ${data.data.name}.`)
+
+            await updateCartDispatch({
+              type: "UPDATE_MESSAGE", 
+              payload: {
+                user_message: `Success! Added: ${data.data.name}.`
+              }
+            })
+
             setProductList(
               [...productList, data.data]
             )
         }
       } catch(error) {
-            setUserMessage(`Error: failed to add product with:  ${error}`)
+
+            await updateCartDispatch({
+              type: "UPDATE_MESSAGE", 
+              payload: {
+                user_message: `ERROR  Adding Product! ${error}.`
+              }
+            })
             console.log("Error: failed to add product with: ", error)
-            //setRegStatus("error")
       }
 
   }      
@@ -99,7 +133,6 @@ const ProductAdmin:React.FC = () => {
        </div>
 
           <div className="cart-right">
-            <div>MESSAGE: {userMessage}</div>
             <div className="admin-app-1">
               <ProductForm submitAddProduct = {submitAddProduct} />
             </div>
