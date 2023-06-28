@@ -1,35 +1,54 @@
-.shopping-plank {
+.prod-list {
   border: 1px solid navy;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+
+.prod-list-item {
+  width: 95%;
+  align-items: left;
+  border: 1px solid purple;
   white-space: nowrap;
+  flex-flow: row nowrap; 
+}
+
+
+.shopping-plank {
+  border: 1px solid grey;
+  display: flex;
+  padding: 5px;
+  margin-top: 0px;
 }
 
 .shopping-plank-img {
   display: inline-block;
   border: 0px solid green;
-  padding-right: 5px
+  padding-right: 5px;
 }
 
 .shopping-img {
-  width: 100px;
+  max-width: 100px;
+  border: 0px solid black;
 }
 
 .shopping-plank-info {
-  display: inline-block;
-  border: 0px solid green;
+  width: 100%;
+  max-height: 70px;
+  border: 0px solid red;
   vertical-align:top;
-  padding-top: 5px;
-  margin: 15px;
- 
+  padding-top: 10px;
 
 }
-
-
 
 .shopping-add-button {
   display: inline-block;
   border: 0px solid orange;
-  vertical-align:top;
+  vertical-align: middle;
+  max-height: 65px; 
   padding-left: 10px;
+  padding-top: 10px;
   padding-bottom: 5px;
 }
 

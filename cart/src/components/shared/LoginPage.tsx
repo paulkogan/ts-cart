@@ -106,11 +106,6 @@ const LoginPage: React.FC = () => {
     return (
         <div className="login-outer" >
 
-            <div className="login-messages">
-                <div>Login State: {loginState}</div>
-                <div> Hook AuthUser {JSON.stringify(auth.authUser)}</div>
-            </div> 
-
             <div className="login-input-div" >
                 <input
                     className="login-input-field" 

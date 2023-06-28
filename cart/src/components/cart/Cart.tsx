@@ -60,14 +60,19 @@ const Cart:React.FC = () => {
       }
    }
 
-    
+  
+
     return () => {
-        //console.log("-------- Maybe getting PRODUCT list")
-        // instead of useRef - but useRef better
-        if (productList.length === 0) {            
-              fetchBEProducts()              
-        }
+      if (!runRef.current) {
+        setIsLoading(true)
+        fetchBEProducts()
+      }
+      
+      runRef.current = true;                      
     }
+
+
+
 
   }, []) 
 

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef, useContext} from 'react';
+import {useState} from 'react';
 import {axiosGetRequest, axiosPostRequest} from '../services/api_service'
 
 
@@ -29,7 +29,7 @@ const useAuth = (updateCartDispatch) => {
               await updateCartDispatch({
                   type: "UPDATE_MESSAGE", 
                   payload: {
-                    user_message: `AS Hook: ${path} Cookie Session Token OK `
+                    user_message: `uAH: ${path} Cookie Session Token OK `
                   }
                 })
               return {status: response.status, data: data.session, message: null}
