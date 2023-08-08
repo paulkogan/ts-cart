@@ -1,4 +1,5 @@
 
+// Product and OrderItem now under Domain 
 
 // export interface Product {
 //     product_id: string | null;

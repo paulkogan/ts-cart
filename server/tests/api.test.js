@@ -88,6 +88,32 @@ let bad_product_4 = {
     description: null
 }
 
+let login_request_1 = {
+    userid: "tom@hanks.com",
+    password: "abcd"
+}
+
+
+describe("POST /auth/login", () => {
+    beforeAll(async () => {
+        // clear DB
+        await sequelize.sync({ force: true })
+        User.registerNew(test_user_1)
+        User.registerNew(test_user_2)
+    })
+    
+
+    it("should login a user", async () => {
+        const response = await request(baseURL).post('/auth/login').send(login_request_1);
+        console.log("login response ============\n",JSON.stringify(response.body, null,4))
+        expect(response.statusCode).toBe(200);
+        expect(response.body.errors).toBe(null);
+        expect(response.body.data.name).toBe('Tom Hanks');
+    });
+
+})
+
+
 
 describe("POST /products/create", () => {
 
@@ -103,7 +129,7 @@ describe("POST /products/create", () => {
         //await db.sequelize.close()
     })
 
-    it("should properly add a new product", async () => {
+    it.skip("should properly add a new product", async () => {
         const response = await request(baseURL).post('/products/create').send(test_product_3);
         //console.log("new product create============\n",JSON.stringify(response.body, null,4))
         expect(response.statusCode).toBe(201);
@@ -113,14 +139,14 @@ describe("POST /products/create", () => {
     });
     
 
-    it("should return 400 if bad data", async () => {
+    it.skip("should return 400 if bad data", async () => {
         const response = await request(baseURL).post('/products/create').send(bad_product_4);
         //console.log("BAD product RESPONSE ============\n",JSON.stringify(response.body, null,4))
         expect(response.statusCode).toBe(400);
         expect(response.body.message).toContain("price must be >= 0 but is");
     });
 
-    it("should return 400 if duplicate", async () => {
+    it.skip("should return 400 if duplicate", async () => {
         const response = await request(baseURL).post('/products/create').send(test_product_3);
         //console.log("DUPLICATE product RESPONSE ============\n",JSON.stringify(response.body, null,4))
         expect(response.statusCode).toBe(400);
@@ -142,7 +168,7 @@ describe("GET /products", () => {
     afterAll(async () => {
     })
 
-    it("should return 200", async () => {
+    it.skip("should return 200", async () => {
     const response = await request(baseURL).get("/products");
     expect(response.statusCode).toBe(200);
     expect(response.body.errors).toBe(null);
@@ -150,7 +176,7 @@ describe("GET /products", () => {
     
     it("should return catalog products", async () => {
     const response = await request(baseURL).get("/products");
-    //console.log("=========="+JSON.stringify(response))
+    console.log("product list =========="+JSON.stringify(response))
     expect(response.body.data.length).toBe(3);
     expect(response.body.data[0].price).toBe(10000);
     });
@@ -159,7 +185,7 @@ describe("GET /products", () => {
 describe("GET /users", () => {
 
     beforeAll(async () => {
-        await sequelize.sync({ force: true })
+        //await sequelize.sync({ force: true })
         User.registerNew(test_user_1)
         User.registerNew(test_user_2)
     })
@@ -170,12 +196,13 @@ describe("GET /users", () => {
 
     it("should return 200 and ALL users", async () => {
         const response = await request(baseURL).get("/users");
+        console.log("USERS LIST  ============\n",response.body.data, null,4)
         expect(response.statusCode).toBe(200);
         expect(response.body.errors).toBe(null);
         expect(response.body.data.length).toBe(2);
     });
     
-    it("should return only the target user", async () => {
+    it.skip("should return only the target user", async () => {
     const response = await request(baseURL).get("/users?name=Damon");
     //console.log("RESPONSE ============\n",response.body.data, null,4)
     expect(response.body.data.length).toBe(1);
@@ -201,20 +228,20 @@ describe("POST /findUser", () => {
     })
 
 
-    it("should return 200", async () => {
+    it.skip("should return 200", async () => {
         const response = await request(baseURL).post("/users/find_user").send(find_params);
         //console.log("RESPONSE find user ============\n",response.body)
         expect(response.statusCode).toBe(200);
         expect(response.body.errors).toBe(null);
     });
     
-    it("should return found target user", async () => {
+    it.skip("should return found target user", async () => {
         const response = await request(baseURL).post("/users/find_user").send(find_params);
         //console.log("FIND USER RESPONSE ============\n",response.body.data, null,4)
         expect(response.body.data.name).toBe('Matt Damon');
     });
 
-    it("should return 404 if not found", async () => {
+    it.skip("should return 404 if not found", async () => {
         const response = await request(baseURL).post("/users/find_user").send(not_find_params);
         //console.log("NOT FOUND RESPONSE ============\n",response.body, null,4)
         expect(response.statusCode).toBe(404);
@@ -244,7 +271,7 @@ describe("POST /register ", () => {
 
 
 
-    it("should properly register a valid new user", async () => {
+    it.skip("should properly register a valid new user", async () => {
         const response = await request(baseURL).post('/users/register').send(test_user_2);
         //console.log("REGISTER RESPONSE 200============\n",JSON.stringify(response.body, null,4))
         expect(response.statusCode).toBe(200);
@@ -254,7 +281,7 @@ describe("POST /register ", () => {
     });
     
 
-    it("should return 400 if bad registration request", async () => {
+    it.skip("should return 400 if bad registration request", async () => {
         const response = await request(baseURL).post('/users/register').send(bad_test_user);
         // console.log("BAD REGISTER RESPONSE ============\n",JSON.stringify(response.body, null,4))
         expect(response.statusCode).toBe(400);

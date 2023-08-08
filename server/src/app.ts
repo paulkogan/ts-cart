@@ -8,7 +8,7 @@ import 'dotenv/config'
 import router from './routes/routes_main.js';
 
 
-const port = 3001
+
 const app = express();
 
 
@@ -36,5 +36,7 @@ app.use(bodyParser.json())
 
 app.use(router)
 
-app.listen(port, () => console.log(`TS-Cart API listening on port ${port}!`))
+export {app}
+
+// app.listen(port, () => console.log(`TS-Cart API listening on port ${port}!`))
 
