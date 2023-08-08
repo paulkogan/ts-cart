@@ -19,7 +19,7 @@ module.exports = {
     HOST: "localhost",
     USER: "paulkogan",
     PASSWORD: "",
-    DB: "ts_cart_db",
+    DB: "ts_cart_db_xxx",
     dialect: "postgres",
     pool: {
       max: 5,

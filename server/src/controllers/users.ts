@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const registerNew = async (req, res) => {
 
-    var validEmailRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-\.]+$/;
+    var validEmailRegex = /^[a-zA-Z0-9.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-\.]+$/;
 
     if (!req.body.email.match(validEmailRegex)) {
         res.status(400).send({

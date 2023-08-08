@@ -1,4 +1,4 @@
-
+//creation payload
 export interface BaseProduct {
     name: string;
     image_url: string;
@@ -13,7 +13,7 @@ export interface Product extends BaseProduct{
 
 }
 
-
+//creation payload
 export interface BaseOrderItem extends Product{
     order_uuid: string;
     num_units: number;

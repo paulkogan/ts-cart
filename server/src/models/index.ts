@@ -6,7 +6,7 @@ const orderItemModel = require("./order_item.js");
 
 const env = process.env.NODE_ENV || 'development';
 import env_config = require("../../config/config_json.js")
-// console.log("========================")
+console.log(`======================== MODEL-INDEX env is ${env} ============`)
 // console.log(env_config)
 
 const config = env_config[env]

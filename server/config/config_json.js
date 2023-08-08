@@ -12,7 +12,7 @@ const env_config = {
     "use_env_variable": false,
     "username": "postgres",
     "password": "abc",
-    "database": "ts_cart_db",
+    "database": "ts_cart_test_db",
     "host": "127.0.0.1",
     "dialect": "postgres", 
   },

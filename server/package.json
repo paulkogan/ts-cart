@@ -2,12 +2,12 @@
   "name": "ts-cart-api",
   "version": "1.0.0",
   "description": "ts-cart server",
-  "main": "src/app.ts",
+  "main": "src/server.ts",
   "scripts": {
-    "startts": "ts-node-esm src/app.ts",
-    "livets": "nodemon src/app.ts",
-    "node": "node src/app.js",
-    "live": "nodemon dist/src/app.js",
+    "startts": "ts-node-esm src/server.ts",
+    "livets": "nodemon src/server.ts",
+    "node": "node src/server.js",
+    "live": "nodemon dist/src/server.js",
     "test": "jest --runInBand",
     "build": "tsc"
   },

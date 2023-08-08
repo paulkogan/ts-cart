@@ -36,8 +36,10 @@ const ProfilePage: React.FC = () => {
       // update expiration timer
       useEffect(() => { 
         if(sessionStorage.sessionData) {
+
           const interval = setInterval(() => {
-            setExpTime(expTimeInHMS(JSON.parse(sessionStorage.sessionData).exp))
+            let timeNow = Date.now()
+            setExpTime(expTimeInHMS(JSON.parse(sessionStorage.sessionData).exp, timeNow))
           }, 1000);   
           return () => clearInterval(interval);
         }

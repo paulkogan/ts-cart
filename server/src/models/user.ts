@@ -1,10 +1,6 @@
 //const {Model, Optional} = require('sequelize')
 
-
-
 const userModel = (sequelize, DataTypes) => {
-
-
 
     const User = sequelize.define(
       'users', //name of table
