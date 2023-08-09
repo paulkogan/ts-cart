@@ -4,6 +4,7 @@ const {models, sequelize} = require("../dist/src/models/index.js")
 const { v4 : uuidv4 } = require('uuid')
 const User = models.User;
 const Product = models.Product;
+const {generateToken} = require('../dist/src/services/be-auth-service.js')
 
 let test_user_1 = {
     user_uuid: uuidv4(),
@@ -135,22 +136,37 @@ describe("GET /users", () => {
         //await sequelize.sync({ force: true })
         // User.registerNew(test_user_1)
         // User.registerNew(test_user_2)
+
     })
+
+
+    // res.cookie('tsToken', token, { 
+    //     httpOnly: true,
+    //     maxAge: minutes5millis, 
+    //  });
+
 
     afterAll(async () => {
         //await db.sequelize.close()
     })
 
     it("should return 200 and ALL users", async () => {
-        const response = await request(baseURL).get("/users");
-        //console.log("USERS LIST  ============\n",JSON.stringify(response.body.data, null,4))
+        const matchUser = await User.findByEmail(login_request_2.userid)
+        const token = generateToken(matchUser)
+
+        const response = await request(baseURL).get("/users")
+        .set('Cookie', [`tsToken=${token}`]);
+        console.log("USERS LIST  ============\n",JSON.stringify(response.body.data, null,4))
         expect(response.statusCode).toBe(200);
         expect(response.body.errors).toBe(null);
         expect(response.body.data.length).toBe(2);
     });
     
     it("should return only the targeted user", async () => {
-    const response = await request(baseURL).get("/users?name=Damon");
+    const matchUser = await User.findByEmail(login_request_2.userid)
+    const token = generateToken(matchUser)
+    const response = await request(baseURL).get("/users?name=Damon")
+    .set('Cookie', [`tsToken=${token}`]);
     //console.log("find user ============\n",JSON.stringify(response.body.data, null,4))
     expect(response.body.data.length).toBe(1);
     expect(response.body.data[0].email).toBe('matt@damon.com');

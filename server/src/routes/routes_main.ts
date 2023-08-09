@@ -13,7 +13,7 @@ router.get('/orders', authorization, ordersController.listOrders);
 router.post('/orders/create', authorization, ordersController.createNew);
 router.get('/products', productsController.listProducts);
 router.post('/products/create', productsController.createNew);
-router.get('/users', usersController.listUsers);
+router.get('/users', authorization, usersController.listUsers);
 router.post('/users/find_user', usersController.findUser)
 router.post('/users/register', usersController.registerNew)
 router.post('/auth/login', authController.loginUser)
