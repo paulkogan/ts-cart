@@ -1,10 +1,11 @@
 const request = require("supertest")
-const baseURL = "http://localhost:3001"
+const baseURL = "http://localhost:3003"
 const {models, sequelize} = require("../dist/src/models/index.js")
 const { v4 : uuidv4 } = require('uuid')
 const User = models.User;
 const Product = models.Product;
-const {generateToken} = require('../dist/src/services/be-auth-service.js')
+const {generateToken} = require('../dist/src/services/be-auth-service.js');
+const { JsonWebTokenError } = require("jsonwebtoken");
 
 let test_user_1 = {
     user_uuid: uuidv4(),
@@ -122,7 +123,7 @@ describe("POST /auth/login", () => {
 
     it("should login a user", async () => {
         const response = await request(baseURL).post('/auth/login').send(login_request_2);
-        console.log("login response ============\n",JSON.stringify(response.body, null,4))
+        // console.log("login response ============\n",JSON.stringify(response.body, null,4))
         expect(response.statusCode).toBe(200);
         expect(response.body.errors).toBe(null);
         expect(response.body.data.name).toBe('Matt Damon');
@@ -131,43 +132,43 @@ describe("POST /auth/login", () => {
 })
 
 describe("GET /users", () => {
-
-    beforeAll(async () => {
-        //await sequelize.sync({ force: true })
-        // User.registerNew(test_user_1)
-        // User.registerNew(test_user_2)
-
-    })
-
-
-    // res.cookie('tsToken', token, { 
-    //     httpOnly: true,
-    //     maxAge: minutes5millis, 
-    //  });
+    const matchUser = {
+        "name": "Matt Damon",
+        "email": "matt@damon.com",
+        "home_state": "AZ",
+        "user_uuid": "a5b6e6f8-811e-40c1-9b61-d16be60757de"
+    }
+    // not really logging in, just generating the JsonWebTokenError, and including it in a cookie
+    const token = generateToken(matchUser)
 
 
     afterAll(async () => {
         //await db.sequelize.close()
     })
 
-    it("should return 200 and ALL users", async () => {
-        const matchUser = await User.findByEmail(login_request_2.userid)
-        const token = generateToken(matchUser)
-
+    it("should return 200 and ALL users if logged-in", async () => {
         const response = await request(baseURL).get("/users")
         .set('Cookie', [`tsToken=${token}`]);
-        console.log("USERS LIST  ============\n",JSON.stringify(response.body.data, null,4))
+        //console.log("USERS LIST  ============\n",JSON.stringify(response.body.data, null,4))
         expect(response.statusCode).toBe(200);
         expect(response.body.errors).toBe(null);
         expect(response.body.data.length).toBe(2);
     });
     
-    it("should return only the targeted user", async () => {
-    const matchUser = await User.findByEmail(login_request_2.userid)
-    const token = generateToken(matchUser)
+    it("should return 401 and Auth Service Error if bad cookie", async () => {
+        const response = await request(baseURL).get("/users")
+        .set('Cookie', [`tsToken=${{"name":"none"}}`]);
+        // console.log("401 not logged in ============\n",JSON.stringify(response.body, null,4))
+        expect(response.statusCode).toBe(401);
+        expect(response.text).toBe('Authorization Error: cookies token not verified or expired');
+
+    });
+
+
+    it("url params filter returns only the targeted user", async () => {
     const response = await request(baseURL).get("/users?name=Damon")
     .set('Cookie', [`tsToken=${token}`]);
-    //console.log("find user ============\n",JSON.stringify(response.body.data, null,4))
+    // console.log("filter ============\n",JSON.stringify(response.body, null,4))
     expect(response.body.data.length).toBe(1);
     expect(response.body.data[0].email).toBe('matt@damon.com');
     });
@@ -178,18 +179,6 @@ describe("POST /findUser", () => {
     const find_params = {"email":"matt@damon.com"}
     const not_find_params = {"email":"not@there.com"}
 
-    beforeAll(async () => {
-
-        // await sequelize.sync({ force: true })
-        // User.registerNew(test_user_1)
-        // User.registerNew(test_user_2)
-    })
-    
-    afterAll(async () => {
-        //await db.sequelize.close()
-    })
-
-    
     it("should return found target user", async () => {
         const response = await request(baseURL).post("/users/find_user").send(find_params);
         //console.log("FIND USER RESPONSE ============\n",response.body.data, null,4)
@@ -287,27 +276,27 @@ describe("POST /users/register ", () => {
         sequelize.close()
     })
 
-    it("should properly register a valid new user", async () => {
+    it("should properly register a valid new user return 201", async () => {
         const response = await request(baseURL).post('/users/register').send(test_user_3);
-        // console.log("REGISTER user RESPONSE 200============\n",JSON.stringify(response.body, null,4))
-        expect(response.statusCode).toBe(200);
+        // console.log("REGISTER user RESPONSE 201============\n",JSON.stringify(response.body, null,4))
+        expect(response.statusCode).toBe(201);
         expect(response.body.errors).toBe(undefined);
-        expect(response.body.name).toBe('Paul Kogan');
-        expect(response.body.home_state).toBe('NY');
+        expect(response.body.data.name).toBe('Paul Kogan');
+        expect(response.body.data.home_state).toBe('NY');
     });
     
 
-    it("should return 400 if invalid user data", async () => {
+    it("should return 400 if invalid email format", async () => {
         const response = await request(baseURL).post('/users/register').send(bad_test_user);
         // console.log("BAD REGISTER RESPONSE ============\n",JSON.stringify(response.body, null,4))
         expect(response.statusCode).toBe(400);
         expect(response.body.message).toContain("invalid email");
     });
     
-    it("should return 500 if duplicate user", async () => {
+    it("should return 400 if duplicate user", async () => {
         const response = await request(baseURL).post('/users/register').send(test_user_3);
         // console.log("DUPLICATE USER RESPONSE ============\n",JSON.stringify(response.body, null,4))
-        expect(response.statusCode).toBe(500);
+        expect(response.statusCode).toBe(400);
         expect(response.body.message).toContain("Validation error");
     });
     

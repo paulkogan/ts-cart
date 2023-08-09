@@ -97,7 +97,7 @@ const  RegisterUserForm:React.FC = () => {
               await updateCartDispatch({
                 type: "UPDATE_MESSAGE", 
                 payload: {
-                  user_message: `Success! Registration complete for ${data.email}`
+                  user_message: `Success! Registration complete for ${data.data.email}`
                 }
               })
 
@@ -189,40 +189,3 @@ export default RegisterUserForm;
 // if sending entire event
 //const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 
-
-//   <div className="prod-input-field">
-//   <select 
-//         name="us_state"
-//         onChange = {event => {handleChange(event.target.name, event.target.value) }}
-//   >
-
-//      {   stateOptions.map(state => <option key={state} value={state}>{state}</option>   )}
-         
-//   </select>
-// </div>
-
-
-
-
-
-
-
-
-// onChange = {handleChange}
-// onChange = {(event) => {handleChange(event)}}
-//   onChange={event => {
-//     setnewUser({
-//       ...newUser,
-//       ["price"]: parseFloat(event.target.value)
-//     });
-// }}
-// <button onClick={handleClick}>Add</button>
-
-
-// {   stateOptions.forEach(state => {
-
-//   <option value={state}>{state}</option>
-//  )
-// })
-
-// }

@@ -13,7 +13,7 @@ import {
 
 const createNewProduct = async (productPayload: BaseProductType) => {
     let new_product = {...productPayload, product_id: uuidv4()}
-    console.log(`SERVICE - New Product OBJECT is: ${JSON.stringify(new_product)}`)
+    // console.log(`SERVICE - New Product OBJECT is: ${JSON.stringify(new_product)}`)
     
     try {
         const createProductResponse = await Product.createNew(new_product)

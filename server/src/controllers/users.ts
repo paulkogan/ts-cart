@@ -3,7 +3,8 @@ const Sequelize = require("sequelize");
 const {models, sequelize} = require("../models/index.js");
 const User = models.User;
 const Op = Sequelize.Op;
-import { v4 as uuidv4 } from 'uuid';
+
+import createNewUser from "../domain/user.service"
 
 const registerNew = async (req, res) => {
 
@@ -16,38 +17,18 @@ const registerNew = async (req, res) => {
         return  
     }
 
-    let new_user = {
-        user_uuid: uuidv4(),
-        name: req.body.name,
-        password: req.body.password,
-        email: req.body.email,
-        avatar_url: null,
-        home_state: req.body.home_state
-    }
-    // console.log(`New User OBJECT is: ${JSON.stringify(new_user)}`)
 
-
-    User.registerNew(new_user)
-    .then(data => {
-        if (data) {
-            console.log(`\n\nSUCCESS BE: New User registered with: ${JSON.stringify(data)}`)
-            res.send(data);
-        } else {
-            console.log(`\n\nFAIL BE: Did not register new user with  ${new_user.email}`)
-            res.status(400).send({
-                message: `Error (400): Did not register new user with   ${new_user.email}`
-              });
-        }
-
-    })
-    .catch(err => {
+    const createUserResponse = await createNewUser(req.body) 
+    console.log(`\n\nCREATE User RESPONSE IS  ${JSON.stringify(createUserResponse)}`)
+    if (createUserResponse.status) {
+        res.status(createUserResponse.status).send(createUserResponse);
+    } else {
         res.status(500).send({
-        message:
-            err.message || "Some error occurred while registering user"
+            message:createUserResponse.message
         });
-    });
-
+    }
 }
+
 
 const listUsers = async (req, res) => {
     const name = req.query.name;
