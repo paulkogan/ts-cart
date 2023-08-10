@@ -1,6 +1,6 @@
 import { app } from "./app"
 
-const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV || "development"
 
 const port = (env == "test") ? 3003 : 3001
     
