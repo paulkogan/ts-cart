@@ -8,6 +8,6 @@ export interface BaseUser {
     home_state: string;
   }
 
-  export interface User extends BaseUser {
+export interface User extends BaseUser {
     user_uuid: string;
   }
