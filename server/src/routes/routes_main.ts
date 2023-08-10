@@ -8,7 +8,7 @@ const router = express.Router();
 
 
 
-//router.get('/products', verifyToken, getUsers);
+//router.get('/products', verifyToken, getUsers); # we started by sending token in the headers
 router.get('/orders', authorization, ordersController.listOrders);
 router.post('/orders/create', authorization, ordersController.createNew);
 router.get('/products', productsController.listProducts);

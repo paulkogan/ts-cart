@@ -1,5 +1,6 @@
 const request = require("supertest")
-const baseURL = "http://localhost:3003"
+// const baseURL= "http://localhost:3003"
+const {app} = require('../dist/src/app.js')
 const {models, sequelize} = require("../dist/src/models/index.js")
 const { v4 : uuidv4 } = require('uuid')
 const User = models.User;
@@ -122,11 +123,12 @@ describe("POST /auth/login", () => {
     
 
     it("should login a user", async () => {
-        const response = await request(baseURL).post('/auth/login').send(login_request_2);
+        const response = await request(app).post('/auth/login').send(login_request_2);
         // console.log("login response ============\n",JSON.stringify(response.body, null,4))
         expect(response.statusCode).toBe(200);
         expect(response.body.errors).toBe(null);
         expect(response.body.data.name).toBe('Matt Damon');
+        
     });
 
 })
@@ -147,7 +149,7 @@ describe("GET /users", () => {
     })
 
     it("should return 200 and ALL users if logged-in", async () => {
-        const response = await request(baseURL).get("/users")
+        const response = await request(app).get("/users")
         .set('Cookie', [`tsToken=${token}`]);
         //console.log("USERS LIST  ============\n",JSON.stringify(response.body.data, null,4))
         expect(response.statusCode).toBe(200);
@@ -156,7 +158,7 @@ describe("GET /users", () => {
     });
     
     it("should return 401 and Auth Service Error if bad cookie", async () => {
-        const response = await request(baseURL).get("/users")
+        const response = await request(app).get("/users")
         .set('Cookie', [`tsToken=${{"name":"none"}}`]);
         // console.log("401 not logged in ============\n",JSON.stringify(response.body, null,4))
         expect(response.statusCode).toBe(401);
@@ -166,7 +168,7 @@ describe("GET /users", () => {
 
 
     it("url params filter returns only the targeted user", async () => {
-    const response = await request(baseURL).get("/users?name=Damon")
+    const response = await request(app).get("/users?name=Damon")
     .set('Cookie', [`tsToken=${token}`]);
     // console.log("filter ============\n",JSON.stringify(response.body, null,4))
     expect(response.body.data.length).toBe(1);
@@ -180,7 +182,7 @@ describe("POST /findUser", () => {
     const not_find_params = {"email":"not@there.com"}
 
     it("should return found target user", async () => {
-        const response = await request(baseURL).post("/users/find_user").send(find_params);
+        const response = await request(app).post("/users/find_user").send(find_params);
         //console.log("FIND USER RESPONSE ============\n",response.body.data, null,4)
         expect(response.body.data.name).toBe('Matt Damon');
         expect(response.statusCode).toBe(200);
@@ -188,7 +190,7 @@ describe("POST /findUser", () => {
     });
 
     it("should return 404 if not found", async () => {
-        const response = await request(baseURL).post("/users/find_user").send(not_find_params);
+        const response = await request(app).post("/users/find_user").send(not_find_params);
         // console.log("NOT FOUND RESPONSE ============\n",response.body, null,4)
         expect(response.statusCode).toBe(404);
         expect(response.body.errors).toContain("Did not find user with");
@@ -209,7 +211,7 @@ describe("GET /products", () => {
 
     
     it("should return list of all products in the catalog", async () => {
-        const response = await request(baseURL).get("/products");
+        const response = await request(app).get("/products");
         // console.log("product list ==========\n"+JSON.stringify(response.body,null,4))
         expect(response.statusCode).toBe(200);
         expect(response.body.errors).toBe(null);
@@ -235,7 +237,7 @@ describe("POST /products/create", () => {
     })
 
     it("should properly add a new product", async () => {
-        const response = await request(baseURL).post('/products/create').send(test_product_4);
+        const response = await request(app).post('/products/create').send(test_product_4);
         // console.log("new product create============\n",JSON.stringify(response.body, null,4))
         expect(response.statusCode).toBe(201);
         expect(response.body.errors).toBe(undefined);
@@ -245,14 +247,14 @@ describe("POST /products/create", () => {
     
 
     it("should return 400 if bad data", async () => {
-        const response = await request(baseURL).post('/products/create').send(bad_product_4);
+        const response = await request(app).post('/products/create').send(bad_product_4);
         // console.log("BAD product RESPONSE ============\n",JSON.stringify(response.body, null,4))
         expect(response.statusCode).toBe(400);
         expect(response.body.message).toContain("price must be >= 0 but is");
     });
 
     it("should return 400 if duplicate", async () => {
-        const response = await request(baseURL).post('/products/create').send(test_product_3);
+        const response = await request(app).post('/products/create').send(test_product_3);
         //console.log("DUPLICATE product RESPONSE ============\n",JSON.stringify(response.body, null,4))
         expect(response.statusCode).toBe(400);
         expect(response.body.message).toContain("Duplicate product");
@@ -277,7 +279,7 @@ describe("POST /users/register ", () => {
     })
 
     it("should properly register a valid new user return 201", async () => {
-        const response = await request(baseURL).post('/users/register').send(test_user_3);
+        const response = await request(app).post('/users/register').send(test_user_3);
         // console.log("REGISTER user RESPONSE 201============\n",JSON.stringify(response.body, null,4))
         expect(response.statusCode).toBe(201);
         expect(response.body.errors).toBe(undefined);
@@ -287,14 +289,14 @@ describe("POST /users/register ", () => {
     
 
     it("should return 400 if invalid email format", async () => {
-        const response = await request(baseURL).post('/users/register').send(bad_test_user);
+        const response = await request(app).post('/users/register').send(bad_test_user);
         // console.log("BAD REGISTER RESPONSE ============\n",JSON.stringify(response.body, null,4))
         expect(response.statusCode).toBe(400);
         expect(response.body.message).toContain("invalid email");
     });
     
     it("should return 400 if duplicate user", async () => {
-        const response = await request(baseURL).post('/users/register').send(test_user_3);
+        const response = await request(app).post('/users/register').send(test_user_3);
         // console.log("DUPLICATE USER RESPONSE ============\n",JSON.stringify(response.body, null,4))
         expect(response.statusCode).toBe(400);
         expect(response.body.message).toContain("Validation error");

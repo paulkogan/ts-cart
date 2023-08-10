@@ -5,11 +5,6 @@ import {axiosPostRequest} from '../../services/api_service'
 import {getTaxRates} from "../../utils"
 import {CartStateContext}  from '../../hooks/CartStateContext' 
 
-// interface Props {
-//   submitAddProduct: (new_product:Product) => any;
-// }
-// const  RegisterUserForm:React.FC <Props> = (props) => {
-//   const {submitAddProduct} = props;
 
 const  RegisterUserForm:React.FC = () => {
 
