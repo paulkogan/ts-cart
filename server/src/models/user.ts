@@ -50,10 +50,6 @@ const userModel = (sequelize, DataTypes) => {
 			where: {email: email_target},
 		})
 
-		if (!results) {
-			console.log("No user found")
-		}
-      
 		return results
 
 	} 
