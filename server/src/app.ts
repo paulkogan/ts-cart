@@ -38,5 +38,4 @@ app.use(router)
 
 export {app}
 
-// app.listen(port, () => console.log(`TS-Cart API listening on port ${port}!`))
 

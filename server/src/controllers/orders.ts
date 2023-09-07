@@ -139,7 +139,7 @@ const listOrders = async (req, res) => {
 		.catch(err => {
 			res.status(500).send({
 				message:
-            err.message || "Some error occurred while retrieving orders."
+            err.message || "Some error occurred while retrieving orders!"
 			})
 		})
 }

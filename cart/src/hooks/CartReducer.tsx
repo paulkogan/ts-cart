@@ -1,7 +1,7 @@
-//import React, {useState, useReducer} from 'react';
+
 import {CartState, OrderItem} from "../types/types"
 import {cloneDeep} from 'lodash'
-import {getTaxRates, getTaxRateForState} from "../utils"
+import {getTaxRateForState} from "../utils"
 
 const reduceCartTotals = (basket_items: OrderItem[]) : {price: number, tax: number} => {
     return basket_items.reduce((tots, item: OrderItem) => {
@@ -18,15 +18,10 @@ const CartUpdater = (state: CartState,  action: {type:string, payload: any}) => 
     const {
         basket_items, 
         delivery_us_state,
-        user_uuid,
-        price_total,
-        tax_total, 
-        user_message
     } = state
+
     // need to clone the array to avoid double execution under TS Strict in DEV 
-    
     const new_basket_items = cloneDeep(basket_items)
-    const us_tax_rates = getTaxRates()
 
     switch(action.type) {
 

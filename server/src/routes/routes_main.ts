@@ -19,6 +19,6 @@ router.post("/users/register", usersController.registerNew)
 router.post("/auth/login", authController.loginUser)
 router.post("/auth/logout", authController.logoutUser)
 router.get("/auth/verify", authorization, authController.verifySession)
-
+router.get("/auth/session", authorization, authController.verifySession) // test
 
 export default router
