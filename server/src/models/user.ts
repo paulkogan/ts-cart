@@ -1,4 +1,27 @@
-//const {Model, Optional} = require('sequelize')
+const {Model, Optional} = require('sequelize')
+import {
+	BaseUser, 
+	User } from "../domain/user.interface"
+
+// type Optional<T> = T | {};
+
+interface UserAttributes {
+	user_uuid? : string;
+	name: string;
+	password: string;
+	email: string;
+	avatar_url: string;
+	home_state: string;
+}
+
+ // could not make <Optional> work
+// interface UserCreationAttributes 
+// 	extends Optional <UserAttributes> {}
+
+
+
+
+
 
 const userModel = (sequelize, DataTypes) => {
 
@@ -44,7 +67,7 @@ const userModel = (sequelize, DataTypes) => {
 	//User.removeAttribute('id');
 	//User.removeAttribute('createdAt');
 
-	User.findByEmail = async (email_target) => {
+	User.findByEmail = async (email_target:string) => {
 
 		const results = await User.findOne({
 			where: {email: email_target},

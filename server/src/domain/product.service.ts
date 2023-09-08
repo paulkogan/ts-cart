@@ -2,11 +2,12 @@ const {models} = require("../models/index.js")
 const Product = models.Product
 import { v4 as uuidv4 } from "uuid"
 
-import {BaseProduct as BaseProductType} from "./product.interface"
 
+import {
+	NewProductPayload
+ } from "../domain/product.interface"
 
-
-const createNewProduct = async (productPayload: BaseProductType) => {
+const createNewProduct = async (productPayload: NewProductPayload) => {
 	const new_product = {...productPayload, product_id: uuidv4()}
 	// console.log(`SERVICE - New Product OBJECT is: ${JSON.stringify(new_product)}`)
     

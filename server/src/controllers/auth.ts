@@ -5,7 +5,17 @@ const User = models.User
 
 //import { v4 as uuidv4 } from 'uuid';
 import {generateToken} from "../services/be-auth-service"
+import {Response} from 'express'
+import {
+	LoginData, 
+	LogoutRequestBody, 
+	LogoutUserData, 
+	TypedRequestBody
+} from '../types/types'
 
+import {
+	TokenUser, 
+	User } from "../domain/user.interface"
 
 const verifySession = async (req, res) => {
 	return res.json({ 
@@ -14,14 +24,14 @@ const verifySession = async (req, res) => {
 
 }
 
-const logoutUser = async (req, res) => {
+const logoutUser = async (req:LogoutRequestBody, res:Response) => {
 	//console.log(`LOGOUT BODY ======= ${JSON.stringify(req.body)}`)
-	const logoutUser = JSON.parse(req.body.user)
+	const logoutUser = JSON.parse(req.body.user) as LogoutUserData  // body.user is just string, not an object
 	if (!logoutUser || !logoutUser.email) {
 		return res.status(404).json({
 			data: null,
 			errors: "Missing Logout User", 
-			message: "Missing Logout User"
+			message: "Missing Logout User",
 		})
 	}
 
@@ -40,7 +50,7 @@ const logoutUser = async (req, res) => {
 
 }
 
-const loginUser = async (req, res) => {
+const loginUser = async (req: TypedRequestBody<LoginData>, res) => {
 	const tryEmail = req.body.userid
 	const tryPassword = req.body.password
 
@@ -61,7 +71,7 @@ const loginUser = async (req, res) => {
 			email: matchUser.email,
 			home_state: matchUser.home_state, 
 			user_uuid: matchUser.user_uuid
-		}
+		} as TokenUser
 
 		const token = generateToken(matchUser)
 		const decoded_token = JSON.parse(atob(token.split(".")[1]))

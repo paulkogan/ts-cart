@@ -1,5 +1,9 @@
 "use strict"
 
+import {
+	NewOrder, 
+ } from "../domain/product.interface"
+
 const orderModel = (sequelize, DataTypes) => {
 
 	const Order = sequelize.define(
@@ -54,7 +58,7 @@ const orderModel = (sequelize, DataTypes) => {
 			createdAt: false
 		})
 
-	Order.createNew = async (new_order) => {
+	Order.createNew = async (new_order: NewOrder) => {
 		//console.log(`\nMODEL - Order.Create: ${JSON.stringify(new_order)}\n\n`)
 		return await Order.create(new_order)
 

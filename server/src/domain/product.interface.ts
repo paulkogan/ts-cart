@@ -1,20 +1,36 @@
+import {
+	User } from "../domain/user.interface"
+
+
+
+
 //creation payload
 export interface BaseProduct {
     name: string;
     image_url: string;
-    price: number;
     description?: string;
-    inventory: number;
+
   
 }
 
-export interface Product extends BaseProduct{
+export interface NewProductPayload extends BaseProduct{
+    price: string;
+    inventory: string;
+  
+}
+
+
+
+export interface CreatedProduct extends BaseProduct{
     product_id: string;
+    price: number;
+    inventory: number;
 
 }
 
 //creation payload
-export interface BaseOrderItem extends Product{
+export interface BaseOrderItem extends NewProductPayload{
+    product_id: string;
     order_uuid: string;
     num_units: number;
     cost: number; //total cost
@@ -23,7 +39,36 @@ export interface BaseOrderItem extends Product{
 }
 
 
-export interface OrderItem extends BaseOrderItem{
+export interface CreatedOrderItem extends BaseOrderItem{
     order_item_uuid: string | null;
     order_item_status: string;  
+}
+
+
+export interface BaseOrder {
+    user_uuid: string;
+    date_placed: Date;
+    delivery_us_state: string;
+    items_total: number;
+    tax_total: number;
+    shipping_total: number;  
+    order_status: string;
+    customer: User;
+}
+
+export interface ReadyOrder extends BaseOrder{
+    order_uuid: string;
+}
+
+
+
+export interface NewOrder extends BaseOrder{
+    order_items: CreatedOrderItem[];
+}
+
+
+
+export interface CreatedOrder extends BaseOrder{
+    order_uuid: string;
+    order_items: CreatedOrderItem[];
 }

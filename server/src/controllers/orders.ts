@@ -6,12 +6,21 @@ const OrderItem = models.OrderItem
 const Op = Sequelize.Op
 // import {cloneDeep} from 'lodash'
 
-import {OrderItem } from "../domain/product.interface"
+import {Response} from 'express'
+
+import {
+	CreatedOrderItem,
+	CreatedOrder, 
+	NewOrder, 
+	ReadyOrder
+ } from "../domain/product.interface"
+
+import {TypedRequestBody} from "../types/types"
 
 import { v4 as uuidv4 } from "uuid"
 
 
-const reduceOrderTotals = (basket_items: OrderItem[]) => {
+const reduceOrderTotals = (basket_items: CreatedOrderItem[]) : {price: number, tax: number}=> {
 	return basket_items.reduce((tots:any, item) => {
 		tots.price = tots.price+item.cost
 		tots.tax = tots.tax+item.tax
@@ -35,7 +44,7 @@ const paginateData = (data: any, pageIndex: number, rowsPerPage: number) => {
 
 } 
 
-const createNew = async (req, res) => { 
+const createNew = async (req:TypedRequestBody<NewOrder>, res: Response) => { 
 	const orderItems = req.body.order_items
 	const newOrderUUID = uuidv4()
 	const totals =  reduceOrderTotals(orderItems)
@@ -49,7 +58,7 @@ const createNew = async (req, res) => {
 		tax_total: totals.tax,
 		shipping_total: 0.0,
 		order_status: "accepted"
-	}
+	} as ReadyOrder
     
 	console.log(`\n\nserver - New Order OBJECT is: ${JSON.stringify(new_order)}\n\n`)
 
