@@ -6,7 +6,18 @@ const Op = Sequelize.Op
 
 import createNewUser from "../domain/user.service"
 
-const registerNew = async (req, res) => {
+import {Response} from 'express'
+import {
+	TypedRequestBody
+} from '../types/types'
+
+import {
+	CreateUser 
+} from "../domain/user.interface"
+
+
+
+const registerNew = async (req: TypedRequestBody<CreateUser>, res: Response) => {
 
 	const validEmailRegex = /^[a-zA-Z0-9.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9.]+$/
 
@@ -50,7 +61,7 @@ const listUsers = async (req, res) => {
 }
 
 
-const findUser = async (req, res) => {
+const findUser = async (req: TypedRequestBody<{email:string}>, res: Response) => {
 	const target_email = req.body.email
 	console.log(`User target_email is ${target_email}`)
 

@@ -4,12 +4,10 @@ const User = models.User
 import { v4 as uuidv4 } from "uuid"
 
 import {
-	BaseUser, 
-	User } from "./user.interface"
+	CreateUser 
+} from "../domain/user.interface"
 
-
-
-const createNewUser = async (userPayload: BaseUser) => {
+const createNewUser = async (userPayload: CreateUser) => {
 	const new_user = {...userPayload, user_uuid: uuidv4()}
 	// console.log(`SERVICE - New  USER is: ${JSON.stringify(new_user}`)
     

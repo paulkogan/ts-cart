@@ -5,7 +5,15 @@ const Op = Sequelize.Op
 import createNewProduct from "../domain/product.service"
 // No types on the controller
 
-const createNew = async (req, res) => {
+import {
+	NewProductPayload
+ } from "../domain/product.interface"
+
+import {TypedRequestBody} from "../types/types"
+
+
+
+const createNew = async (req:TypedRequestBody<NewProductPayload>, res) => {
 	if (!req.body.price || parseFloat(req.body.price) < 0.00) {
 		// console.log(`\n\nFAIL BE: Error (400): price must be >= 0 but is ${req.body.price}`)
 		return res.status(400).send({

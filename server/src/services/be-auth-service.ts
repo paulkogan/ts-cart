@@ -3,7 +3,11 @@
 import jsonWebToken from "jsonwebtoken"   
 import "dotenv/config"
 
-export const generateToken = (user) => {
+import {
+	TokenUser,
+} from "../domain/user.interface"
+
+export const generateToken = (user: TokenUser) => {
 	//1. Dont use password and other sensitive fields
 	//2. Use fields that are useful in other parts of the     
 
