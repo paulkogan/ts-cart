@@ -9,7 +9,10 @@ import {
 	NewProductPayload
  } from "../domain/product.interface"
 
-import {TypedRequestBody} from "../types/types"
+import {
+	TypedRequestBody, 
+	TypedRequestQuery,
+} from "../types/types"
 
 
 
@@ -48,8 +51,7 @@ const createNew = async (req:TypedRequestBody<NewProductPayload>, res) => {
 
 }
 
-
-const listProducts = async (req, res) => {
+const listProducts = async (req: TypedRequestQuery<{name:string}>,  res) => {
 	const name = req.query.name
 	const condition = name ? { name: { [Op.like]: `%${name}%` } } : null
 

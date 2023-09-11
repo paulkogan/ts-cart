@@ -1,4 +1,4 @@
-const {Model, Optional} = require('sequelize')
+const {Model, Optional} = require("sequelize")
 import {
 	BaseUser, 
 	User } from "../domain/user.interface"
@@ -67,7 +67,7 @@ const userModel = (sequelize, DataTypes) => {
 	//User.removeAttribute('id');
 	//User.removeAttribute('createdAt');
 
-	User.findByEmail = async (email_target:string) => {
+	User.findByEmail = async (email_target:string): Promise<BaseUser> => {
 
 		const results = await User.findOne({
 			where: {email: email_target},

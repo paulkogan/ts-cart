@@ -6,13 +6,16 @@ const Op = Sequelize.Op
 
 import createNewUser from "../domain/user.service"
 
-import {Response} from 'express'
+import {Response} from "express"
 import {
-	TypedRequestBody
-} from '../types/types'
+	TypedRequestBody, 
+	TypedRequestQuery,
+	GetResponse
+} from "../types/types"
 
 import {
-	CreateUser 
+	CreateUser, 
+	User 
 } from "../domain/user.interface"
 
 
@@ -20,6 +23,7 @@ import {
 const registerNew = async (req: TypedRequestBody<CreateUser>, res: Response) => {
 
 	const validEmailRegex = /^[a-zA-Z0-9.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9.]+$/
+
 
 	if (!req.body.email.match(validEmailRegex)) {
 		res.status(400).send({
@@ -41,27 +45,36 @@ const registerNew = async (req: TypedRequestBody<CreateUser>, res: Response) => 
 }
 
 
-const listUsers = async (req, res) => {
+const listUsers = async (req: TypedRequestQuery<{name:string}>, res: Response<GetResponse<User[]>>) => {
 	const name = req.query.name
 	const condition = name ? { name: { [Op.like]: `%${name}%` } } : null
 
-	User.findAll({ where: condition })
+	User.findAll({ 
+		where: condition,
+		order: [
+			["name", "ASC"],
+		],
+	})
 		.then(data => {
 			res.status(200).send({
 				"data":data,
-				"errors": null
+				"errors": null,
+				"message": null
 			})
 		})
 		.catch(err => {
 			res.status(500).send({
-				message:
-            err.message || "Some error occurred while retrieving users."
+				"data": null,
+				"errors": `Did not find users with ${name}`, 
+				"message": `ERROR: for  List Users - ${err.message} `
 			})
 		})
 }
 
 
-const findUser = async (req: TypedRequestBody<{email:string}>, res: Response) => {
+
+
+const findUser = async (req: TypedRequestBody<{email:string}>, res: Response<GetResponse<User>>) => {
 	const target_email = req.body.email
 	console.log(`User target_email is ${target_email}`)
 
@@ -85,8 +98,9 @@ const findUser = async (req: TypedRequestBody<{email:string}>, res: Response) =>
 		})
 		.catch(err => {
 			res.status(500).send({
-				message:
-            err.message || "Some error occurred while finding User by email"
+				"data": null,
+				"errors": `Did not find user with  ${target_email}`, 
+				"message": `ERROR: for  ${target_email} - ${err.message} `
 			})
 		})
 
