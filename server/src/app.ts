@@ -4,7 +4,6 @@ import bodyParser from "body-parser"
 // import jsonWebToken from 'jsonwebtoken'   
 // import {expressjwt} from 'express-jwt';
 import cookieParser from "cookie-parser"
-import "dotenv/config"
 import router from "./routes/routes_main.js"
 
 

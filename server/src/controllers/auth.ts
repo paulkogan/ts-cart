@@ -5,13 +5,11 @@ const User = models.User
 
 //import { v4 as uuidv4 } from 'uuid';
 import {generateToken} from "../services/be-auth-service"
-import {Response} from 'express'
+import {Response} from "express"
 import {
 	LoginData, 
-	LogoutRequestBody, 
-	LogoutUserData, 
 	TypedRequestBody
-} from '../types/types'
+} from "../types/types"
 
 import {
 	TokenUser, 
@@ -24,9 +22,12 @@ const verifySession = async (req, res) => {
 
 }
 
-const logoutUser = async (req:LogoutRequestBody, res:Response) => {
-	//console.log(`LOGOUT BODY ======= ${JSON.stringify(req.body)}`)
-	const logoutUser = JSON.parse(req.body.user) as LogoutUserData  // body.user is just string, not an object
+
+
+
+const logoutUser = async (req:TypedRequestBody<{user:string}>, res:Response) => {
+	//console.log(`LOGOUT BODY ======= ${JSON.stringify(req.body)}`)  // need interface for definition
+	const logoutUser = JSON.parse(req.body.user) as {email:string} // body.user is just string, not an object
 	if (!logoutUser || !logoutUser.email) {
 		return res.status(404).json({
 			data: null,

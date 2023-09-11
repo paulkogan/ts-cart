@@ -10,7 +10,7 @@
     "dev": "nodemon -e ts --exec 'yarn buildrun'",
     "start": "nodemon -e ts --exec 'yarn buildrun'",
     "test": "jest --runInBand",
-    "lint": "npx eslint '**/*.js'"
+    "lint": "npx eslint '**/*.js' --fix"
   },
   "author": "Paul Kogan",
   "license": "ISC",
@@ -34,7 +34,7 @@
     "body-parser": "^1.20.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
-    "dotenv": "^16.1.4",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-jwt": "^8.4.1",
     "helmet": "^6.0.0",

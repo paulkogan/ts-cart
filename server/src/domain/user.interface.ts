@@ -20,4 +20,5 @@ export interface CreateUser extends BaseUser {
 export interface User extends BaseUser {
     user_uuid: string;
     avatar_url: string;
+    password: string;
   }

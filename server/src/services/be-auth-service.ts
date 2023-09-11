@@ -34,7 +34,8 @@ export const authorization = async (req, res, next) => {
 		return res.status(401).send("Authorization Error: no token present in cookies")
 	}
 	try {
-		const secret = await process.env.JWT_SECRET
+		//const secret = await process.env.JWT_SECRET
+		const secret = await process.env.REACT_APP_JWT_SECRET
 		const data = secret ? jsonWebToken.verify(token, secret) : null
 		req.session = data
 
