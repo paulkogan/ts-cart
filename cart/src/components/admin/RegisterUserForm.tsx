@@ -1,5 +1,6 @@
 import React, {useState, useRef, useContext, useEffect} from 'react';
-import {User} from "../../types/types"
+import {User, CartStateContextType} from "../../types/types"
+
 import './Admin.css';
 import {axiosPostRequest} from '../../services/api_service'
 import {getTaxRates} from "../../utils"
@@ -8,30 +9,28 @@ import {CartStateContext}  from '../../hooks/CartStateContext'
 
 const  RegisterUserForm:React.FC = () => {
 
+const {updateCartDispatch}   = useContext(CartStateContext) as CartStateContextType;
+const runRef = useRef(false);
 
 
-  const {cartState, updateCartDispatch, auth}   = useContext(CartStateContext);
-  const runRef = useRef(false);
+useEffect(() => {
+  const setInitialMessage = async () => { 
+      await updateCartDispatch({
+          type: "UPDATE_MESSAGE", 
+          payload: {
+            user_message: `Add new Users here!`
+          }
+        })
+  }
 
+  return () => {
+      if (!runRef.current) {
+          setInitialMessage()     
+      }    
+        runRef.current = true;                      
+    }
 
-  useEffect(() => {
-    const setInitialMessage = async () => { 
-        await updateCartDispatch({
-            type: "UPDATE_MESSAGE", 
-            payload: {
-              user_message: `Add new Users here!`
-            }
-          })
-   }
-
-    return () => {
-        if (!runRef.current) {
-            setInitialMessage()     
-        }    
-          runRef.current = true;                      
-      }
-
-  }, []) 
+}, [updateCartDispatch]) 
 
   const getNewUserObj = () :User => {
       return {
@@ -49,7 +48,7 @@ const  RegisterUserForm:React.FC = () => {
   const us_tax_states = ["--"].concat(Object.keys(getTaxRates()));
 
   const handleChange = (fieldName: string, fieldValue: string | number): void => {
-    if(fieldName == "home_state" && fieldValue == "--" ) {
+    if(fieldName === "home_state" && fieldValue === "--" ) {
       return 
     }
 
@@ -133,10 +132,9 @@ const  RegisterUserForm:React.FC = () => {
                 <input 
                     type="text"
                     placeholder="Name"
-                    onChange={event => {
+                    onChange={() => {
                         setNewUser({
-                          ...newUser,
-                          ["name"]: event.target.value
+                          ...newUser,                         
                         });
 
                     }}
@@ -180,6 +178,7 @@ const  RegisterUserForm:React.FC = () => {
 
 export default RegisterUserForm;
 
+// ["name"]: event.target.value
 
 // if sending entire event
 //const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

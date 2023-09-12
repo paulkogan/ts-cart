@@ -1,13 +1,13 @@
 import React from 'react';
-import {OrderItem} from "../../types/types"
+import type {OrderItem} from "../../types/types"
 import BasketPlank from "./BasketPlank"
 import './Cart.css';
 
-interface Props {
+interface BasketListProps extends React.HTMLAttributes<HTMLDivElement>{
   selected: OrderItem[]
 }
 
-const  BasketList:React.FC <Props> = ({selected}) => {
+const  BasketList:React.FC <BasketListProps> = ({selected}) => {
 
   const renderBasketlist = ():JSX.Element[]  => {
 
@@ -17,6 +17,7 @@ const  BasketList:React.FC <Props> = ({selected}) => {
         <div key={item.product_id} className="basket-outer-item" >
               <BasketPlank item = {item} />
         </div>
+
       )
     })
 

@@ -1,5 +1,5 @@
 import React, {useState, useRef, useContext, useEffect} from 'react';
-import {Product} from "../../types/types"
+import type {Product, CartStateContextType} from "../../types/types"
 import './Admin.css';
 import ProductForm from './ProductForm';
 import AdminProductList from './AdminProductList';
@@ -10,7 +10,7 @@ import {axiosGetRequest, axiosPostRequest} from '../../services/api_service'
 const ProductAdmin:React.FC = () => {
   const [productList, setProductList] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(false)
-  const {cartState, updateCartDispatch, auth}   = useContext(CartStateContext);
+  const {cartState, updateCartDispatch, auth}   = useContext(CartStateContext) as CartStateContextType;
   const runRef = useRef(false);
 
   useEffect(() => {
