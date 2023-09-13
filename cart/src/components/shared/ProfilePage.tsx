@@ -3,10 +3,13 @@ import React, {useState, useEffect, useRef, useContext} from 'react';
 import {CartStateContext}  from '../../hooks/CartStateContext'
 import {expTimeInHMS} from '../../utils'
 import '../App.css';
+import {CartStateContextType} from "../../types/types"
+
+
 
 const ProfilePage: React.FC = () => {
     const [expTime, setExpTime] = useState("no exp data")
-    const {cartState, updateCartDispatch, auth}   = useContext(CartStateContext);
+    const {cartState, auth}   = useContext(CartStateContext) as CartStateContextType;
     const runRef = useRef(false);
 
     // doing it here as an exception on an unprotercted page
@@ -30,7 +33,7 @@ const ProfilePage: React.FC = () => {
           
           runRef.current = true;                      
       } 
-    }, [])
+    }, [auth])
 
 
       // update expiration timer

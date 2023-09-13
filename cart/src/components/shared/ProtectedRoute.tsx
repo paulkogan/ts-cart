@@ -1,11 +1,12 @@
-import React, {useState, useEffect, useRef, useContext} from 'react';
+import {useState, useEffect, useRef, useContext} from 'react';
 import { Navigate } from "react-router-dom";
 import {CartStateContext}  from '../../hooks/CartStateContext'
+import type {CartStateContextType} from "../../types/types"
 
 
 export const ProtectedRoute = ( {children, path}:any) => {
   const [sessionState, setSessionState] = useState("waiting")
-  const {cartState, updateCartDispatch, auth}   = useContext(CartStateContext);
+  const {auth}   = useContext(CartStateContext) as CartStateContextType;
   const runRef = useRef(false);
 
   useEffect(() => {
@@ -13,7 +14,7 @@ export const ProtectedRoute = ( {children, path}:any) => {
       try {
 
            const response = await auth.verifySessionWithBEHook("PR-"+path)
-           if (response.status < 300) {
+           if (typeof response.status == 'number' && response.status < 300) {
             setSessionState("session")
            } else {
             setSessionState("no session")
@@ -33,7 +34,7 @@ export const ProtectedRoute = ( {children, path}:any) => {
         runRef.current = true;                      
     }
 
-  }, []) 
+  }, [path, auth]) 
 
 
 

@@ -1,7 +1,8 @@
 import React, {useState, useEffect, useRef, useContext} from 'react';
 import {CartStateContext}  from '../../hooks/CartStateContext' 
-import { Navigate, useNavigate, useLocation } from "react-router-dom"; 
-//const history = useHistory();
+import type {CartStateContextType} from "../../types/types"
+import { useNavigate } from "react-router-dom"; 
+
 
 const initialLoginObj = {
     email: "",
@@ -21,8 +22,7 @@ const initialLoginObj = {
 const LoginPage: React.FC = () => {
 
     const [loginObj, setLoginObj] = useState(initialLoginObj)
-    const [loginState, setLoginState] = useState("none") //needed?
-    const {cartState, updateCartDispatch, auth}   = useContext(CartStateContext);
+    const {updateCartDispatch, auth}   = useContext(CartStateContext) as CartStateContextType;
     const navigate = useNavigate(); 
     const runRef = useRef(false);
 
@@ -45,14 +45,13 @@ const LoginPage: React.FC = () => {
               runRef.current = true;                      
           }
     
-      }, []) 
+      }, [updateCartDispatch, auth]) 
 
 
 
 
 
     const doChange = async (fieldName:string, fieldValue: string | null ) => {
-        await setLoginState('in_progress')
         setLoginObj({
             ...loginObj, 
             [fieldName]:fieldValue
@@ -64,7 +63,6 @@ const LoginPage: React.FC = () => {
         .then( async (response:any) => {           
                 if (response) {
                     const destPage = sessionStorage.getItem("lastPage") || "/cart"
-                    await setLoginState('success');
 
                     //console.log("SUCCESS - REDIRECTING after LOGIN: "+destPage)
                     await updateCartDispatch({
@@ -76,7 +74,6 @@ const LoginPage: React.FC = () => {
                     navigate(destPage)
                     
                 } else {
-                    setLoginState('error')
                     await updateCartDispatch({
                         type: "UPDATE_MESSAGE", 
                         payload: {
@@ -89,7 +86,6 @@ const LoginPage: React.FC = () => {
 
         }).catch((err:any) => {      //handleLogin return error
             //console.log("LOGIN PAGE ERROR: "+err.message)
-            setLoginState("error");
             updateCartDispatch({
                 type: "UPDATE_MESSAGE", 
                 payload: {

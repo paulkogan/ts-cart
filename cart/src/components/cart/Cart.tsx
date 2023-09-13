@@ -1,19 +1,20 @@
 import React, {useState, useEffect, useRef, useContext} from 'react';
-import {Product} from "../../types/types"
+import type {Product, CartStateContextType} from "../../types/types"
 import BasketList from './BasketList';
 import ShoppingProductList from './ShoppingProductList';
 import CheckoutForm from './CheckoutForm';
 import {axiosGetRequest} from '../../services/api_service'
 import {CartStateContext}  from '../../hooks/CartStateContext'
-import {getTaxRates} from "../../utils"
+import axios, {AxiosResponse} from 'axios';
 import './Cart.css';
+
 
 
 const Cart:React.FC = () => {
 
-  const [productList, setProductList] = useState<Product[]>([])
-  const [isLoading, setIsLoading] = useState(false)
-  const {cartState, updateCartDispatch, auth}   = useContext(CartStateContext);
+  const [productList, setProductList]  = useState<Product []>([])
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const {cartState, updateCartDispatch, auth}   = useContext(CartStateContext) as CartStateContextType;
   const runRef = useRef(false); 
 
   // this is a bit of  hack to fix that Context data gets wiped on page reload 
@@ -39,22 +40,20 @@ const Cart:React.FC = () => {
               addUserToCartState ()              
           }
       } 
-  }, []) 
+  }, [updateCartDispatch, cartState.user_uuid]) 
 
 
   //get product list
   useEffect(() => {
     const products_url = "/products"
-    const sourceTaxRates = getTaxRates()
     const fetchBEProducts = async () => {
       setIsLoading(true)
       try {
 
-           const response = await axiosGetRequest(products_url)
-           const data = response.data.data
-           //console.log("Actual PRODUCTS RESPONSE: ", response)
-           setProductList(data)
-           setIsLoading(false)
+          const {data : {data} }  = await axiosGetRequest(products_url) as AxiosResponse<{data: Product[]}>
+          //console.log("First PRODUCTS RESPONSE: ", data[0].description)
+          setProductList(data)
+          setIsLoading(false)
       } catch(error) {
            console.log("Error!: failed to fetch product data", error)
       }
@@ -121,7 +120,7 @@ const Cart:React.FC = () => {
             </div>
 
             <div className="cart-app-3">
-                <BasketList selected = {cartState.basket_items}/>
+                <BasketList selected = {cartState.basket_items} />
             </div>
         </div>
 

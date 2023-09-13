@@ -1,6 +1,7 @@
 import React, {useReducer} from 'react';
 import CartReducer from './CartReducer';
 import useAuth from './useAuth'
+import type {CartStateContextType} from "../types/types"
 
 const initialCartState = {
     "user_uuid": "",
@@ -15,25 +16,20 @@ const initialCartState = {
 // and refreshing if necessary from sessionStorage.sessionData
 
 // const initializeCartState = () => {
-//     //check session storage for user info    
-//     const user = sessionStorage.getItem('sessionData')
-//     if (user) {
-//          const userObj = JSON.parse(user)
-//          initialCartState.user_uuid = userObj.user_uuid
-//          initialCartState.delivery_us_state = userObj.home_state
-//         console.log("adding user info to cartState")
-//     } else {
-//         console.log("No user info in sessionStorage to add to cartState")
-//     }
-
-//     return initialCartState
-// }
 
 
-const CartStateContext = React.createContext();
 
 
-export const CartStateProvider = ({ children }) => {
+interface ProviderProps {
+    children: React.ReactNode;
+  }
+
+
+const CartStateContext = React.createContext<CartStateContextType| null > (null);
+//const CartStateContext = React.createContext (null);
+
+
+export const CartStateProvider: React.FC<ProviderProps> = ({ children}) => {
     const [cartState, updateCartDispatch] = useReducer(CartReducer, initialCartState);
 
 

@@ -1,11 +1,9 @@
 import React, {Dispatch, SetStateAction} from 'react';
-import {CartState} from "../../types/types"
+import type {CartState} from "../../types/types"
 import {toDollarString} from "../../utils"
 import './Cart.css';
 import {axiosPostRequest} from '../../services/api_service'
 import {getTaxRates} from "../../utils"
-
-type UpdateStringState = Dispatch<SetStateAction<string>>
 
 interface Props {
   cartState: CartState;

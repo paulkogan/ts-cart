@@ -1,21 +1,20 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useContext} from 'react';
 import {
-  BrowserRouter as Router,
   Link, 
 } from "react-router-dom";
 import {CartStateContext}  from '../../hooks/CartStateContext' 
-import { Navigate, useNavigate, useLocation } from "react-router-dom"; 
+import { useNavigate} from "react-router-dom"; 
 import '../App.css';
-
+import type {CartStateContextType} from "../../types/types"
 
 
 const Nav:React.FC = () => {
-  const {cartState, updateCartDispatch, auth} = useContext(CartStateContext);
+  const {cartState, auth}   = useContext(CartStateContext) as CartStateContextType;
   const navigate = useNavigate(); 
 
   const logoutWithNav = async () => {
     const logoutResult = await auth.handleLogoutHook()
-    if (logoutResult.status == 'fail') {
+    if (logoutResult.status === 'fail') {
       navigate('/login')
     } 
   }

@@ -1,4 +1,4 @@
-
+import React, { Dispatch, SetStateAction} from 'react';
 
 export interface Product {
     product_id: string | null;
@@ -57,4 +57,25 @@ export interface User {
   email: string;
   password: string;
   home_state: string | null;
+}
+
+
+interface HookResponse {
+    status: number | string;
+    data?: string | null;
+    message?: string | null;
+}
+
+
+export interface CartStateContextType { 
+    cartState: CartState; 
+    updateCartDispatch: React.Dispatch<{ type: string; payload: object; }>; 
+    auth: { 
+        authUser: { name: string; home_state: string; }, 
+        hasValidSessionHook: () => boolean; 
+        setAuthUser: Dispatch<SetStateAction<{ name: string; home_state: string; }>>;
+        handleLoginHook: (login: string, password: string) => Promise<HookResponse>;
+        verifySessionWithBEHook: (path: string) => Promise<HookResponse>; 
+        handleLogoutHook: () => Promise<HookResponse>; 
+    };
 }
