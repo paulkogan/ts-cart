@@ -60,10 +60,10 @@ export interface User {
 }
 
 
-interface hookResponse {
+interface HookResponse {
     status: number | string;
-    data?: any | null
-    message?: any | null
+    data?: string | null;
+    message?: string | null;
 }
 
 
@@ -74,8 +74,8 @@ export interface CartStateContextType {
         authUser: { name: string; home_state: string; }, 
         hasValidSessionHook: () => boolean; 
         setAuthUser: Dispatch<SetStateAction<{ name: string; home_state: string; }>>;
-        handleLoginHook: (login: any, password: any) => Promise<hookResponse>;
-        verifySessionWithBEHook: (path: any) => Promise<hookResponse>; 
-        handleLogoutHook: () => Promise<hookResponse>; 
+        handleLoginHook: (login: string, password: string) => Promise<HookResponse>;
+        verifySessionWithBEHook: (path: string) => Promise<HookResponse>; 
+        handleLogoutHook: () => Promise<HookResponse>; 
     };
 }

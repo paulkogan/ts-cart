@@ -1,5 +1,5 @@
 import React from 'react';
-import {OrderItem} from "../../types/types"
+import type {OrderItem} from "../../types/types"
 import {toDollarString} from "../../utils"
 import './Cart.css';
 
